@@ -1,0 +1,1 @@
+xcopy /s /i "C:\xampp\htdocs\sl-dts\s" "C:\xampp\htdocs\sl-dts\sms_outgoing" /Y

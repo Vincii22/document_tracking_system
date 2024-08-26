@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html style="width:997px;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dts.user.documents.on.hand-johns</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Data-Table.css">
+    <link rel="stylesheet" href="assets/css/Data-Table2.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="height:51px;background-color:rgb(255,0,0);">
+            <div class="container"><a class="navbar-brand" href="#" style="color:rgba(255,255,255,0.9);">sl-dts</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div
+                    class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color:rgb(255,255,255);">Documents</a>
+                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="add_document.html">Add Document</a><a class="dropdown-item" role="presentation" href="documents_on_hand.html">Process Document</a><a class="dropdown-item" role="presentation"
+                                    href="#">Track Document</a><a class="dropdown-item" role="presentation" href="document_list.html">Document List</a></div>
+                        </li>
+                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color:rgb(255,255,255);">Key Elements</a>
+                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="user_mgmt.html">User Mgmt</a><a class="dropdown-item" role="presentation" href="dept_mgmt.html">Dept Mgmt</a></div>
+                        </li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="#" style="color:rgb(255,255,255);">Analytics</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown"><a class="dropdown-toggle nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color:rgb(255,255,255);"><i class="fa fa-user"></i>&nbsp;user</a>
+                            <div class="dropdown-menu dropdown-menu-right"
+                                role="menu"><a class="dropdown-item" role="presentation" href="#">Change Password</a><a class="dropdown-item" role="presentation" href="#">Logout</a></div>
+                        </li>
+                    </ul>
+            </div>
+    </div>
+    </nav>
+    </div>
+    <div class="d-inline" style="font-size:10px;">
+        <div class="container">
+            <div class="row" style="padding:0px;margin:7px;">
+                <div class="col">
+                    <h4 style="color:rgb(134,142,150);">Documents on Hand</h4>
+                </div>
+            </div>
+            <div class="row no-gutters" style="width:1024px;height:486px;margin:28px;padding:-38px;">
+                <div class="col-3" style="margin:19px;width:791px;height:449px;"><select multiple="" style="height:406px;width:235px;"><optgroup label="INCOMING"><option value="12" selected="">180809010-RQST-STACRUZNHS</option><option value="13">180809011-PRCSNG-SILAGOCS</option><option value="14">180809012-RQST-MCRHNCS</option><option value="">180809013-SBMSN-STBRNRD2</option><option value="">180809014-CMNCTN-SOGODCS</option><option value="">180809015-RQST-DOST</option><option value="">180809016-CMNCTN-LBGNCS</option><option value="">180809017-RQST-LGUMAASIN</option><option value="">180809018-RQST-SOGOD2</option></optgroup></select>
+                    <div
+                        class="row" style="margin:9px;">
+                        <div class="col-5"><button class="btn btn-success btn-sm" type="button" style="height:23px;padding:3px;font-size:10px;margin:6px;width:65px;">Accept</button></div>
+                        <div class="col-6"><button class="btn btn-danger btn-sm" type="button" style="height:23px;padding:4px;font-size:10px;background-color:rgb(225,33,33);margin:6px;width:88px;">Add Remarks</button></div>
+                </div>
+            </div>
+            <div class="col-3" style="margin:19px;width:896px;height:417px;"><select multiple="" style="height:406px;width:235px;"><optgroup label="ON QUEUE"><option value="12" selected="">180809010-RQST-STACRUZNHS</option><option value="13">180809011-PRCSNG-SILAGOCS</option><option value="14">180809012-RQST-MCRHNCS</option><option value="">180809013-SBMSN-STBRNRD2</option><option value="">180809014-CMNCTN-SOGODCS</option><option value="">180809015-RQST-DOST</option><option value="">180809016-CMNCTN-LBGNCS</option><option value="">180809017-RQST-LGUMAASIN</option><option value="">180809018-RQST-SOGOD2</option></optgroup></select>
+                <div
+                    class="row" style="margin:9px;">
+                    <div class="col-5"><button class="btn btn-success btn-sm" type="button" style="height:23px;padding:3px;font-size:10px;margin:6px;width:65px;">Forward</button></div>
+                    <div class="col-6"><button class="btn btn-danger btn-sm" type="button" style="height:23px;padding:4px;font-size:10px;background-color:rgb(225,33,33);margin:6px;width:88px;">Add Remarks</button></div>
+            </div>
+        </div>
+        <div class="col-3" style="margin:19px;width:896px;height:417px;"><select multiple="" style="height:411px;width:235px;"><optgroup label="OUTGOING"><option value="12" selected="">180809010-RQST-STACRUZNHS</option><option value="13">180809011-PRCSNG-SILAGOCS</option><option value="14">180809012-RQST-MCRHNCS</option><option value="">180809013-SBMSN-STBRNRD2</option><option value="">180809014-CMNCTN-SOGODCS</option><option value="">180809015-RQST-DOST</option><option value="">180809016-CMNCTN-LBGNCS</option><option value="">180809017-RQST-LGUMAASIN</option><option value="">180809018-RQST-SOGOD2</option></optgroup></select>
+            <div
+                class="row" style="margin:9px;">
+                <div class="col-5"><button class="btn btn-success btn-sm" type="button" style="height:23px;padding:3px;font-size:10px;margin:6px;width:84px;">Cancel Forward</button></div>
+                <div class="col-6"><button class="btn btn-danger btn-sm" type="button" style="height:23px;padding:4px;font-size:10px;background-color:rgb(225,33,33);margin:6px;width:88px;">Add Remarks</button></div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal fade align-self-center" role="dialog" tabindex="-1" id="dept_modal" style="width:700px;height:300px;">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="width:296px;height:38px;font-size:17px;">
+                    <div class="row" style="width:296px;height:21px;">
+                        <div class="col" style="width:296px;">
+                            <h4 class="modal-title" style="color:rgb(241,11,11);font-size:15px;background-color:rgb(255,255,255);padding:0px;padding-top:5px;padding-right:5px;padding-bottom:5px;padding-left:5px;height:21px;">PLEASE SELECT DEPARTMENT</h4>
+                        </div>
+                    </div><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body" style="height:38px;width:297px;padding-left:10px;">
+                    <div class="row" style="height:21px;width:296px;">
+                        <div class="col"><select style="width:245px;"><optgroup label="PLEASE SELECT DEPARTMENT"><option value="12" selected=""></option><option value="13"></option><option value="14"></option></optgroup></select></div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="width:285px;height:57px;">
+                    <div class="row">
+                        <div class="col" style="width:167px;"><button class="btn btn-light" type="button" data-dismiss="modal" style="background-color:rgb(115,168,57);font-size:10px;width:88px;height:23px;color:rgb(255,255,255);margin:0px;padding:4px;">FORWARD</button></div>
+                        <div class="col"
+                            style="width:101px;"><button class="btn btn-danger btn-sm" type="button" style="height:23px;padding:4px;font-size:9px;background-color:rgb(225,33,33);margin:0px;width:88px;">CANCEL FORWARD</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="remarks_modal" style="width:1049px;height:561px;">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="height:21px;width:266px;padding:0;font-size:15px;">
+                    <div class="row" style="width:260px;height:21px;">
+                        <div class="col" style="width:260px;height:21px;padding:0px;">
+                            <h4 class="modal-title" style="color:rgb(255,0,0);width:266px;height:21x;padding:0px;margin-right:0px;padding-right:8px;font-size:15px;">&nbsp; &nbsp; &nbsp; ADD REMARKS TO DOCUMENT</h4>
+                        </div>
+                    </div><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body" style="width:283px;height:90px;padding:10px;">
+                    <div class="container" style="height:80px;">
+                        <div class="row" style="height:80px;">
+                            <div class="col" style="width:290px;">
+                                <p style="height:25px;width:364px;color:rgb(239,11,11);font-size:19px;">PLEASE SELECT REMARKS</p><select style="width:249px;height:30px;"></select></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding:10px;height:50px;">
+                    <div class="row" style="width:297px;height:27px;font-size:14px;">
+                        <div class="col" style="width:176px;"><button class="btn btn-success btn-sm" type="button" style="height:23px;padding:3px;font-size:10px;margin:6px;width:65px;">Forward</button><button class="btn btn-danger btn-sm" type="button" style="height:23px;padding:4px;font-size:10px;background-color:rgb(225,33,33);margin:6px;width:88px;">Add Remarks</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+</body>
+
+</html>

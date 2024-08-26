@@ -1,0 +1,72 @@
+Add_Document_Success
+    Print Button - printReceipt
+    
+Add_Document
+    Document Name Textbox- docName
+    Document Type Select - docType
+    Document Owner Type Select - docOwnerType
+    District Select - district
+    School Select - school
+    Individual - individual
+    Other - other
+    Add Document Button - addDoc
+
+Docs_on_Hand
+    Accept Incoming Button - acceptIncoming
+    Incoming Remarks Button - addIncomingRemarks
+    Forward Button - forward
+    Onqueue Remarks Button - addOnQueueRemarks
+    Completed Button - completed
+    Cancel Button - cancel
+    Cancel Forward Button - cancelForward
+    Outgoing Remarks Button - addOutgoingRemarks
+    Incoming Select - incomingList
+    On Queue Select - onQueueList
+    Outgoing Select - outgoingList
+    View Select - viewSelect
+
+Login
+    Error Container - errorContainer
+    Username Textbox - username
+    Password Textbox - password
+    Login Button - login
+
+Dept MGMT
+    Add Department Button - addDept
+    Edit Button -
+    Delete Button - 
+    Edit Save Button - editSave
+    Edit Close Button - editClose
+    Edit Dept Head Select - deptHeadEdit
+    Add Save Button - addSave
+    Add Close Button - addClose
+    Add Dept Head Select - deptHeadAdd
+    Add Dept Name - deptName
+    Add Dept Code - deptCode
+
+User MGMT
+    Search User Textbox - searchUser
+    Add User Button - addUser
+    Reset Password Button - 
+    Edit Button - 
+    Delete Button - 
+    Username Textbox - username
+    Password1 Textbox - password1
+    Password2 Textbox - password2
+    Lastname Textbox - lastname
+    Firstname Textbox - firstname
+    Dept Select - dept
+    Usertype Select - usertype
+    Close Button - close
+    Save Button - saveUser
+
+Document MGMT
+    Search Document Textbox - searchDoc
+    View Select - viewSelect
+    Track Document Button - 
+
+Track Document
+    Input Tracking Textbox - inputTracking
+    Search Button - search
+    results Table - resultsTable
+
