@@ -1,0 +1,130 @@
+Users lacking fcns
+reset password
+
+Documents
+ Create
+ Update
+ Delete
+ Find By Id
+ FInd All
+
+Dept
+ Create
+ Update
+ Delete
+ Find All
+
+
+
+Dept Mgmt
+    Department.create.edit.delete.view
+
+Document Mgmt
+    Document.
+        create.
+        edit.
+        delete.
+        view
+        generate_code
+        duplicate_check
+
+Documents on Hand
+    DocHistory.Incoming.OnQueue.Forwarded.AddRemarks
+
+Track Document
+    DocHistory.View
+
+//User Mgmt
+    User.
+	   create.done
+       edit.done
+       delete.done
+       resetpassword(can be done thru the class functions)
+
+
+COMMUNICATION - COMM-
+REQUEST - RQST-
+FOR PROCESSING - PROC-
+SUBMISSION - SUBM-
+
+
+180915001-COMM-DILG
+180915002-SUBM-STA
+
+
+Document Code 
+Document Name - Document Owner
+
+Sample Tracking Information
+
+TIMESTAMP   
+                                        REMARKS
+1RECEIVED AT                  RECORDS         BY   M.E. MORI
+2FORWARDED TO                 CID             BY   M.E. MORI
+3REMARKS ADDED AT             RECORDS         BY   M.E. MORI   NO PERSONNEL PRESENT AT CID
+4FORWARD CANCELED AT          RECORDS         BY   M.E.MORI
+5MARKED COMPLETED AT          SGOD-OFFICE     BY   M.A.ISMA
+6DOCUMENT CANCELED AT         SGOD-HRD        BY   H.FERNANDEZ
+
+WAITING
+IN TRANSIT
+CANCELED
+COMPLETED
+
+
+//User Mgmt
+    User.
+	create.edit.delete.resetpassword
+
+//Incoming List Query (Incorrect)
+SELECT documents.doc_id, CONCAT(documents.doc_trackingnum,'-',documents.doc_type,'-',documents.doc_code) 
+FROM documents 
+INNER JOIN documents_history ON documents.doc_id = documents_history.doc_id 
+WHERE documents_history.is_last=true 
+      AND documents_history.dept_id=3
+      AND documents_history.dochist_type =2
+
+//On Queue List Query ()
+SELECT documents.doc_id, CONCAT(documents.doc_trackingnum,'-',documents.doc_type,'-',documents.doc_code) 
+FROM documents 
+INNER JOIN documents_history ON documents.doc_id = documents_history.doc_id 
+WHERE documents_history.is_last=true 
+      AND documents_history.user_id=1 
+      AND (documents_history.dochist_type=1 OR documents_history.dochist_type=4)
+
+//Forwarded To Query ()
+SELECT documents.doc_id, CONCAT(documents.doc_trackingnum,'-',documents.doc_type,'-',documents.doc_code) 
+FROM documents 
+INNER JOIN documents_history ON documents.doc_id = documents_history.doc_id 
+WHERE documents_history.is_last=true 
+      AND documents_history.user_id=4 
+      AND documents_history.dochist_type=2
+
+"SELECT date_of_birth, sex, civil_status, tin, philhealth_num, gsis_num, regular.rpsu_num, regular.step_increment, 
+regular.original_appointment, regular.last_promo_date, regular.school_id, position.position_code, plantilla_station.plantilla_station_code
+FROM personnel
+INNER JOIN regular ON personnel.personnel_id = regular.personnel_id
+INNER JOIN position ON position.position_id = regular.position_id
+INNER JOIN plantilla_station ON regular.plantilla_station_id = plantilla_station.plantilla_station_id
+WHERE personnel.personnel_id=$esearch");
+
+
+SELECT documents_history.timestamp, CONCAT(documents_history.dochist_type,' ',departments.dept_abbreviation,
+      ' BY ',users.user_abbreviation) AS dochist_specs, documents_history.dochist_remarks
+FROM documents_history
+INNER JOIN departments ON documents_history.dept_id = departments.dept_id
+INNER JOIN users ON documents_history.user_id = users.user_id
+WHERE documents_history.doc_id = 3
+ORDER BY documents_history.timestamp ASC
+
+
+
+pages that require pagination
+
+
+
+
+
+
+
+

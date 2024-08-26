@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dts.user.documents.on.hand-johns</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Data-Table.css">
+    <link rel="stylesheet" href="assets/css/Data-Table2.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="height:650px;">
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="height:51px;background-color:rgb(255,0,0);">
+            <div class="container"><a class="navbar-brand" href="#" style="color:rgba(255,255,255,0.9);">sl-dts</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div
+                    class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color:rgb(255,255,255);">Documents</a>
+                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="add_document.html">Add Document</a><a class="dropdown-item" role="presentation" href="documents_on_hand">Process Document</a><a class="dropdown-item" role="presentation" href="#">Track Document</a>
+                                <a
+                                    class="dropdown-item" role="presentation" href="document_list.html">Document List</a>
+                            </div>
+                        </li>
+                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color:rgb(255,255,255);">Key Elements</a>
+                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="user_mgmt.html">User Mgmt</a><a class="dropdown-item" role="presentation" href="dept_mgmt.html">Dept Mgmt</a></div>
+                        </li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="#" style="color:rgb(255,255,255);">Analytics</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown"><a class="dropdown-toggle nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" style="color:rgb(255,255,255);"><i class="fa fa-user"></i>&nbsp;guest</a>
+                            <div class="dropdown-menu dropdown-menu-right"
+                                role="menu"><a class="dropdown-item" role="presentation" href="#">Change Password</a><a class="dropdown-item" role="presentation" href="#">Logout</a></div>
+                        </li>
+                    </ul>
+            </div>
+    </div>
+    </nav>
+    </div>
+    <div style="font-size:10px;">
+        <div class="container">
+            <div class="row" style="padding:0px;margin:7px;">
+                <div class="col">
+                    <h4 style="color:rgb(134,142,150);">Add Document</h4>
+                </div>
+            </div>
+            <div class="row no-gutters" style="width:939px;">
+                <div class="col-auto" style="margin:19px;width:923px;">
+                    <form style="width:925px;">
+                        <div class="form-group" style="width:916px;"><label>Document Name:</label><input class="form-control" type="text" style="width:496px;height:23px;"><label>Document Type:</label><select class="form-control" style="height:23px;width:165px;font-size:10px;padding:4px;"><optgroup label="This is a group"><option value="1" selected="">Request</option><option value="2">For Processing</option><option value="3">Submission</option><option value="4">Communication</option></optgroup></select><label>Document Owner Type:</label>
+                            <select
+                                class="form-control" style="height:23px;width:165px;font-size:10px;padding:4px;">
+                                <optgroup label="docownertype">
+                                    <option value="1" selected="">District</option>
+                                    <option value="2">School</option>
+                                    <option value="3">Individual</option>
+                                    <option value="4">Other</option>
+                                </optgroup>
+                                </select>
+                                <div class="form-row" style="width:922px;padding:6px;">
+                                    <div class="col-2" style="width:149px;padding:0px;height:52px;"><label class="col-form-label">District:</label><select class="form-control" style="height:23px;width:145px;font-size:10px;padding:4px;"><optgroup label="district"><option value="11" selected="">Saint Bernard</option><option value="2">School</option><option value="3">Individual</option><option value="4">Other</option></optgroup></select></div>
+                                    <div
+                                        class="col-3"><label class="col-form-label">School:</label><select class="form-control" style="height:23px;width:215px;font-size:10px;padding:4px;"><optgroup label="school"><option value="4">122345 - Saint Bernard CS</option></optgroup></select></div>
+                                <div
+                                    class="col-3"><label class="col-form-label">Individual:</label><input class="form-control" type="text" style="width:216px;height:23px;"></div>
+                        <div class="col-3"><label class="col-form-label">Other:</label><input class="form-control" type="text" style="width:216px;height:23px;"></div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="padding:0px;margin:7px;">
+        <div class="col"><button class="btn btn-success btn-sm" type="button" style="height:23px;padding:-4px;font-size:10px;">Add Document</button></div>
+    </div>
+    </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+</body>
+
+</html>
