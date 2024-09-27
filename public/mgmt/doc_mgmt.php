@@ -29,41 +29,67 @@ if(!isset($_SESSION['usertype'])) {
     <link rel="stylesheet" href="../assets/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/nav.css">
 </head>
 
 <body style="height:650px;">
-    <div style="height:50px;">
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="height:38px;background-color:rgb(255,0,0);padding:0px;">
-            <div class="container"><a class="navbar-brand" href="#" style="color:rgba(255,255,255,0.9);">sl-dts</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div
-                    class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="dropdown dts_all"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:rgb(255,255,255);">Documents</a>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item dts_uam" role="presentation" href="../add_document.php">Add Document</a>
-                                <a class="dropdown-item dts_uam" role="presentation" href="../docs_on_hand.php">Process Document</a>
-                                <a class="dropdown-item dts_all" role="presentation" href="../track_doc.php">Track Document</a>
-                                <a class="dropdown-item dts_am" role="presentation" href="doc_mgmt.php">Document List</a></div>
-                        </li>
-                        <li class="dropdown dts_a">
-                                <a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:rgb(255,255,255);">Key Elements</a>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="../mastermind/user_mgmt.php">User Mgmt</a>
-                                <a class="dropdown-item" role="presentation" href="../mastermind/dept_mgmt.php">Dept Mgmt</a></div>
-                        </li>
-                        <li class="nav-item dts_am" role="presentation"><a class="nav-link active" href="#" style="color:rgb(255,255,255);">Analytics</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown"><a class="dropdown-toggle nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder" style="color:rgb(255,255,255);"><i class="fa fa-user"></i>&nbsp; 
-                        <?php echo $_SESSION['username']; ?> 
-                        </a>
-                            <div class="dropdown-menu dropdown-menu-right"
-                                role="menu"><a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a><a class="dropdown-item" role="presentation" href="../logout.php">Logout</a></div>
-                        </li>
-                    </ul>
-            </div>
+<div class="sidebar">
+<img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" style="width: 80%; height: auto; margin-bottom: 20px;">
+    <a href="../dashboard.php"><i class="fa fa-tasks"></i> Dashboard</a>
+    <a href="../profile.php"><i class="fa fa-tasks"></i> Profile </a>
+    <a href="../add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+    <a href="../docs_on_hand.php" "><i class="fa fa-tasks"></i> Process Document</a>
+    <a href="../track_doc.php"><i class="fa fa-search"></i> Track Document</a>
+    <a href="../mgmt/doc_mgmt.php" class="active"><i class="fa fa-list"></i> Document List</a>
+    <a href="../mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+    <a href="../mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
     </div>
-    </nav>
+    <div>
+    <nav class="navbar navbar-expand-md navigation-clean-button">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcol-1" aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown dts_all">
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">Documents</a>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" role="presentation" href="add_document.php">Add Document</a>
+                        <a class="dropdown-item" role="presentation" href="docs_on_hand.php">Process Document</a>
+                        <a class="dropdown-item" role="presentation" href="track_doc.php">Track Document</a>
+                        <a class="dropdown-item" role="presentation" href="mgmt/doc_mgmt.php">Document List</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown dts_a">
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">Key Elements</a>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" role="presentation" href="mastermind/user_mgmt.php">User Mgmt</a>
+                        <a class="dropdown-item" role="presentation" href="mastermind/dept_mgmt.php">Dept Mgmt</a>
+                    </div>
+                </li>
+                <li class="nav-item dts_am">
+                    <a class="nav-link active" href="#">Analytics</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                        <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
+                        <a class="dropdown-item" role="presentation" href="logout.php">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
     </div>
     <div style="font-size:10px;">
         <div class="container">
@@ -86,9 +112,9 @@ if(!isset($_SESSION['usertype'])) {
             </div>
         </div>
     </div>
-    <div class="footer-basic fixed-bottom" style="height:28px;margin:0px;padding:0px 0px;background-color:rgb(255,0,0);">
+    <div class="footer-basic fixed-bottom" style="height:28px;margin:0px;padding:0px 0px;background-color:#4b83cc;">
         <footer>
-            <p class="copyright" style="color:rgb(255,255,255);margin:3px 0px 0px;">jkiqui-dts-v1 © 2018</p>
+            <p class="copyright" style="color:rgb(255,255,255);margin:3px 0px 0px;"></p>
         </footer>
     </div>
 

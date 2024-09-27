@@ -37,48 +37,35 @@ if(isset($_SESSION['usertype'])) {
     <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 
-<body style="height:650px;">
-    <div></div>
-    <div style="font-size:10px;width:272px;padding:150px 0px;">
-        <div class="container" style="padding:0px;width:25px;margin:0px;">
-            <div class="row no-gutters" style="width:220px;">
-                <form id="loginForm" style="margin:0px 0px;padding:0px 0px;"action="../../j_php/login.php" method="POST">
-                    <div class="form-group">
-                        <div class="form-row" style="padding:0px;margin:7px;">
-                            <div class="col" style="width:216px;">
-                                <h5 style="font-size:20px;color:rgb(255,0,0);">DWCL</h5>
-                                <h6 style="font-size:20px;width:250px;color:rgb(255,0,0);">Document Tracking System</h6>
-                            </div>
-                        </div>
-                        <div class="form-row" style="padding:0px;margin:7px;">
-                            <div class="col" style="width:216px;"><small id="errorContainer" style="font-size:14px;width:265px;color:rgb(255,33,18); display:none">Incorrect username or password</small></div>
-                        </div>
-                        <div class="form-row" style="padding:0px;margin:7px;">
-                            <div class="col"><input class="form-control" type="text" placeholder="Username" id="username" style="width:250px;height:40px;font-size:15px;"></div>
-                        </div>
-                        <div class="form-row" style="padding:0px;margin:7px;">
-                            <div class="col"><input class="form-control" type="password" placeholder="Password" id="password" style="height:40px;"></div>
-                        </div>
-                        <div class="form-row" style="padding:0px;margin:7px;">
-                            <div class="col"><button class="btn btn-danger btn-sm" type="submit" id="login" style="height:40px;font-size:15px;width:250px;padding:0px 0px;">Login</button></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h5>DWCL</h5>
+            <h6>Document Tracking System</h6>
         </div>
+        <form id="loginForm" action="../../j_php/login.php" method="POST">
+            <div class="form-group">
+                <small id="errorContainer">Incorrect username or password</small>
+                <input class="form-control" type="text" placeholder="Username" id="username" name="username" required>
+                <input class="form-control" type="password" placeholder="Password" id="password" name="password" required>
+                <button class="btn btn-primary btn-block" type="submit" id="login">Login</button>
+            </div>
+        </form>
     </div>
-    <div class="footer-basic fixed-bottom" style="height:42px;margin:0px;padding:0px 0px;background-color:rgb(255,0,0);">
+
+    <div class="footer-basic fixed-bottom">
         <footer>
-            <p class="copyright" style="color:rgb(255,255,255);"></p>
+            <p class="copyright">DWCL Document Tracking System © 2024</p>
         </footer>
     </div>
+
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap.min.js"></script>
-
     <script src="../includes/dts.js"></script>
 </body>
 

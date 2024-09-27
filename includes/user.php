@@ -170,7 +170,27 @@ class User extends DatabaseObject {
         $this->user_abbreviation = Document::generate_acronym_two($this->first_name).' '.strtoupper($this->last_name);
         echo $this->update();
     }
+    public static function instantiate($record) {
+        $user = new self; // Create a new instance of User
+        // Set properties from the associative array
+        foreach ($record as $attribute => $value) {
+            if (property_exists($user, $attribute)) {
+                $user->$attribute = $value; // Set the property
+            }
+        }
+        return $user; // Return the User object
+    }
+    public static function find_all_by_dept_and_type($dept_id, $usertype) {
+        global $database; // Ensure you have access to the database connection
+        $sql = "SELECT * FROM users WHERE dept_id = '{$dept_id}' AND usertype = '{$usertype}'";
+        $result_set = $database->query($sql);
+        $users = [];
 
+        while ($row = mysqli_fetch_assoc($result_set)) {
+            $users[] = self::instantiate($row); // Assuming instantiate method exists to create User objects
+        }
+        return $users;
+    }
 
 }
 
