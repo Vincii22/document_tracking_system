@@ -34,6 +34,10 @@ class MySQLDatabase {
         return $result;
     }
 
+    public function prepare($query) {
+        return $this->connection->prepare($query);
+    }
+
     private function confirm_query($result){
         if(!$result){
             die("Database query failed.");

@@ -4,6 +4,9 @@ require_once('database.php');
 
 class DatabaseObject {
     
+    protected static $primary_key; // Declare the static property
+    protected static $table_name;   // Declare the static property
+    protected static $db_fields;   // Declare the static property
     //Common Database Methods
     public static function find_all() {
         return static::find_by_sql("SELECT * FROM ".static::$table_name);

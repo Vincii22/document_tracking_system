@@ -1,0 +1,38 @@
+.navbar {
+    background-color: #4b83cc;
+}
+
+.navbar-brand {
+    color: #fff;
+    font-weight: bold;
+}
+
+.navbar-brand img {
+    height: 30px; /* Adjust height as needed */
+}
+
+.nav-link {
+    color: #fff;
+}
+
+.nav-link:hover {
+    color: #f8f9fa;
+}
+
+.dropdown-menu {
+    background-color: #fff; /* Background color for dropdown */
+}
+
+.dropdown-menu a {
+    color: #333; /* Text color in dropdown */
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0; /* Background color on hover */
+    color: #000; /* Text color on hover */
+}
+
+.navbar-nav .nav-item.active > .nav-link {
+    color: #f0f0f0;
+    font-weight: bold;
+}

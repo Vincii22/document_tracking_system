@@ -1,0 +1,147 @@
+/* General body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #0b71e7; /* Blue background */
+    padding: 0.5rem 1rem;
+    margin-left: 225px; /* Align with the sidebar width */
+}
+
+.navbar-brand {
+    color: #fff;
+    font-weight: bold;
+}
+
+.navbar-brand img {
+    height: 20px;
+    max-height: 100%;
+}
+
+.nav-link {
+    color: #fff;
+}
+
+.nav-link:hover {
+    color: #f8f9fa;
+}
+
+.dropdown-menu {
+    background-color: #fff;
+}
+
+.dropdown-menu a {
+    color: #333;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+.navbar-nav .nav-item.active > .nav-link {
+    color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 225px; /* Set width to 250px to allow room for icon and text */
+    height: 100%;
+    background-color: white; /* Blue background */
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the links horizontally */
+}
+
+/* User Image Styles */
+.user-image {
+    border-radius: 50%;
+    height: 50px; /* Set user image height */
+    width: 50px; /* Set user image width */
+    margin-bottom: 10px; /* Spacing below the image */
+}
+
+/* User Info Styles */
+.user-info {
+    text-align: center; /* Center text */
+    color: #0b71e7; /* Text color */
+}
+
+.user-name {
+    font-size: 16px; /* Larger font for user's name */
+    font-weight: bold; /* Bold font */
+}
+
+.user-department {
+    font-size: 12px; /* Smaller font for department */
+}
+
+/* Link Styles */
+.sidebar a {
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #0b71e7; /* Change to a contrasting color for better visibility */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align text and icon to the left */
+    transition: 0.3s;
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 10px;
+    width: 85%; /* Set the link div to 85% width */
+}
+
+.sidebar a i {
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.sidebar a:hover {
+    background-color: #0b71e7; /* White background on hover */
+    color: white; /* Change text color on hover */
+}
+
+.sidebar a.active {
+    background-color: #0b71e7; /* White background for active links */
+    color: white; /* Change text color for active links */
+}
+
+/* Tooltip removed: Now showing text beside the icon */
+.sidebar a span {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+/* Adjust sidebar for smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .sidebar a span {
+        display: none; /* Hide text on smaller screens for compact view */
+    }
+
+    .navbar {
+        margin-left: 0; /* Adjust navbar margin */
+    }
+
+    .profile-container {
+        margin-left: 0;
+    }
+}

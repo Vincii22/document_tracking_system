@@ -1,0 +1,70 @@
+body {
+    background: url('../images/divineBG.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-header h5 {
+    font-size: 24px;
+    color: #004080;
+    font-weight: bold;
+}
+
+.login-header h6 {
+    font-size: 18px;
+    color: #004080;
+}
+
+.form-control {
+    height: 45px;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #004080;
+    border: none;
+    height: 45px;
+    font-size: 18px;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #003366;
+}
+
+.footer-basic {
+    background-color: #004080;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.footer-basic p {
+    color: #fff;
+    margin: 0;
+}
+
+/* Styling error message */
+#errorContainer {
+    font-size: 14px;
+    color: red;
+    display: none;
+}
