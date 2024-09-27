@@ -70,8 +70,15 @@ $users = User::find_all_by_dept_and_type($dept_id, $usertype);
     <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
     <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
     <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
+<<<<<<< HEAD
+    <?php if ($_SESSION['usertype'] == 'admin'): ?>
+        <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+        <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
+    <?php endif; ?>
+=======
     <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
     <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
+>>>>>>> main
 </div>
 
 <nav class="navbar navbar-expand-md navigation-clean-button">
