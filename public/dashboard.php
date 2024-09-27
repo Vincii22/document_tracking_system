@@ -90,15 +90,10 @@ if (!$document_summary) {
         <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
         <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
         <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
-<<<<<<< HEAD
         <?php if ($_SESSION['usertype'] == 'admin'): ?>
         <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
         <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
     <?php endif; ?>
-=======
-        <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
-        <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
->>>>>>> main
     </div>
 
     <!-- Main Content -->
