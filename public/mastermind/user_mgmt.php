@@ -35,19 +35,19 @@ if(!isset($_SESSION['usertype'])) {
     <link rel="stylesheet" href="../assets/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/nav.css">
 </head>
 
 <body style="height:650px;">
 <div class="sidebar">
 <img src="../assets/images/divineLogo.jpg" alt="Document Tracking System Logo" style="width: 100%; height: auto; margin-bottom: 20px;">
 
-        <a href="../add_document.php" title="Add Document" data-toggle="tooltip"><i class="fa fa-file-o"></i></a>
-        <a href="../docs_on_hand.php" title="Process Document" data-toggle="tooltip"><i class="fa fa-tasks"></i></a>
-        <a href="../track_doc.php" title="Track Document" data-toggle="tooltip"><i class="fa fa-search"></i></a>
-        <a href="../mgmt/doc_mgmt.php" title="Document List" data-toggle="tooltip"><i class="fa fa-list"></i></a>
-        <a href="user_mgmt.php" title="User Management" data-toggle="tooltip" class="active"><i class="fa fa-users"></i></a>
-        <a href="dept_mgmt.php" title="Department Management" data-toggle="tooltip"><i class="fa fa-building"></i></a>
+        <a href="../add_document.php" title="Add Document"><i class="fa fa-file-o">Add Document</i></a>
+        <a href="../docs_on_hand.php" title="Process Document"><i class="fa fa-tasks">Process Document</i></a>
+        <a href="../track_doc.php" title="Track Document"><i class="fa fa-search">Track Document</i></a>
+        <a href="../mgmt/doc_mgmt.php" title="Document List"><i class="fa fa-list">Document List</i></a>
+        <a href="user_mgmt.php" title="User Management" class="active"><i class="fa fa-users">User Management</i></a>
+        <a href="dept_mgmt.php" title="Department Management"><i class="fa fa-building">Department Management</i></a>
 
     </div>
     <div>
@@ -87,7 +87,7 @@ if(!isset($_SESSION['usertype'])) {
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
                         <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
-                        <a class="dropdown-item" role="presentation" href="logout.php">Logout</a>
+                        <a class="dropdown-item" role="presentation" href="../logout.php">Logout</a>
                     </div>
                 </li>
             </ul>

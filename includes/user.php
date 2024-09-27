@@ -26,19 +26,35 @@ class User extends DatabaseObject {
         }
     }
 
-    public static function authenticate ($username="", $password="") {
+    public static function authenticate($username = "", $password = "") {
         global $database;
+    
+        // Escape the username to prevent SQL injection
         $username = $database->escape_value($username);
-        $password = $database->escape_value($password);
-
+    
+        // Prepare the SQL query to find the user by username only
         $sql = "SELECT * FROM users ";
         $sql .= "WHERE username = '{$username}' ";
-        $sql .= "AND password = '{$password}' ";
         $sql .= "LIMIT 1"; 
-
+    
+        // Execute the query and get the result
         $result_array = self::find_by_sql($sql);
-        return !empty($result_array) ? array_shift($result_array) : false;
+    
+        // Check if a user was found
+        if (!empty($result_array)) {
+            $user = array_shift($result_array);
+    
+            // Now, verify the password using password_verify
+            if (password_verify($password, $user->password)) {
+                return $user; // Return the user object if password matches
+            } else {
+                return false; // Return false if password does not match
+            }
+        } else {
+            return false; // Return false if no user found
+        }
     }
+    
 
     public function get_incoming() {
         global $database;
