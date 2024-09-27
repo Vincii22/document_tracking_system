@@ -54,7 +54,7 @@ body {
     left: 0;
     width: 225px; /* Set width to 250px to allow room for icon and text */
     height: 100%;
-    background-color: white; /* Blue background */
+    background-color: blue; /* Blue background */
     padding-top: 20px;
     display: flex;
     flex-direction: column;
