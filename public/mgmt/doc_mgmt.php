@@ -85,15 +85,13 @@ if (!isset($_SESSION['usertype'])) {
         }
 
         .table-container-box {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
+            margin-left: 240px !important;
+            margin-top: 20px !important;
         }
 
         .table-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 83vw;
             background-color: #ffffff;
             border-radius: 10px; 
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
@@ -114,8 +112,9 @@ if (!isset($_SESSION['usertype'])) {
         }
 
         .table-responsive {
-            margin-top: 20px; 
+            margin-top: 10px !important; 
         }
+
     </style>
 </head>
 
@@ -123,7 +122,7 @@ if (!isset($_SESSION['usertype'])) {
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidenav-profile-container">
-            <img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" width="100">
+            <img src="../assets/images/divineLogo.jpg" alt="Document Tracking System Logo" width="100">
             <!-- <img src="assets/images/default-profile.jpg" alt="Profile Image" width="100"> -->
             <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id'] ?>"
                 data-utype="<?php echo $_SESSION['usertype'] ?>" data-dept="<?php echo $_SESSION['dept_id'] ?>"
@@ -136,19 +135,19 @@ if (!isset($_SESSION['usertype'])) {
             </p>
         </div>
         <div class="sidenav-links">
-            <a href="dashboard.php"><i class="fa fa-tasks"></i> Dashboard</a>
-            <a href="profile.php"><i class="fa fa-tasks"></i> Profile </a>
-            <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
-            <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
-            <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
-            <a href="mgmt/doc_mgmt.php" class="active"><i class="fa fa-list"></i> Document List</a>
+            <a href="../dashboard.php"><i class="fa fa-tasks"></i> Dashboard</a>
+            <a href="../profile.php"><i class="fa fa-tasks"></i> Profile </a>
+            <a href="../add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+            <a href="../docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
+            <a href="../track_doc.php"><i class="fa fa-search"></i> Track Document</a>
+            <a href="../mgmt/doc_mgmt.php" class="active"><i class="fa fa-list"></i> Document List</a>
             <?php if ($_SESSION['usertype'] == 'admin'): ?>
-                <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
-                <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
+                <a href="../mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+                <a href="../mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
             <?php endif; ?>
         </div>
         <div class="log-out">
-            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+            <a class="nav-link text-white" href="../logout.php"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
 
     </div>
@@ -179,11 +178,8 @@ if (!isset($_SESSION['usertype'])) {
 
     <div class="table-container-box">
         <div class="table-container">
-            <h4 style="color: rgb(134,142,150);">Document Management</h4>
+            <h4 style="color: rgb(134,142,150); line-height: 70px">Document Management</h4>
             <div class="row" style="padding:0px;margin:7px;">
-                <div class="col-2">
-                    <input class="visible" type="text" id="doc_search" placeholder="Search Documents" style="width:150px;height:35px;font-size:12px;">
-                </div>
                 <div class="col">
                     <select class="form-control-sm" id="viewSelect" style="font-size:12px;height:33px;">
                         <option value="0" selected disabled hidden>View Options</option>
@@ -194,6 +190,11 @@ if (!isset($_SESSION['usertype'])) {
                         <option value="4">View Completed</option>
                     </select>
                 </div>
+
+                <div class="col-2">
+                    <input class="visible" type="text" id="doc_search" placeholder="Search Documents" style="width:150px;height:35px;font-size:12px;">
+                </div>
+                
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
