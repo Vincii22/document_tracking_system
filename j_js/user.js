@@ -107,29 +107,41 @@ function updateUser(userid){
     );
 }
 
-function saveUser(){
-    $.post("../../j_php/user_add.php",{
-        username: $("#username").val(),
-        firstname: $("#firstname").val(),
-        lastname: $("#lastname").val(),
-        password: $("#password1").val(),
-        dept: $("#dept").val(),
-        usertype: $("#usertype").val(),
-        userimage: $('#user_image').val()
-        
-        }, 
-        function(data){
-            if(data==1){
-                alert("User data succesfully added!");
+function saveUser() {
+    // Create a FormData object
+    var formData = new FormData();
+    formData.append('username', $("#username").val());
+    formData.append('firstname', $("#firstname").val());
+    formData.append('lastname', $("#lastname").val());
+    formData.append('password', $("#password1").val());
+    formData.append('dept', $("#dept").val());
+    formData.append('usertype', $("#usertype").val());
+    // Append the file input with the correct name
+    formData.append('user_image', $('#user_image')[0].files[0]);
+
+    // Make the AJAX request
+    $.ajax({
+        url: "../../j_php/user_add.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            if (data == 1) {
+                alert("User data successfully added!");
                 location.reload();
-            }
-            else {   
+            } else {
                 console.log(data);
                 alert("Something went wrong!");
             }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error: " + textStatus, errorThrown);
+            alert("An error occurred while uploading the user data.");
         }
-    );
+    });
 }
+
 
 // function for deleting a user
 function deleteUser(userid){
