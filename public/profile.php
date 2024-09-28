@@ -8,7 +8,8 @@ if (!isset($_SESSION['usertype'])) {
 
 // Fetch the current user information
 $user_id = $_SESSION['user_id'];
-$query = "SELECT users.username, users.first_name, users.last_name, users.usertype, departments.dept_abbreviation 
+$query = "SELECT users.username, users.first_name, users.last_name, users.usertype, 
+                 departments.dept_abbreviation, users.user_image
           FROM users 
           JOIN departments ON users.dept_id = departments.dept_id
           WHERE users.user_id = {$user_id}";
@@ -140,7 +141,7 @@ if (!$user_data) {
     <!-- Profile Container -->
     <div class="profile-container container">
         <div class="profile-header">
-            <img src="assets/images/default-profile.jpg" alt="Profile Image">
+        <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg'; ?>" alt="Profile Image">
             <div class="profile-details">
                 <h2><?php echo $user_data['first_name'] . ' ' . $user_data['last_name']; ?></h2>
                 <p><strong>Username:</strong> <?php echo $user_data['username']; ?></p>
