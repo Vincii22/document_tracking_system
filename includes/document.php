@@ -7,7 +7,7 @@ class Document extends DatabaseObject {
     protected static $table_name = "documents";
     protected static $db_fields = array(
         'doc_id', 'doc_name', 'doc_trackingnum', 'doc_mobilenum', 'doc_code',
-        'doc_status', 'date_started', 'date_completed', 'personnel_id', 'doc_owner', 'doc_type',
+        'doc_status', 'date_started', 'date_completed', 'personnel_id', 'doc_owner', 'doc_type', 'doc_file'
     );
     
     public $doc_id;
