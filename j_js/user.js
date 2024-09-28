@@ -114,7 +114,9 @@ function saveUser(){
         lastname: $("#lastname").val(),
         password: $("#password1").val(),
         dept: $("#dept").val(),
-        usertype: $("#usertype").val()
+        usertype: $("#usertype").val(),
+        userimage: $('#user_image').val()
+        
         }, 
         function(data){
             if(data==1){

@@ -127,6 +127,8 @@ if(!isset($_SESSION['usertype'])) {
             <div class="modal-content">
                 <div class="modal-header" style="background-color:rgb(255,0,0);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
                     <h5 class="modal-title" style="color:rgb(0,255,255);margin:-2px 4px;">Add/Edit User</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+            
+            <form action="../../j_php/user_add.php" method="post" enctype="multipart/form-data">
                 <div class="modal-body" style="width:273px;">
                 <div class="row">
                         <div class="col"><small style="color:rgb(255,0,0); "></small></div>
@@ -147,12 +149,19 @@ if(!isset($_SESSION['usertype'])) {
                         <div class="col-auto" style="margin:0px 0px;padding:0px 5px;"><label class="col-form-label" style="font-size:12px;width:98px;">First Name:</label><input type="text" id="firstname" style="font-size:12px;width:160px;margin:0px 3px;"></div>
                     </div>
                     <div class="row">
+                    <div class="row" style="margin:0px 0px;padding:0px 5px;">
+                        <label class="col-form-label" style="font-size:12px;width:98px;">User Image:</label>
+                        <input type="file" id="user_image" name="user_image" accept="image/*" style="width:160px;margin:0px 3px;">
+                    </div>
+                </div>
+                    <div class="row">
                         <div class="col-auto" style="margin:0px 0px;padding:0px 5px;font-size:12px;"><label class="col-form-label" style="font-size:12px;width:98px;">Department:</label><select id="dept" style="height:24px;margin:0px 3px;width:160px;"><optgroup label="Units/Departments"></optgroup></select></div>
                     </div>
                     <div class="row">
                         <div class="col-auto" style="margin:0px 0px;padding:0px 5px;font-size:12px;"><label class="col-form-label" style="font-size:12px;width:98px;">Usertype:</label><select id="usertype" style="height:24px;margin:0px 3px;width:160px;"><optgroup label="Usertypes"><option value="1">Admin</option><option value="2">Dean</option><option value="3">Assistant</option><option value="4">Student Assistant</option></optgroup></select></div>
                     </div>
                 </div>
+                </form>
                 <div class="modal-footer" style="height:35px;"><button class="btn btn-light btn-sm" type="button" id="close" data-dismiss="modal" style="height:23px;width:50px;margin:0px 0px;padding:0px 0px;">Close</button><button class="btn btn-primary btn-sm" type="button" id="saveUser" style="height:23px;padding:0px 0px;margin:0px 10px;width:45px;font-size:12px;">Save</button></div>
             </div>
         </div>

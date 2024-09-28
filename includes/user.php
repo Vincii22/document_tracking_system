@@ -6,7 +6,7 @@ class User extends DatabaseObject {
     protected static $primary_key = "user_id";
     protected static $table_name="users";
     protected static $db_fields = array('user_id','username','password',
-    'first_name','last_name','user_abbreviation','usertype','dept_id','personnel_id');
+    'first_name','last_name','user_abbreviation','usertype','dept_id','personnel_id', 'user_image');
     public $user_id;
     public $username;
     public $password;
@@ -15,7 +15,7 @@ class User extends DatabaseObject {
     public $dept_id;
     public $usertype;
     public $personnel_id;
-
+    public $user_image;
     public $user_abbreviation;
   
     public function full_name() {
@@ -179,6 +179,8 @@ class User extends DatabaseObject {
         $this->user_abbreviation = Document::generate_acronym_two($this->first_name).' '.strtoupper($this->last_name);
         $this->first_name = strtoupper($this->first_name);
         $this->last_name = strtoupper($this->last_name);
+
+        
         return $this->create();
     }
     
