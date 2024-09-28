@@ -58,7 +58,7 @@ if(isset($_SESSION['usertype'])) {
 
     <div class="footer-basic fixed-bottom">
         <footer>
-            <p class="copyright">DWCL Document Tracking System © 2024</p>
+            <p class="copyright" style="margin-top: 0 !important">DWCL Document Tracking System © 2024</p>
         </footer>
     </div>
 

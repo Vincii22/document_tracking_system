@@ -20,6 +20,13 @@ if (!$user_data) {
     echo "User data not found.";
     exit;
 }
+
+// Set session variables with fetched data
+$_SESSION['first_name'] = $user_data['first_name'];
+$_SESSION['last_name'] = $user_data['last_name'];
+$_SESSION['username'] = $user_data['username'];
+$_SESSION['usertype'] = $user_data['usertype'];
+$_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +37,8 @@ if (!$user_data) {
     <title>User Profile</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/nav.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/nav.css?v=<?php echo time(); ?>">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -83,55 +90,56 @@ if (!$user_data) {
             color: #343a40;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .profile-container {
-                margin-left: 0;
-                padding: 20px;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .sidebar a {
-                text-align: center;
-                float: none;
-            }
-        }
+        
     </style>
 </head>
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" style="width: 80%; height: auto; margin-bottom: 20px;">
-        <a href="dashboard.php" ><i class="fa fa-tasks"></i> Dashboard</a>
-        <a href="profile.php" class="active"><i class="fa fa-tasks"></i> Profile </a>
-        <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
-        <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
-        <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
-        <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
-        <?php if ($_SESSION['usertype'] == 'admin'): ?>
-        <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
-        <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
-    <?php endif; ?>
+        <div class="sidenav-profile-container">
+            <img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" width="100">
+            <!-- <img src="assets/images/default-profile.jpg" alt="Profile Image" width="100"> -->
+            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
+            </a>
+            <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['usertype']; ?>
+            </p>
+        </div>
+        <div class="sidenav-links">
+            <a href="dashboard.php" ><i class="fa fa-tasks"></i> Dashboard</a>
+            <a href="profile.php" class="active"><i class="fa fa-tasks"></i> Profile </a>
+            <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+            <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
+            <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
+            <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
+            <?php if ($_SESSION['usertype'] == 'admin'): ?>
+            <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+            <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
+        <?php endif; ?>
+        </div>
+        <div class="log-out">
+            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
+
     </div>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md">
         <div class="container">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
-                        <i class="fa fa-user"></i> <?php echo $_SESSION['username']; ?>
-                    </a>
-                </li>
-            </ul>
+
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+            <li class="nav-item">
+                    <a class="nav-link text-white" href="logout.php"><i class="fa fa-bell"></i></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                        <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
+                        <a class="dropdown-item" role="presentation" href="logout.php">Logout</a>
+                    </div>
                 </li>
             </ul>
         </div>
