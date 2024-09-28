@@ -98,8 +98,7 @@ $_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidenav-profile-container">
-            <img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" width="100">
-            <!-- <img src="assets/images/default-profile.jpg" alt="Profile Image" width="100"> -->
+            <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
             <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
                 </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
             </a>
