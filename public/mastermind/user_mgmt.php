@@ -36,8 +36,25 @@ if(!isset($_SESSION['usertype'])) {
     <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/nav.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<!-- Add Custom CSS for Modal Width -->
+<style>
+ /* Adjust the width of the modal */
+ .modal-full {
+        max-width: 50%; /* Changed to 70% */
+    }
 
+    /* Center the modal both vertically and horizontally */
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        height: 100%; /* To ensure the modal is centered */
+    }
+
+</style>
 <body style="height:650px;">
 <div class="sidebar">
 <img src="../assets/images/divineLogo.jpg" alt="Document Tracking System Logo" style="width: 100%; height: auto; margin-bottom: 20px;">
@@ -122,50 +139,103 @@ if(!isset($_SESSION['usertype'])) {
             <p class="copyright" style="color:rgb(255,255,255);"></p>
         </footer>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="editModal" style="padding:0px 0px;margin:100px 0px;height:375px;">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:rgb(255,0,0);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
-                    <h5 class="modal-title" style="color:rgb(0,255,255);margin:-2px 4px;">Add/Edit User</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-            
-            <form action="../../j_php/user_add.php" method="post" enctype="multipart/form-data">
-                <div class="modal-body" style="width:273px;">
+
+
+
+
+<div class="modal fade" role="dialog" tabindex="-1" id="editModal" style="padding:0px 0px;margin:0;">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Add/Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
                 <div class="row">
-                        <div class="col"><small style="color:rgb(255,0,0); "></small></div>
+                    <div class="col-md-6 form-group">
+                        <label for="username">Username:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" id="username" class="form-control" placeholder="Enter username">
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;padding:0px 5px;"><label class="col-form-label" style="font-size:12px;width:98px;">Username:</label><input type="text" id="username" style="font-size:12px;width:160px;margin:0px 3px;"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;padding:0px 5px;"><label class="col-form-label" style="font-size:12px;width:98px;">Enter Password:</label><input type="password" id="password1" style="width:160px;margin:0px 3px;font-size:12px;"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;padding:0px 5px;"><label class="col-form-label" style="font-size:12px;width:98px;">Reenter Password:</label><input type="password" id="password2" style="width:160px;margin:0px 3px;font-size:12px;"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;padding:0px 5px;"><label class="col-form-label" style="font-size:12px;width:98px;">Last Name:</label><input type="text" id="lastname" style="font-size:12px;width:160px;margin:0px 3px;"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;padding:0px 5px;"><label class="col-form-label" style="font-size:12px;width:98px;">First Name:</label><input type="text" id="firstname" style="font-size:12px;width:160px;margin:0px 3px;"></div>
-                    </div>
-                    <div class="row">
-                    <div class="row" style="margin:0px 0px;padding:0px 5px;">
-                        <label class="col-form-label" style="font-size:12px;width:98px;">User Image:</label>
-                        <input type="file" id="user_image" name="user_image" accept="image/*" style="width:160px;margin:0px 3px;">
+                    <div class="col-md-6 form-group">
+                        <label for="password1">Enter Password:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+                            <input type="password" id="password1" class="form-control" placeholder="Enter password">
+                        </div>
                     </div>
                 </div>
-                    <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;padding:0px 5px;font-size:12px;"><label class="col-form-label" style="font-size:12px;width:98px;">Department:</label><select id="dept" style="height:24px;margin:0px 3px;width:160px;"><optgroup label="Units/Departments"></optgroup></select></div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="password2">Reenter Password:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+                            <input type="password" id="password2" class="form-control" placeholder="Reenter password">
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;padding:0px 5px;font-size:12px;"><label class="col-form-label" style="font-size:12px;width:98px;">Usertype:</label><select id="usertype" style="height:24px;margin:0px 3px;width:160px;"><optgroup label="Usertypes"><option value="1">Admin</option><option value="2">Dean</option><option value="3">Assistant</option><option value="4">Student Assistant</option></optgroup></select></div>
+                    <div class="col-md-6 form-group">
+                        <label for="lastname">Last Name:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                            </div>
+                            <input type="text" id="lastname" class="form-control" placeholder="Enter last name">
+                        </div>
                     </div>
                 </div>
-                </form>
-                <div class="modal-footer" style="height:35px;"><button class="btn btn-light btn-sm" type="button" id="close" data-dismiss="modal" style="height:23px;width:50px;margin:0px 0px;padding:0px 0px;">Close</button><button class="btn btn-primary btn-sm" type="button" id="saveUser" style="height:23px;padding:0px 0px;margin:0px 10px;width:45px;font-size:12px;">Save</button></div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="firstname">First Name:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" id="firstname" class="form-control" placeholder="Enter first name">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="user_image">User Image:</label>
+                        <input type="file" id="user_image" name="user_image" accept="image/*" class="form-control-file">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="dept">Department:</label>
+                        <select id="dept" class="form-control">
+                            <optgroup label="Units/Departments"></optgroup>
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="usertype">Usertype:</label>
+                        <select id="usertype" class="form-control">
+                            <optgroup label="Usertypes">
+                                <option value="1">Admin</option>
+                                <option value="2">Dean</option>
+                                <option value="3">Assistant</option>
+                                <option value="4">Student Assistant</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="button" id="saveUser">Save</button>
             </div>
         </div>
     </div>
+</div>
+
     <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">

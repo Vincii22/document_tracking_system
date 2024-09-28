@@ -19,21 +19,26 @@ $personnel->last_name = "z";
 $personnel->usertype = 1;
 $personnel->dept_id = 1;
 */
-if(isset($_FILES['user_image']) && $_FILES['user_image']['error'] == 0) {
-    $target_dir = "../uploads/users/";
-    $file_name = basename($_FILES['user_image']['name']);
-    $target_file = $target_dir . $file_name;
+if(isset($_FILES['user_image'])) {
+    if ($_FILES['user_image']['error'] == 0) {
+        $target_dir = "../uploads/users/";
+        $file_name = basename($_FILES['user_image']['name']);
+        $target_file = $target_dir . $file_name;
 
-    // Move the uploaded file to the target directory
-    if(move_uploaded_file($_FILES['user_image']['tmp_name'], $target_file)) {
-        $personnel->user_image = $target_file; // Store the path in the database
-        echo "Image successfully uploaded and path is: " . $personnel->user_image . "<br>";
+        // Move the uploaded file to the target directory
+        if(move_uploaded_file($_FILES['user_image']['tmp_name'], $target_file)) {
+            $personnel->user_image = $target_file; // Store the path in the database
+            echo "Image successfully uploaded and path is: " . $personnel->user_image . "<br>";
+        } else {
+            echo "Error moving uploaded file.<br>";
+        }
     } else {
-        echo "Error moving uploaded file.<br>";
+        echo "Error uploading file. Code: " . $_FILES['user_image']['error'] . "<br>";
     }
 } else {
-    echo "No file uploaded or error with file.<br>";
+    echo "No file uploaded.<br>";
 }
+
 
 echo $personnel->add();
 
