@@ -1,15 +1,14 @@
-<?php require_once("../../includes/initialize.php"); 
- 
-if(!isset($_SESSION['usertype'])) {
+<?php require_once("../../includes/initialize.php");
+
+if (!isset($_SESSION['usertype'])) {
     redirect_to('../login.php');
 } else {
-    if ($_SESSION['usertype'] == 'guest' ) {
+    if ($_SESSION['usertype'] == 'guest') {
         redirect_to('../track_doc.php');
-    }
-    else if ($_SESSION['usertype'] == 'user' ) {
+    } else if ($_SESSION['usertype'] == 'user') {
         redirect_to('../docs_on_hand.php');
     }
-    
+
 }
 
 ?>
@@ -28,114 +27,212 @@ if(!isset($_SESSION['usertype'])) {
     <link rel="stylesheet" href="../assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="../assets/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/nav.css">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/nav.css?v=<?php echo time(); ?>">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .profile-container {
+            margin-left: 270px;
+            margin-top: 50px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 30px;
+        }
+
+        .profile-details h2 {
+            font-size: 36px;
+            color: #343a40;
+        }
+
+        .profile-details p {
+            font-size: 18px;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+
+        .profile-footer {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-footer p {
+            font-size: 16px;
+            color: #343a40;
+        }
+
+        div {
+            margin: 0 !important;
+        }
+
+        .table-container-box {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .table-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #ffffff;
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            padding: 20px; 
+        }
+
+        .table th, .table td {
+            vertical-align: middle; 
+        }
+
+        .table thead {
+            background-color: #007bff; 
+            color: #ffffff;
+        }
+
+        .table th {
+            font-weight: bold; 
+        }
+
+        .table-responsive {
+            margin-top: 20px; 
+        }
+    </style>
 </head>
 
-<body style="height:650px;">
-<div class="sidebar">
-<img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" style="width: 80%; height: auto; margin-bottom: 20px;">
-    <a href="../dashboard.php"><i class="fa fa-tasks"></i> Dashboard</a>
-    <a href="../profile.php"><i class="fa fa-tasks"></i> Profile </a>
-    <a href="../add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
-    <a href="../docs_on_hand.php" "><i class="fa fa-tasks"></i> Process Document</a>
-    <a href="../track_doc.php"><i class="fa fa-search"></i> Track Document</a>
-    <a href="../mgmt/doc_mgmt.php" class="active"><i class="fa fa-list"></i> Document List</a>
-    <?php if ($_SESSION['usertype'] == 'admin'): ?>
-        <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
-        <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
-    <?php endif; ?>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidenav-profile-container">
+            <img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" width="100">
+            <!-- <img src="assets/images/default-profile.jpg" alt="Profile Image" width="100"> -->
+            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id'] ?>"
+                data-utype="<?php echo $_SESSION['usertype'] ?>" data-dept="<?php echo $_SESSION['dept_id'] ?>"
+                id="usernameHolder">
+                </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
+            </a>
+            <p data-id="<?php echo $_SESSION['user_id'] ?>" data-utype="<?php echo $_SESSION['usertype'] ?>"
+                data-dept="<?php echo $_SESSION['dept_id'] ?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['usertype']; ?>
+            </p>
+        </div>
+        <div class="sidenav-links">
+            <a href="dashboard.php"><i class="fa fa-tasks"></i> Dashboard</a>
+            <a href="profile.php"><i class="fa fa-tasks"></i> Profile </a>
+            <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+            <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
+            <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
+            <a href="mgmt/doc_mgmt.php" class="active"><i class="fa fa-list"></i> Document List</a>
+            <?php if ($_SESSION['usertype'] == 'admin'): ?>
+                <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+                <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
+            <?php endif; ?>
+        </div>
+        <div class="log-out">
+            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
+
     </div>
-    <div>
-    <nav class="navbar navbar-expand-md navigation-clean-button">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcol-1" aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown dts_all">
-                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">Documents</a>
-                    <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" role="presentation" href="add_document.php">Add Document</a>
-                        <a class="dropdown-item" role="presentation" href="docs_on_hand.php">Process Document</a>
-                        <a class="dropdown-item" role="presentation" href="track_doc.php">Track Document</a>
-                        <a class="dropdown-item" role="presentation" href="mgmt/doc_mgmt.php">Document List</a>
-                    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md">
+        <div class="container">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="logout.php"><i class="fa fa-bell"></i></a>
                 </li>
-                <li class="nav-item dropdown dts_a">
-                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">Key Elements</a>
-                    <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" role="presentation" href="mastermind/user_mgmt.php">User Mgmt</a>
-                        <a class="dropdown-item" role="presentation" href="mastermind/dept_mgmt.php">Dept Mgmt</a>
-                    </div>
-                </li>
-                <li class="nav-item dts_am">
-                    <a class="nav-link active" href="#">Analytics</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                    <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#"
+                        data-id="<?php echo $_SESSION['user_id'] ?>" data-utype="<?php echo $_SESSION['usertype'] ?>"
+                        data-dept="<?php echo $_SESSION['dept_id'] ?>" id="usernameHolder">
                         <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                        <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
+                        <a class="dropdown-item" role="presentation" href="#" id="changePassword"
+                            data-target="#editPassword" data-toggle="modal">Change Password</a>
                         <a class="dropdown-item" role="presentation" href="logout.php">Logout</a>
                     </div>
                 </li>
             </ul>
         </div>
+    </nav>
     </div>
-</nav>
 
-
-    </div>
-    <div style="font-size:10px;">
-        <div class="container">
+    <div class="table-container-box">
+        <div class="table-container">
+            <h4 style="color: rgb(134,142,150);">Document Management</h4>
             <div class="row" style="padding:0px;margin:7px;">
+                <div class="col-2">
+                    <input class="visible" type="text" id="doc_search" placeholder="Search Documents" style="width:150px;height:35px;font-size:12px;">
+                </div>
                 <div class="col">
-                    <h4 style="color:rgb(134,142,150);">Document Management</h4>
+                    <select class="form-control-sm" id="viewSelect" style="font-size:12px;height:33px;">
+                        <option value="0" selected disabled hidden>View Options</option>
+                        <option value="0">View All</option>
+                        <option value="1">View Waiting</option>
+                        <option value="2">View In Transit</option>
+                        <option value="3">View Cancelled</option>
+                        <option value="4">View Completed</option>
+                    </select>
                 </div>
             </div>
-            <div class="row" style="padding:0px;margin:7px;height:21px;">
-                <div class="col-2"><input class="visible" type="text" id="doc_search" placeholder="Search Documents" style="width:150px;height:35px;font-size:12px;"></div>
-                <div class="col"><select class="form-control-sm" id="viewSelect" style="font-size:12px;height:33px;"><option value="0" selected disabled hidden>View Options</option><option value="0">View All</option><option value="1">View Waiting</option><option value="2">View In Transit</option><option value="3">View Cancelled</option><option value="4">View Completed</option></select></div>
-            </div>
-            <div id="tableHolder" class="row no-gutters" style="width:1107px;">
-
-                        
-
-
-
-
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <div id="tableHolder" class="row no-gutters" style="">
+                    </div>
+                </table>
             </div>
         </div>
-    </div>
-    <div class="footer-basic fixed-bottom" style="height:28px;margin:0px;padding:0px 0px;background-color:#4b83cc;">
-        <footer>
-            <p class="copyright" style="color:rgb(255,255,255);margin:3px 0px 0px;"></p>
-        </footer>
     </div>
 
     <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:rgb(255,0,0);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
-                    <h5 class="modal-title" style="color:rgb(0,255,255);margin:-2px 4px;">Change Password</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-header"
+                    style="background-color:rgb(255,0,0);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
+                    <h5 class="modal-title" style="color:rgb(0,255,255);margin:-2px 4px;">Change Password</h5><button
+                        type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                </div>
                 <div class="modal-body" style="width:273px;">
                     <div class="row">
-                        <div class="col"><small style="color:rgb(255,0,0); display:none">Password was updated successfully.</small></div>
+                        <div class="col"><small style="color:rgb(255,0,0); display:none">Password was updated
+                                successfully.</small></div>
                     </div>
                     <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;"><label class="col-form-label" style="font-size:12px;">Enter Password:</label><input type="password" id="mPassword1" style="font-size:12px;margin:0px 21px;"></div>
-                        <div class="col-auto" style="margin:0px 0px;"><label class="col-form-label" style="font-size:12px;">Reenter Password:&nbsp;</label><input type="password" id="mPassword2" style="font-size:12px;margin:5px;"></div>
+                        <div class="col-auto" style="margin:0px 0px;"><label class="col-form-label"
+                                style="font-size:12px;">Enter Password:</label><input type="password" id="mPassword1"
+                                style="font-size:12px;margin:0px 21px;"></div>
+                        <div class="col-auto" style="margin:0px 0px;"><label class="col-form-label"
+                                style="font-size:12px;">Reenter Password:&nbsp;</label><input type="password"
+                                id="mPassword2" style="font-size:12px;margin:5px;"></div>
                     </div>
                 </div>
-                <div class="modal-footer" style="height:35px;"><button class="btn btn-light btn-sm" type="button" id="mPasswordClose" data-dismiss="modal" style="height:23px;width:50px;margin:0px 0px;padding:0px 0px;">Close</button><button class="btn btn-primary btn-sm" type="button" id="mPasswordSave"
-                        style="height:23px;padding:0px 0px;margin:0px 10px;width:45px;font-size:12px;">Save</button></div>
+                <div class="modal-footer" style="height:35px;"><button class="btn btn-light btn-sm" type="button"
+                        id="mPasswordClose" data-dismiss="modal"
+                        style="height:23px;width:50px;margin:0px 0px;padding:0px 0px;">Close</button><button
+                        class="btn btn-primary btn-sm" type="button" id="mPasswordSave"
+                        style="height:23px;padding:0px 0px;margin:0px 10px;width:45px;font-size:12px;">Save</button>
+                </div>
             </div>
         </div>
     </div>

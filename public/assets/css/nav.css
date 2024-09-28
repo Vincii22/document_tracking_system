@@ -54,11 +54,83 @@ body {
     left: 0;
     width: 225px; /* Set width to 250px to allow room for icon and text */
     height: 100%;
-    background-color: blue; /* Blue background */
+    background-color: rgb(255, 255, 255); /* Blue background */
     padding-top: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center; /* Center the links horizontally */
+
+    .sidenav-profile-container{
+        border-bottom: 1px solid black;
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .nav-link{
+            padding: 0px 0 0 0 !important;
+            width: 100% !important;
+            text-decoration: none;
+            font-size: 14px;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            border-radius: 5px;
+            margin-bottom: 0px !important;
+            text-align: center;
+        }
+        .nav-link:hover{
+            background: none !important;
+            color: blue;
+        }
+        p{
+            margin-bottom: 0 !important;
+            text-transform: uppercase;
+            font-size: .8rem
+        }
+
+    }
+
+    .sidenav-links{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        a{
+            color: black;
+        }
+    }
+
+    .log-out{
+        border-top: 1px solid black;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 0;
+        background: #0b71e7;
+
+        .nav-link{
+            padding: 10px 0 !important;
+            width: 100% !important;
+            text-decoration: none;
+            font-size: 14px;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            border-radius: 5px;
+            margin-bottom: 0px !important;
+            text-align: center;
+        }
+    }
 }
 
 /* User Image Styles */
@@ -143,5 +215,24 @@ body {
 
     .profile-container {
         margin-left: 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-container {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        text-align: center;
+        float: none;
     }
 }
