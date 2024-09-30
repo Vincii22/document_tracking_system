@@ -95,6 +95,10 @@ body {
 
     }
 
+    /* Adjust the main content to avoid overlap with the sidebar */
+    .main-content {
+        margin-left: 225px; /* Adjust based on sidebar width */
+    }
     .sidenav-links{
         width: 100%;
         display: flex;
@@ -215,6 +219,10 @@ body {
 
     .profile-container {
         margin-left: 0;
+    }
+    .main-content {
+        margin-left: 0; /* Remove left margin for smaller screens */
+        padding: 0 15px; /* Add padding for better spacing */
     }
 }
 

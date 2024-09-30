@@ -2,7 +2,18 @@
 
 if(!isset($_SESSION['usertype'])) {
     redirect_to('login.php');
-} 
+} else if ($_SESSION['usertype'] == 'student assistant') {
+    redirect_to('./unauthorized.php'); // Redirect non-admin users to an unauthorized page
+}
+
+// Assuming you have a way to retrieve user data
+$user_id = $_SESSION['user_id'];
+$user_query = "SELECT user_image FROM users WHERE user_id = '{$user_id}' LIMIT 1"; // Update table name if necessary
+$user_result = $database->query($user_query);
+$user_data = $database->fetch_array($user_result);
+
+// Check if the user image is set and accessible
+$user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg';
 ?>
 
 <!DOCTYPE html>
@@ -22,99 +33,98 @@ if(!isset($_SESSION['usertype'])) {
 </head>
 
 <body style="height:650px;">
+<!-- Sidebar -->
 <div class="sidebar">
-    <img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" style="width: 100%; height: auto; margin-bottom: 20px;">
-    <a href="dashboard.php"><i class="fa fa-tasks"></i> Dashboard</a>
-    <a href="profile.php"><i class="fa fa-tasks"></i> Profile </a>
-    <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
-    <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
-    <a href="track_doc.php" class="active"><i class="fa fa-search"></i> Track Document</a>
-    <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
-    <?php if ($_SESSION['usertype'] == 'admin'): ?>
-        <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
-        <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
-    <?php endif; ?>
-</div>
+        <div class="sidenav-profile-container">
+            <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
+            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
+            </a>
+            <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['usertype']; ?>
+            </p>
+        </div>
+        <div class="sidenav-links">
+            <a href="dashboard.php" ><i class="fa fa-tasks"></i> Dashboard</a>
+            <a href="profile.php"><i class="fa fa-tasks"></i> Profile </a>
+            <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+            <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
+            <a href="track_doc.php" class="active"><i class="fa fa-search"></i> Track Document</a>
+            <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
+            <?php if ($_SESSION['usertype'] == 'admin'): ?>
+            <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+            <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
+        <?php endif; ?>
+        </div>
+        <div class="log-out">
+            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
 
-    <div>
-        <nav class="navbar navbar-expand-md navigation-clean-button">
-            <div class="container">
-                <a class="navbar-brand" href="#"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcol-1" aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown dts_all">
-                            <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">Documents</a>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="add_document.php">Add Document</a>
-                                <a class="dropdown-item" role="presentation" href="docs_on_hand.php">Process Document</a>
-                                <a class="dropdown-item" role="presentation" href="track_doc.php">Track Document</a>
-                                <a class="dropdown-item" role="presentation" href="mgmt/doc_mgmt.php">Document List</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown dts_a">
-                            <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">Key Elements</a>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="mastermind/user_mgmt.php">User Mgmt</a>
-                                <a class="dropdown-item" role="presentation" href="mastermind/dept_mgmt.php">Dept Mgmt</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dts_am">
-                            <a class="nav-link active" href="#">Analytics</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
-                                <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
-                                <a class="dropdown-item" role="presentation" href="logout.php">Logout</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
     </div>
-    <div style="font-size:10px;">
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-md">
         <div class="container">
-            <div class="row" style="padding:0px;margin:7px;">
-                <div class="col">
-                    <h4 style="color:rgb(134,142,150);">Track Document</h4>
+
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link text-white" href="logout.php"><i class="fa fa-bell"></i></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                        <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
+                        <a class="dropdown-item" role="presentation" href="logout.php">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div style="font-size:10px;">
+    <div class="container">
+        <div class="row" style="padding:0;margin:7px;">
+            <div class="col text-center">
+                <h4 style="color:rgb(134,142,150);">Track Document</h4>
+            </div>
+        </div>
+        <form>
+            <div class="row align-items-center" style="padding:0;margin:7px;">
+                <div class="col-auto">
+                    <input type="text" placeholder="Input Tracking Number" name="tracking" 
+                           value="<?php if(isset($_GET['tracking'])) echo htmlspecialchars($_GET['tracking']); ?>" 
+                           id="inputTracking" 
+                           class="form-control form-control-sm" 
+                           style="max-width: 165px; font-size:12px;">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-success btn-sm" type="submit" id="search" 
+                            data-tracking="<?php if(isset($_GET['tracking'])) echo htmlspecialchars($_GET['tracking']); ?>" 
+                            style="font-size:10px;">Search</button>
                 </div>
             </div>
-            <form>   
-                <div class="row" style="padding:0px;margin:7px;height:14px;">
-                    <div class="col-auto" style="height:33px;width:165px;">
-                        <input type="text" placeholder="Input Tracking Number" name="tracking" value="<?php if(isset($_GET['tracking']))echo $_GET['tracking']; ?>" id="inputTracking" style="width:146px;height:25px;font-size:12px;">
-                    </div>
-                    <div class="col"><button class="btn btn-success btn-sm" type="submit" id="search" data-tracking="<?php if(isset($_GET['tracking']))echo $_GET['tracking']; ?>" style="height:23px;padding:0px 0px;font-size:10px;margin:0px -15px;width:45px;">Search&nbsp;</button></div>
-                </div>
-            </form>
-            <div class="row no-gutters" style="width:1100px;height:465px;">
-                <div class="col-auto visible" style="margin:19px;width:1055px;">
-                    <div class="table-responsive visible" style="font-size:12px;background-color:#ffffff;margin:0px;padding:0px;width:1043px;height:418px;">
-                        <table class="table table-striped table-bordered table-sm table-fixed">
-                            <thead>
-                                <tr class="float-none justify-content-start">
-                                    <th style="width:135px;">Timestamp</th>
-                                    <th>Document Movement</th>
-                                    <th style="width:381px;">Document Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody id="resultsTable">
-                                <!-- Results will be populated here -->
-                            </tbody>
-                        </table>
-                    </div>
+        </form>
+        <div class="row no-gutters" style="margin-top: 19px;">
+            <div class="col">
+                <div class="table-responsive" style="font-size:12px;background-color:#ffffff;">
+                    <table class="table table-striped table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th style="width:135px;">Timestamp</th>
+                                <th>Document Movement</th>
+                                <th style="width:381px;">Document Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTable">
+                            <!-- Results will be populated here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 
     <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
         <div class="modal-dialog modal-sm" role="document">

@@ -6,13 +6,14 @@ class Document extends DatabaseObject {
     protected static $primary_key = "doc_id";
     protected static $table_name = "documents";
     protected static $db_fields = array(
-        'doc_id', 'doc_name', 'doc_trackingnum', 'doc_mobilenum', 'doc_code',
+        'doc_id', 'doc_name', 'doc_trackingnum', 'barcode_path', 'doc_mobilenum', 'doc_code',
         'doc_status', 'date_started', 'date_completed', 'personnel_id', 'doc_owner', 'doc_type', 'doc_file'
     );
     
     public $doc_id;
     public $doc_name;
     public $doc_trackingnum = 0;
+    public $barcode_path;
     public $doc_mobilenum;
     public $doc_code;
     public $doc_status;
@@ -102,32 +103,41 @@ class Document extends DatabaseObject {
         }
         return strtoupper($acronym);
     }
-
     public function add_document() {
         $this->doc_status = 1;
         $this->generate_trackingnum();
         $this->generate_code();
         $this->date_started = date('Y-m-d');
-
+    
         // Set the doc_ownertype based on session dept_id
         if (isset($_SESSION['dept_id'])) {
             $this->doc_ownertype = strtoupper($_SESSION['dept_id']); // Storing department ID as owner type
         }
-
-          // Check if file name is set and ensure it's saved
-          if (!empty($this->doc_file)) {
-         }
-
+    
+        // Check if file name is set and ensure it's saved
+        if (!empty($this->doc_file)) {
+            // Process file upload logic if needed
+        }
+    
+        // Generate the barcode before saving the document
+        if (!$this->generate_barcode()) {
+            return false; // If barcode generation fails, do not proceed further
+        }
+    
+        // Save the document
         $x = $this->create();
-
+    
+        // Save the document history
         $new_doc_hist = new DocumentHistory;
         $new_doc_hist->doc_id = $this->doc_id;
         $new_doc_hist->user_id = $_SESSION['user_id'];
         $new_doc_hist->dept_id = $_SESSION['dept_id'];
         $new_doc_hist->dochist_type = 1;    
         $y = $new_doc_hist->create();
+        
         return $x + $y;
     }
+    
 
     private function change_is_last() {
         // Updates the last document history entry of the document
@@ -253,5 +263,33 @@ class Document extends DatabaseObject {
         }
         return $object_array;
     }
+
+    public function generate_barcode() {
+        if (empty($this->doc_trackingnum)) {
+            return false;
+        }
+
+        // Use the php-barcode-generator library
+        $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
+        $barcode = $generator->getBarcode($this->doc_trackingnum, $generator::TYPE_CODE_128);
+
+        // Define where to save the barcode
+        $barcode_dir = "../barcodes/";
+        if (!is_dir($barcode_dir)) {
+            mkdir($barcode_dir, 0777, true); // Create directory if not exists
+        }
+
+        // Set the barcode path
+        $this->barcode_path = $barcode_dir . $this->doc_trackingnum . ".png";
+
+        // Save the barcode image
+        if (file_put_contents($this->barcode_path, $barcode)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+
+
 ?>

@@ -41,6 +41,15 @@ if (isset($usertype) && $usertype === 'guest') {
 
 // Fetch users based on department and user type
 $users = User::find_all_by_dept_and_type($dept_id, $usertype);
+
+// Assuming you have a way to retrieve user data
+$user_id = $_SESSION['user_id'];
+$user_query = "SELECT user_image FROM users WHERE user_id = '{$user_id}' LIMIT 1"; // Update table name if necessary
+$user_result = $database->query($user_query);
+$user_data = $database->fetch_array($user_result);
+
+// Check if the user image is set and accessible
+$user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg';
 ?>
 
 <!DOCTYPE html>
@@ -60,9 +69,52 @@ $users = User::find_all_by_dept_and_type($dept_id, $usertype);
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/nav.css">
     <style>
-        div{
-            margin: 0 !important;
-        }
+div {
+    margin: 0 !important;
+}
+
+/* Adjust the form container */
+.form-container {
+    border: 1px solid #d1d1d1; /* Light border for the container */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Space inside the container */
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 600px; /* Maximum width */
+    position: relative; /* Set relative positioning for layout control */
+    margin: 20px auto; /* Centering with vertical spacing */
+    left: 50%; /* Move to the center */
+    transform: translateX(-50%); /* Adjust to truly center */
+}
+
+/* Input field styles */
+.form-container .form-control {
+    border-radius: 5px; /* Rounded inputs */
+    margin-bottom: 15px; /* Space between inputs */
+}
+
+/* Button styles */
+.form-container .btn {
+    border-radius: 5px; /* Rounded button */
+    transition: background-color 0.3s; /* Smooth background color change */
+}
+
+.form-container .btn:hover {
+    background-color: #0056b3; /* Darker background on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-container {
+        margin: 10px; /* Adjust margins for smaller screens */
+        padding: 15px; /* Slightly reduce padding */
+        max-width: 90%; /* Full width on smaller screens */
+        left: 0; /* Reset left for smaller screens */
+        transform: none; /* Reset transform for mobile */
+    }
+}
+
+
     </style>
 </head>
 
@@ -80,8 +132,8 @@ $users = User::find_all_by_dept_and_type($dept_id, $usertype);
         </div>
         <div class="sidenav-links">
             <a href="dashboard.php" ><i class="fa fa-tasks"></i> Dashboard</a>
-            <a href="profile.php" class="active"><i class="fa fa-tasks"></i> Profile </a>
-            <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+            <a href="profile.php"><i class="fa fa-tasks"></i> Profile </a>
+            <a href="add_document.php"  class="active"><i class="fa fa-file-o"></i> Add Document</a>
             <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
             <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
             <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
@@ -96,8 +148,9 @@ $users = User::find_all_by_dept_and_type($dept_id, $usertype);
 
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-md">
+ 
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-md">
         <div class="container">
 
             <ul class="navbar-nav ml-auto">
@@ -116,44 +169,46 @@ $users = User::find_all_by_dept_and_type($dept_id, $usertype);
             </ul>
         </div>
     </nav>
-
-
-<div class="container my-5">
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="container my-5">
     <h4 class="text-center mb-4">Add Document</h4>
-    <form id="documentForm" action="../j_php/document_add.php" method="POST" enctype="multipart/form-data" style="max-width: 600px; margin: auto;">
-        <input type="hidden" name="docowner" value="soecs">
-        <input type="hidden" name="personnel_id" value="<?php echo $user_id; ?>">
+    <div class="form-container">
+        <form id="documentForm" action="../j_php/document_add.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="docowner" value="soecs">
+            <input type="hidden" name="personnel_id" value="<?php echo $user_id; ?>">
 
-        <div class="form-group">
-            <label for="docName">Document Name:</label>
-            <input class="form-control" type="text" id="docName" name="docname" required>
-        </div>
+            <div class="form-group">
+                <label for="docName">Document Name:</label>
+                <input class="form-control" type="text" id="docName" name="docname" required>
+            </div>
 
-        <div class="form-group">
-            <label for="docType">Document Type:</label>
-            <select class="form-control" id="docType" name="doctype" required>
-                <option value="1">Request</option>
-                <option value="2">For Processing</option>
-                <option value="3">Submission</option>
-                <option value="4">Communication</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="docType">Document Type:</label>
+                <select class="form-control" id="docType" name="doctype" required>
+                    <option value="1">Request</option>
+                    <option value="2">For Processing</option>
+                    <option value="3">Submission</option>
+                    <option value="4">Communication</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="contactNum">Contact Number:</label>
-            <input class="form-control" type="number" name="mobilenum" minlength="10" maxlength="10" id="contactNum" required>
-        </div>
+            <div class="form-group">
+                <label for="contactNum">Contact Number:</label>
+                <input class="form-control" type="number" name="mobilenum" minlength="10" maxlength="10" id="contactNum" required>
+            </div>
 
-        <div class="form-group">
-            <label for="docfile">Upload Document:</label>
-            <input class="form-control" type="file" name="docfile" required>
-        </div>
+            <div class="form-group">
+                <label for="docfile">Upload Document:</label>
+                <input class="form-control" type="file" name="docfile" required>
+            </div>
 
-        <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary">Add Document</button>
-        </div>
-    </form>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Add Document</button>
+            </div>
+        </form>
+    </div>
 </div>
+
 
 <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
     <div class="modal-dialog modal-sm" role="document">

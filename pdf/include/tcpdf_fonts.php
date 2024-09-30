@@ -1664,6 +1664,21 @@ class TCPDF_FONTS {
 	 * @public static
 	 */
 	public static function unichr($c, $unicode=true) {
+		// Ensure $c is an integer
+		if (!is_int($c) && !is_string($c)) {
+			return ''; // or throw an exception
+		}
+		
+		// Convert string to integer if it's a numeric string
+		if (is_string($c) && is_numeric($c)) {
+			$c = (int)$c; 
+		}
+	
+		// Check if $c is a valid Unicode code point
+		if ($c < 0) {
+			return ''; // Invalid code point
+		}
+	
 		if (!$unicode) {
 			return chr($c);
 		} elseif ($c <= 0x7F) {
@@ -1682,6 +1697,7 @@ class TCPDF_FONTS {
 			return '';
 		}
 	}
+	
 
 	/**
 	 * Returns the unicode caracter specified by UTF-8 value
