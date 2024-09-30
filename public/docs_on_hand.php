@@ -7,6 +7,13 @@ if(!isset($_SESSION['usertype'])) {
         redirect_to('track_doc.php');
     }
 }
+
+// Fetch all documents from the database
+$documents = Document::find_all(); // Assuming you have a 'find_all' method in your Document class
+
+if (!$documents) {
+    echo "No documents found.";
+}
 ?>
 
 <!DOCTYPE html>
@@ -81,8 +88,14 @@ if(!isset($_SESSION['usertype'])) {
                 <div
                     class="col-auto" style="margin:0px 0px;width:80px;height:300px;padding:0px 0px;">
                     <div class="row" id="incomingButtons" style="margin:140px 13px;">
-                        <div class="col"><button class="btn btn-success btn-sm" type="button" id="acceptIncoming" style="height:23px;padding:0px 0px;font-size:12px;margin:0px -8px;width:65px;">Accept</button><button class="btn btn-warning btn-lg" type="button" id="addIncomingRemarks"
-                                style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:8px -8px;width:62px;" data-target="#remarksModal" data-toggle="modal">Remarks</button></div>
+                        <div class="col">
+                            <button class="btn btn-success btn-sm" type="button" id="acceptIncoming" style="height:23px;padding:0px 0px;font-size:12px;margin:0px -8px;width:65px;">Accept</button>
+                            <button class="btn btn-warning btn-lg" type="button" id="addIncomingRemarks" style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:8px -8px;width:62px;" data-target="#remarksModal" data-toggle="modal">Remarks</button>
+                            <?php foreach ($documents as $doc) : ?>
+                               <button class="btn btn-info btn-sm viewDoc" type="button" data-id="<?= $doc->doc_id ?>">View</button>
+                            <?php endforeach; ?>
+
+                        </div>
                     </div>
                     </div>
                     <div class="col-auto my-auto" style="margin:19px;width:260px;height:449px;"><select multiple="" id="onQueueList" style="height:460px;width:250px;"><optgroup label="***ON QUEUE">
@@ -158,6 +171,31 @@ if(!isset($_SESSION['usertype'])) {
         </div>
     </div>
 
+    <!-- MODAL FOR VIEWING DOCUMENT  -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="viewModal" style="padding:0px 0px;margin:200px 0px;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:rgb(0,123,255);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
+                <h5 class="modal-title" style="color:rgb(255,255,255);margin:-2px 4px;">Document Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body" style="width:273px;">
+                <!-- Document details will be displayed here -->
+                <div id="documentDetails" style="font-size:12px;">
+                    <p><strong>Document Name:</strong> <span id="docName"></span></p>
+                    <p><strong>Document Owner:</strong> <span id="docOwner"></span></p>
+                    <p><strong>Document Type:</strong> <span id="docType"></span></p>
+                    <p><strong>Document File:</strong> <span id="docFile"></span></p>
+                    <p><strong>Date Started:</strong> <span id="docDateStarted"></span></p>
+                </div>
+            </div>
+            <div class="modal-footer" style="height:35px;">
+                <button class="btn btn-light btn-sm" type="button" data-dismiss="modal" style="height:23px;width:50px;margin:0px 0px;padding:0px 0px;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- END MODAL FOR VIEWING DOCUMENT  -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/jquery.dataTables.min.js"></script>
@@ -167,10 +205,44 @@ if(!isset($_SESSION['usertype'])) {
     <script src="../j_js/docprocessing.js"></script>
 
     <script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip(); 
+$(document).on('click', '.viewDoc', function() {
+    var docId = $(this).data('id'); // Get the document ID from the button
+    console.log("Document ID:", docId);  // Debug: Check if doc_id is correctly logged
+
+    $.ajax({
+        url: '../j_php/get_document_details.php', // The PHP file that handles the document fetching
+        type: 'POST',
+        data: { doc_id: docId },  // Send the document ID to the server
+        success: function(response) {
+            console.log("Response from server:", response);  // Log response from the server
+            try {
+                var data = JSON.parse(response);
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Populate the modal with the document details
+                    $('#docName').text(data.doc_name);
+                    $('#docOwner').text(data.doc_owner);
+                    $('#docType').text(data.doc_type);
+                    $('#docFile').html('<a href="' + data.doc_file + '" download>Download File</a>');
+                    $('#docDateStarted').text(data.date_started);
+
+                    // Show the modal
+                    $('#viewModal').modal('show');
+                }
+            } catch (e) {
+                alert('Error parsing server response.');
+                console.error('Parsing error:', e);
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('Error fetching document details: ' + error);
+        }
+    });
 });
-</script>
+
+
+    </script>
 </body>
 
 </html>
