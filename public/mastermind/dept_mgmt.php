@@ -35,51 +35,46 @@ if(!isset($_SESSION['usertype'])) {
     <link rel="stylesheet" href="../assets/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/nav.css">
 </head>
 
 <body style="height:650px;">
+<!-- Sidebar -->
 <div class="sidebar">
-<img src="../assets/images/divineLogo.jpg" alt="Document Tracking System Logo" style="width: 100%; height: auto; margin-bottom: 20px;">
+        <div class="sidenav-profile-container">
+            <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
+            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
+            </a>
+            <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['usertype']; ?>
+            </p>
+        </div>
+        <div class="sidenav-links">
+            <a href="../dashboard.php" ><i class="fa fa-tasks"></i> Dashboard</a>
+            <a href="../profile.php"><i class="fa fa-tasks"></i> Profile </a>
+            <a href="../add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+            <a href="../docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
+            <a href="../track_doc.php" ><i class="fa fa-search"></i> Track Document</a>
+            <a href="../mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
+            <?php if ($_SESSION['usertype'] == 'admin'): ?>
+            <a href="user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+            <a href="dept_mgmt.php"  class="active"><i class="fa fa-building"></i> Department Management</a>
+        <?php endif; ?>
+        </div>
+        <div class="log-out">
+            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
 
-        <a href="../add_document.php" title="Add Document" data-toggle="tooltip"><i class="fa fa-file-o"></i></a>
-        <a href="../docs_on_hand.php" title="Process Document" data-toggle="tooltip"><i class="fa fa-tasks"></i></a>
-        <a href="../track_doc.php" title="Track Document" data-toggle="tooltip"><i class="fa fa-search"></i></a>
-        <a href="../mgmt/doc_mgmt.php" title="Document List" data-toggle="tooltip"><i class="fa fa-list"></i></a>
-        <a href="user_mgmt.php" title="User Management" data-toggle="tooltip"><i class="fa fa-users"></i></a>
-        <a href="dept_mgmt.php" title="Department Management" data-toggle="tooltip" class="active"><i class="fa fa-building"></i></a>
     </div>
-    <div>
-    <nav class="navbar navbar-expand-md navigation-clean-button">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcol-1" aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown dts_all">
-                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">Documents</a>
-                    <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" role="presentation" href="add_document.php">Add Document</a>
-                        <a class="dropdown-item" role="presentation" href="docs_on_hand.php">Process Document</a>
-                        <a class="dropdown-item" role="presentation" href="track_doc.php">Track Document</a>
-                        <a class="dropdown-item" role="presentation" href="mgmt/doc_mgmt.php">Document List</a>
-                    </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-md">
+        <div class="container">
+
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link text-white" href="logout.php"><i class="fa fa-bell"></i></a>
                 </li>
-                <li class="nav-item dropdown dts_a">
-                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">Key Elements</a>
-                    <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" role="presentation" href="mastermind/user_mgmt.php">User Mgmt</a>
-                        <a class="dropdown-item" role="presentation" href="mastermind/dept_mgmt.php">Dept Mgmt</a>
-                    </div>
-                </li>
-                <li class="nav-item dts_am">
-                    <a class="nav-link active" href="#">Analytics</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
                         <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>
@@ -91,11 +86,8 @@ if(!isset($_SESSION['usertype'])) {
                 </li>
             </ul>
         </div>
-    </div>
-</nav>
+    </nav>
 
-
-    </div>
     <div style="font-size:10px;">
         <div class="container">
             <div class="row" style="padding:0px;margin:7px;">

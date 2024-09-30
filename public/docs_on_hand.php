@@ -14,6 +14,15 @@ $documents = Document::find_all(); // Assuming you have a 'find_all' method in y
 if (!$documents) {
     echo "No documents found.";
 }
+
+// Assuming you have a way to retrieve user data
+$user_id = $_SESSION['user_id'];
+$user_query = "SELECT user_image FROM users WHERE user_id = '{$user_id}' LIMIT 1"; // Update table name if necessary
+$user_result = $database->query($user_query);
+$user_data = $database->fetch_array($user_result);
+
+// Check if the user image is set and accessible
+$user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg';
 ?>
 
 <!DOCTYPE html>
@@ -36,25 +45,42 @@ if (!$documents) {
 </head>
 
 <body style="height:650px;">
+<!-- Sidebar -->
 <div class="sidebar">
-<img src="assets/images/divineLogo.jpg" alt="Document Tracking System Logo" style="width: 80%; height: auto; margin-bottom: 20px;">
-        <a href="dashboard.php"><i class="fa fa-tasks"></i> Dashboard</a>
-        <a href="profile.php"><i class="fa fa-tasks"></i> Profile </a>  
-        <a href="add_document.php" title="Add Document" ><i class="fa fa-file-o">Add Document</i></a>
-        <a href="docs_on_hand.php" title="Process Document" class="active"><i class="fa fa-tasks">Process Document</i></a>
-        <a href="track_doc.php" title="Track Document" ><i class="fa fa-search"></i>Track Document</a>
-        <a href="mgmt/doc_mgmt.php" title="Document List" ><i class="fa fa-list"></i>Document List</a>
-        <?php if ($_SESSION['usertype'] == 'admin'): ?>
-        <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
-        <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
-    <?php endif; ?>
+        <div class="sidenav-profile-container">
+            <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
+            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
+            </a>
+            <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['usertype']; ?>
+            </p>
+        </div>
+        <div class="sidenav-links">
+            <a href="dashboard.php" ><i class="fa fa-tasks"></i> Dashboard</a>
+            <a href="profile.php"><i class="fa fa-tasks"></i> Profile </a>
+            <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+            <a href="docs_on_hand.php" class="active"><i class="fa fa-tasks"></i> Process Document</a>
+            <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
+            <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
+            <?php if ($_SESSION['usertype'] == 'admin'): ?>
+            <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+            <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
+        <?php endif; ?>
+        </div>
+        <div class="log-out">
+            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
 
     </div>
-    <div>
-    <nav class="navbar navbar-expand-md navigation-clean-button">
-    <div class="container">
-            </ul>
-            <ul class="navbar-nav">
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-md">
+        <div class="container">
+
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link text-white" href="logout.php"><i class="fa fa-bell"></i></a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
                         <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>
@@ -66,8 +92,7 @@ if (!$documents) {
                 </li>
             </ul>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
     </div>
@@ -121,11 +146,7 @@ if (!$documents) {
     </div>
     </div>
     </div>
-    <div class="footer-basic fixed-bottom" style="height:42px;margin:0px;padding:0px 0px;background-color:#4b83cc;">
-        <footer>
-            <p class="copyright" style="color:rgb(255,255,255);"></p>
-        </footer>
-    </div>
+
     <div class="modal fade" role="dialog" tabindex="-1" id="remarksModal" style="padding:0px 0px;margin:200px 0px;">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">

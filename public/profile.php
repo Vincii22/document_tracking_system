@@ -153,7 +153,7 @@ $_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
                 <h2><?php echo $user_data['first_name'] . ' ' . $user_data['last_name']; ?></h2>
                 <p><strong>Username:</strong> <?php echo $user_data['username']; ?></p>
                 <p><strong>Department:</strong> <?php echo $user_data['dept_abbreviation']; ?></p>
-                <p><strong>User Type:</strong> <?php echo ucfirst($user_data['usertype']); ?></p>
+                <p><strong>Position:</strong> <?php echo ucfirst($user_data['usertype']); ?></p>
             </div>
         </div>
 

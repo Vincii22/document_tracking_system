@@ -25,10 +25,39 @@ if(!isset($_SESSION['usertype'])) {
     <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/nav.css">
 </head>
 
 <body style="height:650px;">
     <div>
+        <!-- Sidebar -->
+<div class="sidebar">
+        <div class="sidenav-profile-container">
+            <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
+            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
+            </a>
+            <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                </i> <?php echo $_SESSION['usertype']; ?>
+            </p>
+        </div>
+        <div class="sidenav-links">
+            <a href="dashboard.php" ><i class="fa fa-tasks"></i> Dashboard</a>
+            <a href="profile.php" class="active"><i class="fa fa-tasks"></i> Profile </a>
+            <a href="add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
+            <a href="docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
+            <a href="track_doc.php"><i class="fa fa-search"></i> Track Document</a>
+            <a href="mgmt/doc_mgmt.php"><i class="fa fa-list"></i> Document List</a>
+            <?php if ($_SESSION['usertype'] == 'admin'): ?>
+            <a href="mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
+            <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
+        <?php endif; ?>
+        </div>
+        <div class="log-out">
+            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
+
+    </div>
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="height:38px;background-color:rgb(255,0,0);padding:0px;">
             <div class="container"><a class="navbar-brand" href="#" style="color:rgba(255,255,255,0.9);">sl-dts</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div

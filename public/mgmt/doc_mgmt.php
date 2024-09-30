@@ -7,10 +7,19 @@ if (!isset($_SESSION['usertype'])) {
         redirect_to('../track_doc.php');
     } else if ($_SESSION['usertype'] == 'user') {
         redirect_to('../docs_on_hand.php');
+    }    else if ($_SESSION['usertype'] == 'student assistant') {
+        redirect_to('../unauthorized.php'); // Redirect non-admin users to an unauthorized page
     }
 
 }
+// Assuming you have a way to retrieve user data
+$user_id = $_SESSION['user_id'];
+$user_query = "SELECT user_image FROM users WHERE user_id = '{$user_id}' LIMIT 1"; // Update table name if necessary
+$user_result = $database->query($user_query);
+$user_data = $database->fetch_array($user_result);
 
+// Check if the user image is set and accessible
+$user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : '../assets/images/default-profile.jpg';
 ?>
 
 <!DOCTYPE html>
@@ -122,7 +131,7 @@ if (!isset($_SESSION['usertype'])) {
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidenav-profile-container">
-            <img src="../assets/images/divineLogo.jpg" alt="Document Tracking System Logo" width="100">
+        <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : '../assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
             <!-- <img src="assets/images/default-profile.jpg" alt="Profile Image" width="100"> -->
             <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id'] ?>"
                 data-utype="<?php echo $_SESSION['usertype'] ?>" data-dept="<?php echo $_SESSION['dept_id'] ?>"
