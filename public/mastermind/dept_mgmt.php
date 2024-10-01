@@ -17,7 +17,28 @@ if(!isset($_SESSION['usertype'])) {
     }
     
 }
+// Fetch the current user information
+$user_id = $_SESSION['user_id'];
+$query = "SELECT users.username, users.first_name, users.last_name, users.usertype, 
+                 departments.dept_abbreviation, users.user_image
+          FROM users 
+          JOIN departments ON users.dept_id = departments.dept_id
+          WHERE users.user_id = {$user_id}";
 
+$result = $database->query($query);
+$user_data = $database->fetch_array($result);
+
+if (!$user_data) {
+    echo "User data not found.";
+    exit;
+}
+
+// Set session variables with fetched data
+$_SESSION['first_name'] = $user_data['first_name'];
+$_SESSION['last_name'] = $user_data['last_name'];
+$_SESSION['username'] = $user_data['username'];
+$_SESSION['usertype'] = $user_data['usertype'];
+$_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
 ?>
 
 <!DOCTYPE html>
