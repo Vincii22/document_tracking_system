@@ -176,7 +176,7 @@ div {
     <h4 class="text-center mb-4">Add Document</h4>
     <div class="form-container">
         <form id="documentForm" action="../j_php/document_add.php" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="docowner" value="soecs">
+            <input type="hidden" name="docowner" value="<?php echo htmlspecialchars($dept_abbreviation); ?>">
             <input type="hidden" name="personnel_id" value="<?php echo $user_id; ?>">
 
             <div class="form-group">
