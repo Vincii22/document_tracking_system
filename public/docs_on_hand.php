@@ -136,7 +136,7 @@ $user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : 'ass
                             id="completed" style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:6px -8px;width:73px;">Completed</button><button class="btn btn-danger btn-lg" type="button" id="cancel" style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:3px -8px;width:51px;">Cancel</button></div>
                 </div>
         </div>
-        <div class="col-auto my-auto" style="margin:19px;width:260px;height:449px;"><select multiple="" id="outgoingList" style="height:460px;width:250px;"><optgroup label="***OUTGOING">
+        <div class="col-auto my-auto" style="margin:19px;width:260px;height:449px;"><select multiple="" id="outgoingList" style="height:460px;width:250px;"><optgroup label="***PENDING">
 
         </optgroup></select></div>
         <div

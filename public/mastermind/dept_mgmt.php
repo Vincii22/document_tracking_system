@@ -82,7 +82,7 @@ $_SESSION['usertype'] = $user_data['usertype'];
         <?php endif; ?>
         </div>
         <div class="log-out">
-            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+            <a class="nav-link text-white" href="../logout.php"><i class="fa fa-sign-out"></i> Logout</a>
         </div>
 
     </div>
@@ -100,7 +100,7 @@ $_SESSION['usertype'] = $user_data['usertype'];
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
                         <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
-                        <a class="dropdown-item" role="presentation" href="logout.php">Logout</a>
+                        <a class="dropdown-item" role="presentation" href="../logout.php">Logout</a>
                     </div>
                 </li>
             </ul>
