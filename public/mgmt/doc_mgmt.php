@@ -144,12 +144,14 @@ $user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : '../
             </p>
         </div>
         <div class="sidenav-links">
+        <?php if ($_SESSION['usertype'] != 'admin'): ?>
             <a href="../dashboard.php"><i class="fa fa-tasks"></i> Dashboard</a>
             <a href="../profile.php"><i class="fa fa-tasks"></i> Profile </a>
             <a href="../add_document.php"><i class="fa fa-file-o"></i> Add Document</a>
             <a href="../docs_on_hand.php"><i class="fa fa-tasks"></i> Process Document</a>
             <a href="../track_doc.php"><i class="fa fa-search"></i> Track Document</a>
             <a href="../mgmt/doc_mgmt.php" class="active"><i class="fa fa-list"></i> Document List</a>
+        <?php endif; ?>
             <?php if ($_SESSION['usertype'] == 'admin'): ?>
                 <a href="../mastermind/user_mgmt.php"><i class="fa fa-users"></i> User Management</a>
                 <a href="../mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
@@ -177,7 +179,7 @@ $user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : '../
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
                         <a class="dropdown-item" role="presentation" href="#" id="changePassword"
                             data-target="#editPassword" data-toggle="modal">Change Password</a>
-                        <a class="dropdown-item" role="presentation" href="logout.php">Logout</a>
+                        <a class="dropdown-item" role="presentation" href="../logout.php">Logout</a>
                     </div>
                 </li>
             </ul>
