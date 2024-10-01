@@ -12,14 +12,28 @@ if (!isset($_SESSION['usertype'])) {
     }
 
 }
-// Assuming you have a way to retrieve user data
+// Fetch the current user information
 $user_id = $_SESSION['user_id'];
-$user_query = "SELECT user_image FROM users WHERE user_id = '{$user_id}' LIMIT 1"; // Update table name if necessary
-$user_result = $database->query($user_query);
-$user_data = $database->fetch_array($user_result);
+$query = "SELECT users.username, users.first_name, users.last_name, users.usertype, 
+                 departments.dept_abbreviation, users.user_image
+          FROM users 
+          JOIN departments ON users.dept_id = departments.dept_id
+          WHERE users.user_id = {$user_id}";
 
-// Check if the user image is set and accessible
-$user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : '../assets/images/default-profile.jpg';
+$result = $database->query($query);
+$user_data = $database->fetch_array($result);
+
+if (!$user_data) {
+    echo "User data not found.";
+    exit;
+}
+
+// Set session variables with fetched data
+$_SESSION['first_name'] = $user_data['first_name'];
+$_SESSION['last_name'] = $user_data['last_name'];
+$_SESSION['username'] = $user_data['username'];
+$_SESSION['usertype'] = $user_data['usertype'];
+$_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
 ?>
 
 <!DOCTYPE html>
@@ -130,16 +144,12 @@ $user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : '../
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <div class="sidenav-profile-container">
-        <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : '../assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
-            <!-- <img src="assets/images/default-profile.jpg" alt="Profile Image" width="100"> -->
-            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id'] ?>"
-                data-utype="<?php echo $_SESSION['usertype'] ?>" data-dept="<?php echo $_SESSION['dept_id'] ?>"
-                id="usernameHolder">
+    <div class="sidenav-profile-container">
+            <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : '../assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
+            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
                 </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
             </a>
-            <p data-id="<?php echo $_SESSION['user_id'] ?>" data-utype="<?php echo $_SESSION['usertype'] ?>"
-                data-dept="<?php echo $_SESSION['dept_id'] ?>" id="usernameHolder">
+            <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
                 </i> <?php echo $_SESSION['usertype']; ?>
             </p>
         </div>
