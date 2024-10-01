@@ -19,11 +19,9 @@ if(!isset($_SESSION['usertype'])) {
 }
 // Fetch the current user information
 $user_id = $_SESSION['user_id'];
-$query = "SELECT users.username, users.first_name, users.last_name, users.usertype, 
-                 departments.dept_abbreviation, users.user_image
-          FROM users 
-          JOIN departments ON users.dept_id = departments.dept_id
-          WHERE users.user_id = {$user_id}";
+$query = "SELECT username, first_name, last_name, usertype, user_image
+          FROM users
+          WHERE user_id = {$user_id}";
 
 $result = $database->query($query);
 $user_data = $database->fetch_array($result);
@@ -38,7 +36,7 @@ $_SESSION['first_name'] = $user_data['first_name'];
 $_SESSION['last_name'] = $user_data['last_name'];
 $_SESSION['username'] = $user_data['username'];
 $_SESSION['usertype'] = $user_data['usertype'];
-$_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
+
 ?>
 
 <!DOCTYPE html>
@@ -81,12 +79,11 @@ $_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
 <div class="sidebar">
         <div class="sidenav-profile-container">
             <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
-            <a class="nav-link" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
-                </i> <?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?>
-            </a>
-            <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
-                </i> <?php echo $_SESSION['usertype']; ?>
-            </p>
+            <div class="sidenav-profile-container">
+              <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" id="usernameHolder">
+                <?php echo $_SESSION['username']; ?>
+             </p>
+            </div>
         </div>
         <div class="sidenav-links">
         <?php if ($_SESSION['usertype'] != 'admin'): ?>
