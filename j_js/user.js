@@ -177,7 +177,3 @@ function resetPassword(select){
             }
         });
 }
-
-
-
-

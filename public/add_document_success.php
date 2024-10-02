@@ -58,39 +58,25 @@ if(!isset($_SESSION['usertype'])) {
         </div>
 
     </div>
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="height:38px;background-color:rgb(255,0,0);padding:0px;">
-            <div class="container"><a class="navbar-brand" href="#" style="color:rgba(255,255,255,0.9);">sl-dts</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div
-                    class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="dropdown dts_all"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:rgb(255,255,255);">Documents</a>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item dts_uam" role="presentation" href="add_document.php">Add Document</a>
-                                <a class="dropdown-item dts_uam" role="presentation" href="docs_on_hand.php">Process Document</a>
-                                <a class="dropdown-item dts_all" role="presentation" href="track_doc.php">Track Document</a>
-                                <a class="dropdown-item dts_am" role="presentation" href="mgmt/doc_mgmt.php">Document List</a></div>
-                        </li>
-                        <li class="dropdown dts_a">
-                                <a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:rgb(255,255,255);">Key Elements</a>
-                            <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="mastermind/user_mgmt.php">User Mgmt</a>
-                                <a class="dropdown-item" role="presentation" href="mastermind/dept_mgmt.php">Dept Mgmt</a></div>
-                        </li>
-                        <li class="nav-item dts_am" role="presentation"><a class="nav-link active" href="#" style="color:rgb(255,255,255);">Analytics</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown"><a class="dropdown-toggle nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#" 
-                        data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder" style="color:rgb(255,255,255);"><i class="fa fa-user"></i>&nbsp; 
-                        <?php echo $_SESSION['username']; ?> 
-                        </a>
-                            <div class="dropdown-menu dropdown-menu-right"
-                                role="menu">
-                                <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
-                                <a class="dropdown-item" role="presentation" href="logout.php">Logout</a></div>
-                        </li>
-                    </ul>
-            </div>
-    </div>
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-md">
+        <div class="container">
+
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link text-white" href="logout.php"><i class="fa fa-bell"></i></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
+                        <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a class="dropdown-item" role="presentation" href="#" id="changePassword" data-target="#editPassword" data-toggle="modal">Change Password</a>
+                        <a class="dropdown-item" role="presentation" href="../logout.php">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </nav>
     </div>
     <div style="font-size:10px;width:1100px;">
@@ -109,9 +95,9 @@ if(!isset($_SESSION['usertype'])) {
             </div>
         </div>
     </div>
-    <div class="footer-basic fixed-bottom" style="height:42px;margin:0px;padding:0px 0px;background-color:rgb(255,0,0);">
+    <div class="footer-basic fixed-bottom" style="height:42px;margin:0px;padding:0px 0px;background-color: #0b71e7;">
         <footer>
-            <p class="copyright" style="color:rgb(255,255,255);">jkiqui-dts-v1 © 2018</p>
+            <p class="copyright" style="color:rgb(255,255,255);">DWCL Document Tracking System© 2024</p>
         </footer>
     </div>
     <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
