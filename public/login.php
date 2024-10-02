@@ -3,23 +3,28 @@ require_once("../includes/initialize.php");
 
 if(isset($_SESSION['usertype'])) {
 
-    if ($_SESSION['usertype'] == 'admin' ) {
+    if( $_SESSION['usertype'] == 'admin' ) {
         redirect_to('mastermind/user_mgmt.php');
     }
     
-    else if ( $_SESSION['usertype'] == 'mgmt' ){
-        redirect_to('mgmt/doc_mgmt.php');
+    else if ( $_SESSION['usertype'] == 'dean' ){
+        redirect_to('profile.php');
     }
     
-    else if ( $_SESSION['usertype'] == 'user' ){
-        redirect_to('docs_on_hand.php');
+    else if ( $_SESSION['usertype'] == 'assistant' ){
+        redirect_to('profile.php');
     }
-    
+    else if ( $_SESSION['usertype'] == 'student assistant' ){
+        redirect_to('profile.php');
+    }
     else if ( $_SESSION['usertype'] == 'guest' ){
         redirect_to('track_doc.php');
     }
+    
+    else {
+        redirect_to('login.php');
+    }
 }
-
 ?>
 
 <!DOCTYPE html>

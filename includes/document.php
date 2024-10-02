@@ -42,20 +42,24 @@ class Document extends DatabaseObject {
         return $result_set->fetch_assoc()['total_found'];
     }
 
-    public static function count_all_same_doc_status($docStatus, $searchTerm) {
+    public static function count_all_same_doc_status($docStatus, $searchTerm, $deptId) {
         global $database; 
-        $sql = "SELECT COUNT(*) FROM documents "; 
-        if ($docStatus != 0 && strlen($searchTerm) < 3) {
-            $sql .= "WHERE doc_status = {$docStatus} ";
-        } else if ($docStatus != 0 && strlen($searchTerm) > 2) {
-            $sql .= "WHERE (doc_status = {$docStatus} AND (doc_trackingnum LIKE '%$searchTerm%' OR doc_name LIKE '%$searchTerm%' OR doc_owner LIKE '%$searchTerm%')) ";
-        } else if (strlen($searchTerm) > 2) {
-            $sql .= "WHERE (doc_trackingnum LIKE '%$searchTerm%' OR doc_name LIKE '%$searchTerm%' OR doc_owner LIKE '%$searchTerm%') ";
+        $sql = "SELECT COUNT(*) FROM documents ";
+        $sql .= "LEFT JOIN users ON documents.personnel_id = users.user_id ";
+        $sql .= "WHERE users.dept_id = {$deptId} ";
+        
+        if ($docStatus != 0) {
+            $sql .= "AND doc_status = {$docStatus} ";
         }
         
-        $result_set = $database->query($sql);
-        $row = $database->fetch_array($result_set);
-        return array_shift($row); 
+        if (!empty($searchTerm)) {
+            $sql .= "AND (doc_trackingnum LIKE '%{$searchTerm}%' OR doc_name LIKE '%{$searchTerm}%' OR doc_owner LIKE '%{$searchTerm}%') ";
+        }
+    
+        $result = $database->query($sql);
+        $row = $database->fetch_array($result);
+        
+        return array_shift($row);
     }
 
     public function generate_trackingnum() {
