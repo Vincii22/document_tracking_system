@@ -78,7 +78,7 @@ $_SESSION['usertype'] = $user_data['usertype'];
 <!-- Sidebar -->
 <div class="sidebar">
         <div class="sidenav-profile-container">
-            <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
+            <img src="<?php echo !empty($user_data['user_image']) ? $user_data['user_image'] : '../assets/images/default-profile.jpg'; ?>" alt="Profile Image" width="100" style="border-radius: 50%; border-width: 5px; border-style:  solid; border-color: white #0b71e7 white  #0b71e7;">
             <div class="sidenav-profile-container">
               <p data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" id="usernameHolder">
                 <?php echo $_SESSION['username']; ?>
