@@ -5,14 +5,15 @@ class User extends DatabaseObject {
 
     protected static $primary_key = "user_id";
     protected static $table_name="users";
-    protected static $db_fields = array('user_id','username','password',
-    'first_name','last_name','user_abbreviation','usertype','dept_id','personnel_id', 'user_image');
+    protected static $db_fields = array('user_id', 'username','password',
+    'first_name','last_name','user_abbreviation','usertype','dept_id','personnel_id', 'user_image', 'email');
     public $user_id;
     public $username;
     public $password;
     public $first_name;
     public $last_name;
     public $dept_id;
+    public $email;
     public $usertype;
     public $personnel_id;
     public $user_image;
@@ -209,7 +210,41 @@ class User extends DatabaseObject {
         }
         return $users;
     }
-
+    public static function find_by_email($email) {
+        global $database;
+        $email = $database->escape_value($email);
+        $sql = "SELECT * FROM users WHERE email = '{$email}' LIMIT 1";
+        $result_array = self::find_by_sql($sql);
+        return !empty($result_array) ? array_shift($result_array) : false;
+    }
+    public static function authenticate_by_email($email = "", $password = "") {
+        global $database;
+    
+        // Sanitize email and password
+        $email = $database->escape_value($email);
+        $password = $database->escape_value($password);
+    
+        // Perform query to check for a matching email
+        $sql  = "SELECT * FROM users ";
+        $sql .= "WHERE email = '{$email}' ";
+        $sql .= "LIMIT 1";
+    
+        $result_array = self::find_by_sql($sql);
+        // Check if a user was found
+        if (!empty($result_array)) {
+            $user = array_shift($result_array);
+    
+            // Now, verify the password using password_verify
+            if (password_verify($password, $user->password)) {
+                return $user; // Return the user object if password matches
+            } else {
+                return false; // Return false if password does not match
+            }
+        } else {
+            return false; // Return false if no user found
+        }
+    }
+    
 }
 
 ?>

@@ -1,9 +1,23 @@
 <?php
 require_once("../includes/initialize.php");
-
 $personnel = new User();
 
+// Check if email is provided
+if (isset($_POST['email'])) {
+    $email = $_POST['email'];
+} else {
+    echo "Email not provided.";
+    exit;
+}
 
+// Check if email already exists
+$email = $_POST['email'];
+$existing_user = User::find_by_email($email);
+if ($existing_user) {
+    echo "Email already exists.";
+    exit;
+}
+$personnel->email = $_POST['email'];
 $personnel->username = $_POST['username'];
 $personnel->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 $personnel->first_name = $_POST['firstname'];

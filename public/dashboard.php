@@ -64,6 +64,17 @@ $_SESSION['last_name'] = $user_data['last_name'];
 $_SESSION['username'] = $user_data['username'];
 $_SESSION['usertype'] = $user_data['usertype'];
 $_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
+
+$user_id = $_SESSION['user_id'];
+$notification_query = "SELECT * FROM notifications WHERE user_id = '{$user_id}' AND status = 'UNREAD' ORDER BY created_at DESC";
+$notification_result = $database->query($notification_query);
+$notifications = [];
+while ($row = $database->fetch_array($notification_result)) {
+    $notifications[] = $row;
+}
+
+// Count unread notifications
+$unread_count = count($notifications);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -167,8 +178,12 @@ $_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
 
             <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                    <a class="nav-link text-white" href="logout.php"><i class="fa fa-bell"></i></a>
-                </li>
+    <a class="nav-link text-white" href="notifications.php"><i class="fa fa-bell"></i>
+        <?php if ($unread_count > 0): ?>
+            <span class="badge badge-danger"><?php echo $unread_count; ?></span>
+        <?php endif; ?>
+    </a>
+</li>
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle nav-link text-white" data-toggle="dropdown" aria-expanded="false" href="#" data-id="<?php echo $_SESSION['user_id']?>" data-utype="<?php echo $_SESSION['usertype']?>" data-dept="<?php echo $_SESSION['dept_id']?>" id="usernameHolder">
                         <i class="fa fa-user"></i>&nbsp; <?php echo $_SESSION['username']; ?>

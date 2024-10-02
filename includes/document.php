@@ -131,6 +131,15 @@ class Document extends DatabaseObject {
         // Save the document
         $x = $this->create();
     
+        // If document creation was successful, send notification
+    if ($x) {
+        // Create a notification message
+        $message = "A new document '{$this->doc_name}' has been created.";
+
+        // Send notification to the relevant user(s)
+        $recipient_user_id = $_SESSION['user_id']; // Change this as needed for your logic
+        notify_user($recipient_user_id, $message);
+        
         // Save the document history
         $new_doc_hist = new DocumentHistory;
         $new_doc_hist->doc_id = $this->doc_id;
@@ -139,7 +148,10 @@ class Document extends DatabaseObject {
         $new_doc_hist->dochist_type = 1;    
         $y = $new_doc_hist->create();
         
-        return $x + $y;
+        return $x + $y; // Returns the success status
+    }
+
+    return false; // If document creation failed
     }
     
 
@@ -163,6 +175,12 @@ class Document extends DatabaseObject {
         $new_doc_hist->dept_id = $_SESSION['dept_id'];
         $new_doc_hist->dochist_type = 1;    
         $y = $new_doc_hist->create();
+
+          // Notify relevant user
+          $message = "Document '{$this->doc_name}' has been received.";
+          $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
+          notify_user($recipient_user_id, $message);
+
         return $x + $y;  
     }
 
@@ -179,6 +197,12 @@ class Document extends DatabaseObject {
         $new_doc_hist->dept_id = $dept;
         $new_doc_hist->dochist_type = 2;
         $y = $new_doc_hist->create();
+
+         // Notify relevant user
+         $message = "Document '{$this->doc_name}' has been forwarded to department '{$dept}'.";
+         $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
+         notify_user($recipient_user_id, $message);
+
         return $x + $y;
     }
 
@@ -191,6 +215,15 @@ class Document extends DatabaseObject {
         $new_doc_hist->dochist_type = 3;
         $new_doc_hist->is_last = false;
         return $new_doc_hist->create();
+
+            // Notify relevant user
+            if ($result) {
+                $message = "Remarks added to document '{$this->doc_name}'.";
+                $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
+                notify_user($recipient_user_id, $message);
+            }
+    
+            return $result;
     }
 
     public function cancel_forward() {
@@ -206,6 +239,12 @@ class Document extends DatabaseObject {
         $new_doc_hist->dept_id = $_SESSION['dept_id'];
         $new_doc_hist->dochist_type = 4;
         $y = $new_doc_hist->create();
+
+            // Notify relevant user
+        $message = "Forwarding of document '{$this->doc_name}' has been cancelled.";
+        $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
+        notify_user($recipient_user_id, $message);
+
         return $x + $y;
     }
 
@@ -225,6 +264,12 @@ class Document extends DatabaseObject {
         $new_doc_hist->dochist_type = 5;
         $new_doc_hist->is_last = false;
         $z = $new_doc_hist->create();
+
+        // Notify relevant user
+        $message = "Document '{$this->doc_name}' has been marked as completed.";
+        $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
+        notify_user($recipient_user_id, $message);
+
         return $x + $y + $z;
     }
     
@@ -245,6 +290,11 @@ class Document extends DatabaseObject {
         $new_doc_hist->dochist_type = 6;
         $new_doc_hist->is_last = false;
         $z = $new_doc_hist->create();
+
+        // Notify relevant user
+        $message = "Document '{$this->doc_name}' has been marked as cancelled.";
+        $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
+        notify_user($recipient_user_id, $message);
         
         return $x + $y + $z;
     }
@@ -294,6 +344,22 @@ class Document extends DatabaseObject {
         }
     }
 }
+function notify_user($recipient_user_id, $message) {
+    global $database; // Assuming $database is an instance of MySQLDatabase
+
+    // Escape the recipient_user_id and message to prevent SQL injection
+    $recipient_user_id = $database->escape_value($recipient_user_id);
+    $message = $database->escape_value($message);
+
+    // Construct the SQL query
+    $query = "INSERT INTO notifications (user_id, message, status) VALUES ('{$recipient_user_id}', '{$message}', 'UNREAD')";
+
+    // Execute the query and handle any errors
+    if (!$database->query($query)) {
+        error_log("Database error: " . $database->get_last_error()); // Log the error for debugging
+    }
+}
+
 
 
 ?>

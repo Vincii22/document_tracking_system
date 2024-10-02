@@ -78,6 +78,7 @@ function loadSelectedUser(userid){
         }, 
         function(data){
             var r = JSON.parse(data);
+            $("#email").val(r.email);
             $("#username").val(r.username);
             $("#firstname").val(r.firstname);
             $("#lastname").val(r.lastname);
@@ -90,6 +91,7 @@ function loadSelectedUser(userid){
 function updateUser(userid){
     $.get("../../j_php/user_edit.php",{
         user_id: userid,
+        email: $("#email").val(),
         username: $("#username").val(),
         firstname: $("#firstname").val(),
         lastname: $("#lastname").val(),
@@ -108,16 +110,28 @@ function updateUser(userid){
 }
 
 function saveUser() {
+    // Check other required fields
+    var username = $("#username").val();
+    if (!username) {
+        alert("Username is required.");
+        return;
+    }
+    
     // Create a FormData object
     var formData = new FormData();
-    formData.append('username', $("#username").val());
+    formData.append('email', $("#email").val());
+    formData.append('username', username);
     formData.append('firstname', $("#firstname").val());
     formData.append('lastname', $("#lastname").val());
     formData.append('password', $("#password1").val());
     formData.append('dept', $("#dept").val());
     formData.append('usertype', $("#usertype").val());
-    // Append the file input with the correct name
-    formData.append('user_image', $('#user_image')[0].files[0]);
+    
+    // Append the file input if a file was selected
+    var userImage = $('#user_image')[0].files[0];
+    if (userImage) {
+        formData.append('user_image', userImage);
+    }
 
     // Make the AJAX request
     $.ajax({
@@ -127,20 +141,18 @@ function saveUser() {
         contentType: false,
         processData: false,
         success: function(data) {
-            if (data == 1) {
+            console.log("Response Data:", data); // Log the response
+            if (data == 0) {
                 alert("User data successfully added!");
                 location.reload();
             } else {
                 console.log(data);
-                alert("Something went wrong!");
+                alert("Something went wrong! Response: " + data);
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error("Error: " + textStatus, errorThrown);
-            alert("An error occurred while uploading the user data.");
         }
     });
 }
+
 
 
 // function for deleting a user
@@ -177,3 +189,7 @@ function resetPassword(select){
             }
         });
 }
+
+
+
+

@@ -61,7 +61,7 @@ $_SESSION['usertype'] = $user_data['usertype'];
 <style>
  /* Adjust the width of the modal */
  .modal-full {
-        max-width: 50%; /* Changed to 70% */
+        max-width: 45%; /* Changed to 70% */
     }
 
     /* Center the modal both vertically and horizontally */
@@ -135,17 +135,12 @@ $_SESSION['usertype'] = $user_data['usertype'];
                 <div class="col-auto" style="width:78px;"><button class="btn btn-success btn-sm" type="button" id="addUser" style="height:23px;padding:-4px;font-size:10px;width:67px;" data-target="#editModal" data-toggle="modal">Add User</button></div>
                 <div class="col"><input type="text" placeholder="Search Users" id="searchUser" style="width:150px;height:25px;font-size:12px;"></div>
             </div>
-            <div id="tableArea" class="row no-gutters">
-                
-                        
-           
-                              
-                        
+            <div id="tableArea" class="row no-gutters"> 
             </div>
         </div>
     </div>
 
-<div class="modal fade" role="dialog" tabindex="-1" id="editModal" style="padding:0px 0px;margin:0;">
+    <div class="modal fade" role="dialog" tabindex="-1" id="editModal" style="padding:0;margin:0;">
     <div class="modal-dialog modal-full" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -157,41 +152,41 @@ $_SESSION['usertype'] = $user_data['usertype'];
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6 form-group">
+                        <label for="email">Email:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>
+                            <input type="email" id="email" class="form-control" placeholder="Enter Email" required pattern=".+@dwc-legazpi\.edu$" title="Email must end with @dwc-legazpi.edu">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
                         <label for="username">Username:</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" id="username" class="form-control" placeholder="Enter username">
+                            <input type="text" id="username" class="form-control" placeholder="Enter Username" required>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="password1">Enter Password:</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             </div>
-                            <input type="password" id="password1" class="form-control" placeholder="Enter password">
+                            <input type="password" id="password1" class="form-control" placeholder="Enter Password" required>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="password2">Reenter Password:</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             </div>
-                            <input type="password" id="password2" class="form-control" placeholder="Reenter password">
-                        </div>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="lastname">Last Name:</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                            </div>
-                            <input type="text" id="lastname" class="form-control" placeholder="Enter last name">
+                            <input type="password" id="password2" class="form-control" placeholder="Reenter Password" required>
                         </div>
                     </div>
                 </div>
@@ -202,12 +197,17 @@ $_SESSION['usertype'] = $user_data['usertype'];
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" id="firstname" class="form-control" placeholder="Enter first name">
+                            <input type="text" id="firstname" class="form-control" placeholder="Enter First Name" required>
                         </div>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="user_image">User Image:</label>
-                        <input type="file" id="user_image" name="user_image" accept="image/*" class="form-control-file">
+                        <label for="lastname">Last Name:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                            </div>
+                            <input type="text" id="lastname" class="form-control" placeholder="Enter Last Name" required>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -227,6 +227,12 @@ $_SESSION['usertype'] = $user_data['usertype'];
                                 <option value="4">Student Assistant</option>
                             </optgroup>
                         </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="user_image">User Image:</label>
+                        <input type="file" id="user_image" name="user_image" accept="image/*" class="form-control-file">
                     </div>
                 </div>
             </div>
