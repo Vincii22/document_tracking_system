@@ -10,14 +10,14 @@ if( $_SESSION['usertype'] == 'admin' ) {
 }
 
 else if ( $_SESSION['usertype'] == 'dean' ){
-    redirect_to('mgmt/doc_mgmt.php');
+    redirect_to('profile.php');
 }
 
 else if ( $_SESSION['usertype'] == 'assistant' ){
-    redirect_to('docs_on_hand.php');
+    redirect_to('profile.php');
 }
 else if ( $_SESSION['usertype'] == 'student assistant' ){
-    redirect_to('docs_on_hand.php');
+    redirect_to('profile.php');
 }
 else if ( $_SESSION['usertype'] == 'guest' ){
     redirect_to('track_doc.php');

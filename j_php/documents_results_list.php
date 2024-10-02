@@ -13,18 +13,21 @@ $page = $_GET['page'];
 //$page = 1;
 $per_page = 10;
 
+$deptId = $_SESSION['dept_id'];
 
-$total_count = Document::count_all_same_doc_status($docStatus, $searchTerm);
+$total_count = Document::count_all_same_doc_status($docStatus, $searchTerm, $deptId);
 //echo $total_count;
 
 //echo $dept;
 
 $pagination = new Pagination($page, $per_page, $total_count);
 
-$sql = "SELECT documents.doc_id,doc_trackingnum,doc_name,doc_owner,doc_status,";
-$sql .= "TIMESTAMPDIFF(DAY,documents_history.timestamp,NOW()) AS queue ";
-$sql .= "from documents ";
+$sql = "SELECT documents.doc_id, doc_trackingnum, doc_name, doc_owner, doc_status, ";
+$sql .= "TIMESTAMPDIFF(DAY, documents_history.timestamp, NOW()) AS queue ";
+$sql .= "FROM documents ";
 $sql .= "LEFT JOIN documents_history ON documents.doc_id = documents_history.doc_id AND documents_history.is_last = 1 ";
+$sql .= "LEFT JOIN users ON documents.personnel_id = users.user_id ";
+$sql .= "WHERE users.dept_id = {$deptId} ";
 if ($docStatus != 0 && strlen($searchTerm) < 3) {
     $sql .= "WHERE doc_status = {$docStatus} ";
 } else if ($docStatus != 0 && strlen($searchTerm) > 2) {
