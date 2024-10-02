@@ -36,6 +36,8 @@ if ($file_uploaded) {
 if ($newdoc->add_document()) {
     $doc_trackingnum = $newdoc->doc_trackingnum;
 
+    notify_user($newdoc->personnel_id, "A new document '{$newdoc->doc_name}' has been created.");
+    
     // Generate the barcode
     $generator = new BarcodeGeneratorPNG();
     $barcode = $generator->getBarcode($doc_trackingnum, $generator::TYPE_CODE_128);

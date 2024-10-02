@@ -51,14 +51,21 @@ if(isset($_SESSION['usertype'])) {
             <h5>DWCL</h5>
             <h6>Document Tracking System</h6>
         </div>
-        <form id="loginForm" action="../../j_php/login.php" method="POST">
-            <div class="form-group">
-                <small id="errorContainer">Incorrect username or password</small>
-                <input class="form-control" type="text" placeholder="Username" id="username" name="username" required>
-                <input class="form-control" type="password" placeholder="Password" id="password" name="password" required>
-                <button class="btn btn-primary btn-block" type="submit" id="login">Login</button>
-            </div>
-        </form>
+        <form id="loginForm" method="POST">
+    <div class="form-group">
+        <small id="errorContainer">Incorrect email or password</small>
+        <input class="form-control" 
+           type="email" 
+           placeholder="Email" 
+           id="email" 
+           name="email" 
+           required 
+           pattern=".+@dwc-legazpi\.edu$" 
+           title="Email must end with @dwc-legazpi.edu">
+        <input class="form-control" type="password" placeholder="Password" id="password" name="password" required>
+        <button class="btn btn-primary btn-block" type="submit" id="login">Login</button>
+    </div>
+</form>
     </div>
 
     <div class="footer-basic fixed-bottom">
@@ -72,6 +79,9 @@ if(isset($_SESSION['usertype'])) {
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap.min.js"></script>
     <script src="../includes/dts.js"></script>
+    <script>
+ 
+</script>
 </body>
 
 </html>

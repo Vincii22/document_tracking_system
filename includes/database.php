@@ -6,7 +6,7 @@ require_once("config.php");
 class MySQLDatabase {
 
     private $connection;
-
+    private $last_error;
     function __construct() {
         $this->open_connection();
     }
@@ -29,8 +29,12 @@ class MySQLDatabase {
     }
 
     public function query($sql) {
-        $result = mysqli_query($this->connection,$sql);
-        $this->confirm_query($result);
+        $result = mysqli_query($this->connection, $sql);
+        if (!$result) {
+            // Store the error message
+            $this->last_error = mysqli_error($this->connection);
+            return false; // or handle error as needed
+        }
         return $result;
     }
 
@@ -65,7 +69,9 @@ class MySQLDatabase {
     public function affected_rows() {
         return mysqli_affected_rows($this->connection);
     }
-
+    public function get_last_error() {
+        return $this->last_error;
+    }
 }
 
 $database = new MySQLDatabase();
