@@ -19,13 +19,81 @@ if(!isset($_SESSION['usertype'])) {
     <title>dts-Success!!! Add Document</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/Data-Table.css">
-    <link rel="stylesheet" href="assets/css/Data-Table2.css">
-    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/nav.css">
+    <link rel="stylesheet" href="assets/css/Data-Table.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Data-Table2.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/nav.css?v=<?php echo time(); ?>">
+
+    <style>
+        .check-container {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            border: 5px solid #0b71e7;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .checkmark {
+            width: 40px;
+            height: 50px;
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+
+        .checkmark::before, .checkmark::after {
+            content: '';
+            position: absolute;
+            background-color: #0b71e7;
+            border-radius: 3px;
+            transition: all 0.4s ease;
+        }
+
+        .checkmark::before {
+            width: 8px;
+            height: 40px;
+            left: 17px;
+            top: -2px;
+            transform-origin: bottom left;
+            transform: scaleY(0);
+            transition-delay: .5s;
+        }
+
+        .checkmark::after {
+            width: 20px;
+            height: 8px;
+            left: 0;
+            top: 30px;
+            transform-origin: top left;
+            transform: scaleX(0);
+        }
+
+        .checkmark.active {
+            opacity: 1;
+        }
+
+        .checkmark.active::before {
+            transform: scaleY(1);
+        }
+
+        .checkmark.active::after {
+            transform: scaleX(1);
+        }
+    </style>
+    <script>
+window.onload = function() {
+    // Trigger the checkmark animation when the page loads
+    const checkmark = document.querySelector('.checkmark');
+    checkmark.classList.add('active');
+
+    // No reset: the checkmark will stay visible after the animation
+};
+    </script>
 </head>
 
 <body style="height:650px;">
@@ -53,9 +121,7 @@ if(!isset($_SESSION['usertype'])) {
             <a href="mastermind/dept_mgmt.php"><i class="fa fa-building"></i> Department Management</a>
         <?php endif; ?>
         </div>
-        <div class="log-out">
-            <a class="nav-link text-white" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
-        </div>
+
 
     </div>
     <!-- Navbar -->
@@ -79,27 +145,38 @@ if(!isset($_SESSION['usertype'])) {
         </div>
     </nav>
     </div>
-    <div style="font-size:10px;width:1100px;">
-        <div class="container">
+    <div style="font-size:10px; border-radius: 12px; margin: 20px 25px 25px 250px !important; ; min-height: 70vh;">
+        <div class="bread-crums" style="background-color: white; padding: 20px; margin-bottom: 20px;">
+            <a href="add_document.php" class="" style="font-size: 16px; color: black;">Add another document /</a>
+            
+            <a href="#" class="" style="font-size: 16px; color: blue;">Added Successfully </a>
+        </div>
+        <div class="container " style="max-width: 100% !important; background-color: white; padding: 20px; ">
+            <div class="" style="display: flex; justify-content: center; align-items: center;">
+            <div class="check-container">
+                <div class="checkmark"></div>
+            </div>
+            </div>
             <div class="row" style="padding:0px;margin:7px;height:40px;"></div>
-            <div class="row no-gutters" style="width:939px;">
-                <div class="col-auto" style="margin:19px;width:923px;">
-                    <form style="width:925px;">
+            <div class="no-gutters" style="text-align: center;">
+                <div class="col-auto" style="margin:19px;">
+                    <form style="text-align: center;">
                         <h4 style="color:rgb(134,142,150);">You've successfully added a document.</h4>
                         <h4 id="docTrackHolder" data-tracking="<?php echo $_GET['tracking']; ?>" style="color:rgb(134,142,150);">Your document tracking number is&nbsp;<?php echo $_GET['tracking']; ?></h4>
                     </form>
                 </div>
             </div>
-            <div class="row" style="padding:0px;margin:7px;">
-                <div class="col"><button class="btn btn-primary btn-sm" type="button" id="printReceipt" style="height:23px;padding:-4px;font-size:10px;margin:10px;">Print</button><a href="add_document.php" class="btn btn-success btn-sm" style="height:23px;padding:-4px;font-size:10px;">Add another document</a></div>
+            <div class="" style="padding:0px;margin:7px;">
+                <div class="col" style=" display: flex; justify-content: center; gap: 10px;"><button class="btn btn-primary btn-sm" type="button" id="printReceipt" style="padding:5px 15px 5px 15px;font-size:15px;margin:10px;">Print</button><a href="add_document.php" class="btn btn-success btn-sm" style="padding:5px 15px 5px 15px;font-size:15px;margin:10px;">Add another document</a></div>
             </div>
         </div>
-    </div>
-    <div class="footer-basic fixed-bottom" style="height:42px;margin:0px;padding:0px 0px;background-color: #0b71e7;">
+        <div class="footer-basic fixed-bottom" style="border-top:2px solid black;height:42px;margin-left:250px; margin-right: 25px;padding:0px 0px; background-color: transparent;">
         <footer>
-            <p class="copyright" style="color:rgb(255,255,255);">DWCL Document Tracking System© 2024</p>
+            <p class="copyright" style="color: black;">DWCL Document Tracking System © 2024</p>
         </footer>
     </div>
+    </div>
+    
     <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">

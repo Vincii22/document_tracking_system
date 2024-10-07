@@ -137,6 +137,10 @@ $unread_count = count($notifications);
             width: 65% !important;
             height: 30vh !important;
         }
+        .body-dashboard{
+            width: 83% !important;
+            margin-left: 15rem; 
+        }
     </style>
 </head>
 
@@ -198,48 +202,56 @@ $unread_count = count($notifications);
     </nav>
     
   <!-- Main Content -->
-<div class="container">
+    <div class="body-dashboard">
 
-<!-- Document Summary Dashboard -->
-<div class="dashboard-summary">
-    <div class="summary-card">
-        <h2><?php echo $document_summary['total_documents']; ?></h2>
-        <p>Total Documents</p>
-    </div>
-    <div class="summary-card">
-        <h2><?php echo $document_summary['incoming']; ?></h2>
-        <p>Incoming Documents</p>
-    </div>
-    <div class="summary-card">
-        <h2><?php echo $document_summary['on_queue']; ?></h2>
-        <p>Documents On Queue</p>
-    </div>
-    <div class="summary-card">
-        <h2><?php echo $document_summary['outgoing']; ?></h2>
-        <p>Outgoing Documents</p>
-    </div>
-    <div class="summary-card">
-        <h2><?php echo $document_summary['completed']; ?></h2>
-        <p>Completed Documents</p>
-    </div>
-</div>
+        <!-- Document Summary Dashboard -->
+        <div class="dashboard-summary">
+            <div class="summary-card">
+                <h2><?php echo $document_summary['total_documents']; ?></h2>
+                <p>Total Documents</p>
+            </div>
+            <div class="summary-card">
+                <h2><?php echo $document_summary['incoming']; ?></h2>
+                <p>Incoming Documents</p>
+            </div>
+            <div class="summary-card">
+                <h2><?php echo $document_summary['on_queue']; ?></h2>
+                <p>Documents On Queue</p>
+            </div>
+            <div class="summary-card">
+                <h2><?php echo $document_summary['outgoing']; ?></h2>
+                <p>Outgoing Documents</p>
+            </div>
+            <div class="summary-card">
+                <h2><?php echo $document_summary['completed']; ?></h2>
+                <p>Completed Documents</p>
+            </div>
+        </div>
 
-<!-- Graphs Container -->
-<div class="graphs-container">
-    <div class="graph-card">
-        <canvas id="graph1"></canvas>
-    </div>
-    <div class="graph-card">
-        <canvas id="graph2"></canvas>
-    </div>
-    <div class="graph-card">
-        <canvas id="graph3"></canvas>
-    </div>
-    <div class="graph-card">
-        <canvas id="graph4"></canvas>
-    </div>
-</div>
-</div>
+        <!-- Graphs Container -->
+        <div class="graphs-container">
+            <div class="graph-card">
+                <canvas id="graph1"></canvas>
+            </div>
+            <div class="graph-card">
+                <canvas id="graph2"></canvas>
+            </div>
+            <div class="graph-card">
+                <canvas id="graph3"></canvas>
+            </div>
+            <div class="graph-card">
+                <canvas id="graph4"></canvas>
+            </div>
+        </div>
+        <div class="" style="font-size: 14px; text-align: center; margin-top: 20px !important; margin-bottom: 0 !important; border-top:2px solid black; margin-right: 25px;padding:0px 0px; background-color: transparent;">
+            <footer>
+                <p class="copyright" style="padding-top: 10px;color: black;">DWCL Document Tracking System © 2024</p>
+            </footer>
+        </div>
+        </div>
+
+
+
 
 <!-- Bootstrap JS and Chart.js -->
 <script src="assets/js/jquery.min.js"></script>

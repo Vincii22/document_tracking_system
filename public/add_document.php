@@ -70,15 +70,14 @@ $unread_count = count($notifications);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dts-Add Document</title>
-    
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/Data-Table.css">
-    <link rel="stylesheet" href="assets/css/Data-Table2.css">
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/nav.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Data-Table.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Data-Table2.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/nav.css?v=<?php echo time(); ?>">
     <style>
 div {
     margin: 0 !important;
@@ -186,46 +185,57 @@ div {
             </ul>
         </div>
     </nav>
-    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="container my-5">
-    <h4 class="text-center mb-4">Add Document</h4>
-    <div class="form-container">
-        <form id="documentForm" action="../j_php/document_add.php" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="docowner" value="<?php echo htmlspecialchars($dept_abbreviation); ?>">
-            <input type="hidden" name="personnel_id" value="<?php echo $user_id; ?>">
 
-            <div class="form-group">
-                <label for="docName">Document Name:</label>
-                <input class="form-control" type="text" id="docName" name="docname" required>
-            </div>
+    <div style="font-size:10px; border-radius: 12px; margin: 20px 25px 25px 250px !important; ; min-height: 70vh;">
 
-            <div class="form-group">
-                <label for="docType">Document Type:</label>
-                <select class="form-control" id="docType" name="doctype" required>
-                    <option value="1">Request</option>
-                    <option value="2">For Processing</option>
-                    <option value="3">Submission</option>
-                    <option value="4">Communication</option>
-                </select>
-            </div>
+        <div class="bread-crums" style="background-color: white; padding: 20px; margin-bottom: 20px;">
+            <a href="dashboard.php" style="font-size: 16px; color: black;"> Dashboard /</a>
+            <a href="add_document.php" class="" style="font-size: 16px; color: blue;">Add Document </a>
+        </div>
+        <div class="d-flex justify-content-center align-items-center" style="border-radius: 12px; margin-top: 20px !important; background-color: white;">
+            <div class="container my-5">
+            <h4 class="text-center mb-4" style="color: black !important">Add Document</h4>
+            <div class="form-container">
+                <form id="documentForm" action="../j_php/document_add.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="docowner" value="<?php echo htmlspecialchars($dept_abbreviation); ?>">
+                    <input type="hidden" name="personnel_id" value="<?php echo $user_id; ?>">
+                    <div class="form-group">
+                        <label for="docName">Document Name:</label>
+                        <input class="form-control" type="text" id="docName" name="docname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="docType">Document Type:</label>
+                        <select class="form-control" id="docType" name="doctype" required>
+                            <option value="1">Request</option>
+                            <option value="2">For Processing</option>
+                            <option value="3">Submission</option>
+                            <option value="4">Communication</option>
+                        </select>
+                    </div>
 
-            <div class="form-group">
-                <label for="contactNum">Contact Number:</label>
-                <input class="form-control" type="number" name="mobilenum" minlength="10" maxlength="10" id="contactNum" required>
-            </div>
+                    <div class="form-group">
+                        <label for="contactNum">Contact Number:</label>
+                        <input class="form-control" type="number" name="mobilenum" minlength="10" maxlength="10" id="contactNum" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="docfile">Upload Document:</label>
-                <input class="form-control" type="file" name="docfile" required>
-            </div>
+                    <div class="form-group">
+                        <label for="docfile">Upload Document:</label>
+                        <input class="form-control" type="file" name="docfile" required>
+                    </div>
 
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary">Add Document</button>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Add Document</button>
+                    </div>
+                </form>
             </div>
-        </form>
+            </div>
+        </div>
+        <div class="" style="font-size: 14px; text-align: center; margin-top: 20px !important; margin-bottom: 0 !important; border-top:2px solid black; margin-left:250px; margin-right: 25px;padding:0px 0px; background-color: transparent;">
+            <footer>
+                <p class="copyright" style="padding-top: 10px;color: black;">DWCL Document Tracking System © 2024</p>
+            </footer>
+        </div>
     </div>
-</div>
-
 
 <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
     <div class="modal-dialog modal-sm" role="document">

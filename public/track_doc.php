@@ -58,16 +58,16 @@ $unread_count = count($notifications);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dts-Track Document</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/Data-Table.css">
-    <link rel="stylesheet" href="assets/css/Data-Table2.css">
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/nav.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Data-Table.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Data-Table2.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/nav.css?v=<?php echo time(); ?>">
 </head>
 
-<body style="height:650px;">
+<body>
 <!-- Sidebar -->
 <div class="sidebar">
         <div class="sidenav-profile-container">
@@ -122,36 +122,35 @@ $unread_count = count($notifications);
             </ul>
         </div>
     </nav>
-    <div style="font-size:10px;">
-    <div class="container">
-        <div class="row" style="padding:0;margin:7px;">
-            <div class="col text-center">
-                <h4 style="color:rgb(134,142,150);">Track Document</h4>
-            </div>
+    <div style="font-size:10px; min-height: 90vh; padding-bottom: 20px; border-radius: 12px; margin: 20px 25px 25px 250px !important;">
+        <div class="bread-crums" style="background-color: white; padding: 20px; margin-bottom: 20px;">
+            <a href="dashboard.php" style="font-size: 16px; color: black;"> Dashboard /</a>
+            <a href="#" class="" style="font-size: 16px; color: blue;">Track Document </a>
         </div>
+    <div class="" style="min-height:65vh; height: fit-content; background-color: white; padding: 25px 20px">
         <form>
-            <div class="row align-items-center" style="padding:0;margin:7px;">
+            <div class="d-flex" style=" justify-content:space-between; padding:0;margin:7px;">
                 <div class="col-auto">
                     <input type="text" placeholder="Input Tracking Number" name="tracking" 
                            value="<?php if(isset($_GET['tracking'])) echo htmlspecialchars($_GET['tracking']); ?>" 
                            id="inputTracking" 
                            class="form-control form-control-sm" 
-                           style="max-width: 165px; font-size:12px;">
+                           style="width: 565px; font-size:15px;">
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-success btn-sm" type="submit" id="search" 
                             data-tracking="<?php if(isset($_GET['tracking'])) echo htmlspecialchars($_GET['tracking']); ?>" 
-                            style="font-size:10px;">Search</button>
+                            style="font-size:15px;">Search</button>
                 </div>
             </div>
         </form>
-        <div class="row no-gutters" style="margin-top: 19px;">
+        <div class="row no-gutters" style="padding: 25px 20px">
             <div class="col">
-                <div class="table-responsive" style="font-size:12px;background-color:#ffffff;">
+                <div class="table-responsive" style="font-size:14px;background-color:#ffffff;color:black;">
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
                             <tr>
-                                <th style="width:135px;">Timestamp</th>
+                                <th style="width:185px;">Timestamp</th>
                                 <th>Document Movement</th>
                                 <th style="width:381px;">Document Remarks</th>
                             </tr>
@@ -164,6 +163,11 @@ $unread_count = count($notifications);
             </div>
         </div>
     </div>
+    <div class="" style="font-size: 14px; text-align: center; margin-top: 20px !important; margin-bottom: 0 !important; border-top:2px solid black; margin-right: 25px;padding:0px 0px; background-color: transparent;">
+            <footer>
+                <p class="copyright" style="padding-top: 10px;color: black;">DWCL Document Tracking System © 2024</p>
+            </footer>
+        </div>
 </div>
 
 
