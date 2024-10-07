@@ -184,27 +184,44 @@ class Document extends DatabaseObject {
         return $x + $y;  
     }
 
-    public function forward($dept) {
-        $x = 0;
-        $y = 0;
-        $x = $this->change_is_last();
-        $this->doc_status = 2;
-        $this->update();
+    public function forward($dept_id) {
+    global $database;
+    $x = 0;
+    $y = 0;
 
-        $new_doc_hist = new DocumentHistory;
-        $new_doc_hist->doc_id = $this->doc_id;
-        $new_doc_hist->user_id = $_SESSION['user_id'];
-        $new_doc_hist->dept_id = $dept;
-        $new_doc_hist->dochist_type = 2;
-        $y = $new_doc_hist->create();
+    // Change the document status and update
+    $x = $this->change_is_last();
+    $this->doc_status = 2;
+    $this->update();
 
-         // Notify relevant user
-         $message = "Document '{$this->doc_name}' has been forwarded to department '{$dept}'.";
-         $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
-         notify_user($recipient_user_id, $message);
+    // Fetch the department abbreviation from the database
+    $dept_query = "SELECT dept_abbreviation FROM departments WHERE dept_id = '{$dept_id}' LIMIT 1";
+    $result = $database->query($dept_query);
+    $department = $database->fetch_array($result);
 
-        return $x + $y;
+    // Check if department abbreviation exists
+    if ($department) {
+        $dept_abbreviation = $department['dept_abbreviation'];
+    } else {
+        $dept_abbreviation = "Unknown Department"; // Fallback in case of error
     }
+
+    // Create a new document history entry
+    $new_doc_hist = new DocumentHistory;
+    $new_doc_hist->doc_id = $this->doc_id;
+    $new_doc_hist->user_id = $_SESSION['user_id'];
+    $new_doc_hist->dept_id = $dept_id; // Still store dept_id for history
+    $new_doc_hist->dochist_type = 2;
+    $y = $new_doc_hist->create();
+
+    // Notify relevant user
+    $message = "Document '{$this->doc_name}' has been forwarded to department '{$dept_abbreviation}'.";
+    $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
+    notify_user($recipient_user_id, $message);
+
+    return $x + $y;
+}
+
 
     public function add_remarks($remarks) {
         $new_doc_hist = new DocumentHistory;

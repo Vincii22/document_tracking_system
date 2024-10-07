@@ -1,1 +1,16 @@
-deny from all
+<IfModule mod_mime.c>
+    AddType application/pdf .pdf
+    AddType image/jpeg .jpg .jpeg
+    AddType image/png .png
+    AddType application/vnd.openxmlformats-officedocument.wordprocessingml.document .docx
+    AddType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet .xlsx
+    AddType application/vnd.openxmlformats-officedocument.presentationml.presentation .pptx
+</IfModule>
+
+# Deny access to everything by default
+Deny from all
+
+# Allow access to specific file types
+<FilesMatch "\.(pdf|docx|xlsx|pptx|jpg|jpeg|png)$">
+    Allow from all
+</FilesMatch>

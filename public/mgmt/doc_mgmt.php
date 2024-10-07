@@ -243,12 +243,33 @@ $unread_count = count($notifications);
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
-                    <div id="tableHolder" class="row no-gutters" style="">
+                    <div id="tableHolder" class="row no-gutters">
                     </div>
                 </table>
             </div>
         </div>
     </div>
+<!-- Modal for viewing document details -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLabel">Document Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Name:</strong> <span id="docName"></span></p>
+                <p><strong>Owner:</strong> <span id="docOwner"></span></p>
+                <p><strong>Type:</strong> <span id="docType"></span></p>
+                <p><strong>File:</strong> <span id="docFile"></span></p>
+                <p><strong>Date Started:</strong> <span id="docDateStarted"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
         <div class="modal-dialog modal-sm" role="document">
@@ -290,6 +311,46 @@ $unread_count = count($notifications);
 
     <script src="../../j_js/docmgmt.js"></script>
     <script src="../../j_js/menu-visibility.js"></script>
+
+    <script>
+          // Event listener for viewing the document details
+$("body").on("click", ".btn-view", function() {
+    var docId = $(this).data('id'); // Get the document ID from the button's data-id attribute
+    console.log("Selected Document ID:", docId); // Debugging
+
+    // AJAX request to fetch document details
+    $.ajax({
+        url: '../../j_php/get_document_details.php',
+        type: 'POST',
+        data: { doc_id: docId }, // Send the document ID to the server
+        success: function(response) {
+            console.log("Response from server:", response); // Log response from the server
+            try {
+                var data = JSON.parse(response); // Parse the JSON response
+                if (data.error) {
+                    alert(data.error); // Show error message if exists
+                } else {
+                    // Populate the modal with the document details
+                    $('#docName').text(data.doc_name);
+                    $('#docOwner').text(data.doc_owner);
+                    $('#docType').text(data.doc_type);
+                    $('#docFile').html('<a href="' + data.doc_file + '" target="_blank">View File</a>');
+                    $('#docDateStarted').text(data.date_started);
+
+                    // Show the modal
+                    $('#viewModal').modal('show');
+                }
+            } catch (e) {
+                alert('Error parsing server response.'); // Handle parsing errors
+                console.error('Parsing error:', e);
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('Error fetching document details: ' + error); // Handle AJAX errors
+        }
+    });
+});
+    </script>
 </body>
 
 </html>
