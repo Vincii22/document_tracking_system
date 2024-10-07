@@ -5,59 +5,50 @@ $(document).ready(function () {
     $("#doc_search").val("#");
 
     getDocList(1);
-   // getDocList(0,1,64);
 
-    $("#tableHolder").on( "click", ".page-item",function() {
-        page = $(this).data('value');
+    $("#tableHolder").on("click", ".page-item", function() {
+        var page = $(this).data('value');
+        getDocList(page);
+    });
 
-       getDocList(page);
-      });
-
-    //event listener for view select
-    $("body").on( "change", "select",function() {
+    // Event listener for view select
+    $("body").on("change", "select", function() {
         getDocList(1);
         console.log($("#viewSelect").val());
-      });
-    //event listener for search
-    $("body").on( "keyup", "#doc_search",function() {
+    });
+
+    // Event listener for search
+    $("body").on("keyup", "#doc_search", function() {
         console.log('shit');
-        if($("#doc_search").val().length > 2 || $("#doc_search").val().length == 0){
+        if ($("#doc_search").val().length > 2 || $("#doc_search").val().length == 0) {
             getDocList(1);
             console.log('yes');
         }
-          
     });
-    //event listener for track document button
-    $("body").on( "click", ".btn-success",function() {
+
+    // Event listener for track document button
+    $("body").on("click", ".btn-success", function() {
         var track = $(this).parent().prev().prev().prev().prev().prev().text();
-        
-       // window.location.href = "../track_doc.php?tracking="+track;
-        window.open('../track_doc.php?tracking='+track, 'window name', 'window settings');
+        window.open('../track_doc.php?tracking=' + track, 'window name', 'window settings');
         return false;
     });
     
-      //event listener when page is loaded
-  /*  $(window).focus(function(e) {
-        location.reload();
-    });*/
-    
 
+
+    // Event listener when page is loaded
+    /* $(window).focus(function(e) {
+        location.reload();
+    }); */
 });
 
-//user-defined functions
-
-
-
-function getDocList(page){
-    $.get("../../j_php/documents_results_list.php",{
+// User-defined functions
+function getDocList(page) {
+    $.get("../../j_php/documents_results_list.php", {
         docstatus: $("#viewSelect").val(),
         page: page,
         search: $("#doc_search").val()
-        }, 
-         function(data){
-            $("#tableHolder").html(data);
-            }
-        );
-    }
-
-
+    }, 
+    function(data) {
+        $("#tableHolder").html(data);
+    });
+}

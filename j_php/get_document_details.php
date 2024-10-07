@@ -13,7 +13,7 @@ if (isset($_POST['doc_id'])) {
             'doc_name' => $document->doc_name,
             'doc_owner' => $document->doc_owner,
             'doc_type' => $document->doc_type,
-            'doc_file' => '/uploads/' . $document->doc_file, // Assuming file path
+            'doc_file' => '/php/PreOral/uploads/' . $document->doc_file, // Assuming file path
             'date_started' => $document->date_started
         ]);
     } else {

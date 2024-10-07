@@ -134,10 +134,7 @@ $unread_count = count($notifications);
                         <div class="col">
                             <button class="btn btn-success btn-sm" type="button" id="acceptIncoming" style="height:23px;padding:0px 0px;font-size:12px;margin:0px -8px;width:65px;">Accept</button>
                             <button class="btn btn-warning btn-lg" type="button" id="addIncomingRemarks" style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:8px -8px;width:62px;" data-target="#remarksModal" data-toggle="modal">Remarks</button>
-                            <?php foreach ($documents as $doc) : ?>
-                               <button class="btn btn-info btn-sm viewDoc" type="button" data-id="<?= $doc->doc_id ?>">View</button>
-                            <?php endforeach; ?>
-
+                            <button class="btn btn-info btn-sm" type="button" id="viewSelectedDoc" style="height:23px;padding:0px 0px;font-size:12px;margin:8px -8px;width:62px;">View</button>
                         </div>
                     </div>
                     </div>
@@ -244,43 +241,47 @@ $unread_count = count($notifications);
     <script src="../j_js/docprocessing.js"></script>
 
     <script>
-$(document).on('click', '.viewDoc', function() {
-    var docId = $(this).data('id'); // Get the document ID from the button
-    console.log("Document ID:", docId);  // Debug: Check if doc_id is correctly logged
-
-    $.ajax({
-        url: '../j_php/get_document_details.php', // The PHP file that handles the document fetching
-        type: 'POST',
-        data: { doc_id: docId },  // Send the document ID to the server
-        success: function(response) {
-            console.log("Response from server:", response);  // Log response from the server
-            try {
-                var data = JSON.parse(response);
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    // Populate the modal with the document details
-                    $('#docName').text(data.doc_name);
-                    $('#docOwner').text(data.doc_owner);
-                    $('#docType').text(data.doc_type);
-                    $('#docFile').html('<a href="' + data.doc_file + '" download>Download File</a>');
-                    $('#docDateStarted').text(data.date_started);
-
-                    // Show the modal
-                    $('#viewModal').modal('show');
-                }
-            } catch (e) {
-                alert('Error parsing server response.');
-                console.error('Parsing error:', e);
+          // Event listener for viewing the selected document
+          $("#viewSelectedDoc").click(function() {
+            var selectedDoc = $("#incomingList option:selected").val(); // Get selected document from the list
+            if (selectedDoc) {
+                console.log("Selected Document ID:", selectedDoc);  // Debugging
+    
+                $.ajax({
+                    url: '../j_php/get_document_details.php',
+                    type: 'POST',
+                    data: { doc_id: selectedDoc },  // Send the document ID to the server
+                    success: function(response) {
+                        console.log("Response from server:", response);  // Log response from the server
+                        try {
+                            var data = JSON.parse(response);
+                            if (data.error) {
+                                alert(data.error);
+                            } else {
+                                // Populate the modal with the document details
+                                $('#docName').text(data.doc_name);
+                                $('#docOwner').text(data.doc_owner);
+                                $('#docType').text(data.doc_type);
+                                $('#docFile').html('<a href="' + data.doc_file + '" target="_blank">View File</a>');
+                                $('#docDateStarted').text(data.date_started);
+    
+                                // Show the modal
+                                $('#viewModal').modal('show');
+                            }
+                        } catch (e) {
+                            alert('Error parsing server response.');
+                            console.error('Parsing error:', e);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error fetching document details: ' + error);
+                    }
+                });
+            } else {
+                alert("Please select a document to view.");
             }
-        },
-        error: function(xhr, status, error) {
-            alert('Error fetching document details: ' + error);
-        }
-    });
-});
-
-
+        });
+    
     </script>
 </body>
 
