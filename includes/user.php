@@ -1,5 +1,6 @@
 <?php
 require_once('database.php');
+require_once('document.php');
 
 class User extends DatabaseObject {
 
@@ -73,8 +74,11 @@ class User extends DatabaseObject {
         $object_array = array();
         while ($row = $database->fetch_array($result_set)){
             $object_array[] = $row;
+
         }
+
         return $object_array;
+        
     }
 
     public function get_searched_incoming($searchTerm) {
@@ -91,9 +95,12 @@ class User extends DatabaseObject {
       //  echo $sql;
         $result_set = $database->query($sql);
         $object_array = array();
+        
         while ($row = $database->fetch_array($result_set)){
             $object_array[] = $row;
+            
         }
+
         return $object_array;
     }
 

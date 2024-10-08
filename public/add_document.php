@@ -212,11 +212,11 @@ div {
                             <option value="4">Communication</option>
                         </select>
                     </div>
-
+<!-- 
                     <div class="form-group">
                         <label for="contactNum">Contact Number:</label>
                         <input class="form-control" type="number" name="mobilenum" minlength="10" maxlength="10" id="contactNum" required>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label for="docfile">Upload Document:</label>

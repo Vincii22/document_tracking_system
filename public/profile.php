@@ -7,18 +7,19 @@ if (!isset($_SESSION['usertype'])) {
 } 
 
 // Fetch the current user information
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id']; // Get the current user ID from session
 $query = "SELECT users.username, users.first_name, users.last_name, users.usertype, 
+                 users.user_abbreviation, users.email, 
                  departments.dept_abbreviation, users.user_image
           FROM users 
           JOIN departments ON users.dept_id = departments.dept_id
           WHERE users.user_id = {$user_id}";
 
-$result = $database->query($query);
-$user_data = $database->fetch_array($result);
+$result = $database->query($query); // Execute the query
+$user_data = $database->fetch_array($result); // Fetch the result as an associative array
 
 if (!$user_data) {
-    echo "User data not found.";
+    echo "User data not found."; // Check if user data exists
     exit;
 }
 
@@ -27,7 +28,10 @@ $_SESSION['first_name'] = $user_data['first_name'];
 $_SESSION['last_name'] = $user_data['last_name'];
 $_SESSION['username'] = $user_data['username'];
 $_SESSION['usertype'] = $user_data['usertype'];
+$_SESSION['user_abbreviation'] = $user_data['user_abbreviation'];
+$_SESSION['email'] = $user_data['email'];
 $_SESSION['dept_abbreviation'] = $user_data['dept_abbreviation'];
+
 
 $user_id = $_SESSION['user_id'];
 $notification_query = "SELECT * FROM notifications WHERE user_id = '{$user_id}' AND status = 'UNREAD' ORDER BY created_at DESC";
@@ -176,11 +180,46 @@ $unread_count = count($notifications);
             </div>
         </div>
 
-        <!-- Profile Footer (Extra info, buttons, etc.) -->
         <div class="profile-footer">
-            <p>Here you can add extra profile-related information or actions, such as updating details, uploading a new profile image, or changing settings.</p>
-        </div>
+    <p>Update your profile information:</p>
+    
+    <form action="../j_php/update_profile.php" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" value="<?php echo $user_data['username'] ?? ''; ?>" required>
     </div>
+
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control" name="first_name" value="<?php echo $user_data['first_name'] ?? ''; ?>" required>
+    </div>
+
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" name="last_name" value="<?php echo $user_data['last_name'] ?? ''; ?>" required>
+    </div>
+
+    <div class="form-group">
+    <label for="user_abbreviation">User Abbreviation</label>
+    <input type="text" class="form-control" name="user_abbreviation" value="<?php echo htmlspecialchars($user_data['user_abbreviation'] ?? ''); ?>" required>
+</div>
+
+<div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" required>
+</div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Enter new password">
+        <small class="form-text text-muted">Leave blank if you don't want to change the password.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Profile</button>
+</form>
+
+
+</div>
 
     <!-- Bootstrap JS -->
     <script src="assets/js/jquery.min.js"></script>

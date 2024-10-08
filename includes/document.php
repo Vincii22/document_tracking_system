@@ -318,15 +318,18 @@ class Document extends DatabaseObject {
 
     public function get_dochist() {
         global $database;
-
-        $sql = "SELECT documents_history.timestamp, CONCAT(documents_history.dochist_type, ' ', departments.dept_abbreviation, ";
-        $sql .= "' BY ', users.user_abbreviation) AS dochist_specs, documents_history.dochist_remarks";
-        $sql .= " FROM documents_history";
-        $sql .= " INNER JOIN departments ON documents_history.dept_id = departments.dept_id";
-        $sql .= " INNER JOIN users ON documents_history.user_id = users.user_id";
-        $sql .= " WHERE documents_history.doc_id = " . $this->doc_id;
-        $sql .= " ORDER BY documents_history.timestamp ASC";
-
+    
+        // Fetch the document history along with department and user information
+        $sql = "SELECT documents_history.timestamp, ";
+        $sql .= "CONCAT(documents_history.dochist_type, ' ', departments.dept_abbreviation, ' BY ', users.user_abbreviation) AS dochist_specs, ";
+        $sql .= "documents_history.dochist_remarks, documents.doc_name AS document_name "; // Use doc_name instead of document_name
+        $sql .= "FROM documents_history ";
+        $sql .= "INNER JOIN departments ON documents_history.dept_id = departments.dept_id "; // Joining departments
+        $sql .= "INNER JOIN users ON documents_history.user_id = users.user_id "; // Joining users
+        $sql .= "INNER JOIN documents ON documents_history.doc_id = documents.doc_id "; // Joining documents table
+        $sql .= "WHERE documents_history.doc_id = " . $this->doc_id . " "; // Filtering by document ID
+        $sql .= "ORDER BY documents_history.timestamp ASC"; // Ordering by timestamp
+    
         $result_set = $database->query($sql);
         $object_array = array();
         while ($row = $database->fetch_array($result_set)) {
@@ -334,7 +337,7 @@ class Document extends DatabaseObject {
         }
         return $object_array;
     }
-
+    
     public function generate_barcode() {
         if (empty($this->doc_trackingnum)) {
             return false;
