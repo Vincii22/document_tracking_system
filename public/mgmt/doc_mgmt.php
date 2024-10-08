@@ -42,7 +42,7 @@ $user_result = $database->query($user_query);
 $user_data = $database->fetch_array($user_result);
 
 // Check if the user image is set and accessible
-$user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : 'assets/images/default-profile.jpg';
+$user_image = !empty($user_data['user_image']) ? $user_data['user_image'] : '../assets/images/default-profile.jpg';
 
 $user_id = $_SESSION['user_id'];
 $notification_query = "SELECT * FROM notifications WHERE user_id = '{$user_id}' AND status = 'UNREAD' ORDER BY created_at DESC";
@@ -63,13 +63,13 @@ $unread_count = count($notifications);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dts-Doc MGMT</title>
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/css/Data-Table.css">
-    <link rel="stylesheet" href="../assets/css/Data-Table2.css">
-    <link rel="stylesheet" href="../assets/css/Footer-Basic.css">
-    <link rel="stylesheet" href="../assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/Data-Table.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/Data-Table2.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/Footer-Basic.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/dataTables.bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../assets/css/styles.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../assets/css/nav.css?v=<?php echo time(); ?>">
     <style>
@@ -78,11 +78,48 @@ $unread_count = count($notifications);
             background-color: #f8f9fa;
         }
 
-        .profile-container {
-            margin-left: 270px;
-            margin-top: 50px;
+
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 30px;
+        }
+
+        .profile-details h2 {
+            font-size: 36px;
+            color: #343a40;
+        }
+
+        .profile-details p {
+            font-size: 18px;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+
+        .profile-footer {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-footer p {
+            font-size: 16px;
+            color: #343a40;
+        }
+        
         .profile-header {
             display: flex;
             align-items: center;
@@ -220,13 +257,15 @@ $unread_count = count($notifications);
         </div>
     </nav>
     </div>
-
-    <div class="table-container-box">
-        <div class="table-container">
-            <h4 style="color: rgb(134,142,150); line-height: 70px">Document Management</h4>
+    <div style="font-size:10px; min-height: 90vh; padding-bottom: 20px; border-radius: 12px; margin: 20px 25px 25px 250px !important;">
+        <div class="bread-crums" style="background-color: white; padding: 20px; margin-bottom: 20px !important;">
+            <a href="dashboard.php" style="font-size: 16px; color: black;"> Dashboard /</a>
+            <a href="#" class="" style="font-size: 16px; color: blue;">Track Document </a>
+        </div>
+        <div class="table-container" style="min-height:65vh; height: fit-content; background-color: white; padding: 25px 20px">
             <div class="row" style="padding:0px;margin:7px;">
                 <div class="col">
-                    <select class="form-control-sm" id="viewSelect" style="font-size:12px;height:33px;">
+                    <select class="form-control-sm" id="viewSelect" style="font-size:15px;height:33px;">
                         <option value="0" selected disabled hidden>View Options</option>
                         <option value="0">View All</option>
                         <option value="1">View Waiting</option>
@@ -248,7 +287,7 @@ $unread_count = count($notifications);
                 </table>
             </div>
         </div>
-    </div>
+</div>
 <!-- Modal for viewing document details -->
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -269,6 +308,7 @@ $unread_count = count($notifications);
         </div>
     </div>
 </div>
+
 
 
     <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">

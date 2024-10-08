@@ -12,7 +12,7 @@ if(!isset($_SESSION['usertype'])) {
 $documents = Document::find_all(); // Assuming you have a 'find_all' method in your Document class
 
 if (!$documents) {
-    echo "No documents found.";
+    echo '<div style="position: absolute; top: 10%; left: 50%;">No documents found.</div>';
 }
 
 // Assuming you have a way to retrieve user data
@@ -43,19 +43,96 @@ $unread_count = count($notifications);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dts-Documents on Hand</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/Data-Table.css">
-    <link rel="stylesheet" href="assets/css/Data-Table2.css">
-    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/nav.css">
-    <link rel="stylesheet" href="assets/css/docs_on_hand.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Data-Table.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Data-Table2.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/nav.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/docs_on_hand.css?v=<?php echo time(); ?>">
+    <style>
+    .custom-select {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        transition: all 0.3s ease;
+    }
+    
+    .custom-select:hover {
+        border-color: #007bff;
+        box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
+    }
+    
+    .custom-button {
+        display: block;
+        width: 100%;
+        padding: 6px;
+        margin: 8px 0;
+        font-size: 12px;
+        text-align: center;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .custom-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Button Colors */
+    #acceptIncoming {
+        background-color: #28a745;
+        color: white;
+    }
+
+    #addIncomingRemarks, #addOnQueueRemarks, #addOutgoingRemarks {
+        background-color: #ff4d4d;
+        color: white;
+    }
+
+    #viewSelectedDoc {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    #forward {
+        background-color: #ffc107;
+        color: white;
+    }
+
+    #completed {
+        background-color: #007bff;
+        color: white;
+    }
+
+    #cancel, #cancelForward {
+        background-color: #dc3545;
+        color: white;
+    }
+    option{
+        border-bottom: 1px solid black;
+        padding: 5px 0;
+        margin: 0px 10px;
+    }
+    option:focus{
+        background: #5F5F5F;
+    }
+    option:hover{
+        background-color: #5F5F5F;
+        color: white;
+    }
+</style>
 </head>
 
-<body style="height:650px;">
+<body style="position: relative;">
 <!-- Sidebar -->
 <div class="sidebar">
         <div class="sidenav-profile-container">
@@ -114,9 +191,13 @@ $unread_count = count($notifications);
 
 
     </div>
-    <div style="font-size:10px;">
-        <div class="container" style="width:1191px;">
-            <div class="row" style="padding:0px;margin:0px;height:51px;width:929px;">
+    <div style="font-size:10px; min-height: 90vh; padding-bottom: 20px; border-radius: 12px; margin: 20px 25px 25px 250px !important;">
+        <div class="bread-crums" style="background-color: white; padding: 20px; margin-bottom: 20px;">
+            <a href="dashboard.php" style="font-size: 16px; color: black;"> Dashboard /</a>
+            <a href="#" class="" style="font-size: 16px; color: blue;">Process Document </a>
+        </div>
+        <div class="" style="height: fit-content; background-color: white; padding-right: 20px;">
+            <div class="d-flex" style="">
                 <div class="col-9" style="margin:20px 0px;height:32px;">
                     <h4 style="color:rgb(134,142,150);padding:0px 120px;width:476px;">Process Documents</h4>
                 </div>
@@ -124,66 +205,97 @@ $unread_count = count($notifications);
                 
                 <input class="visible" type="text" id="doc_search" placeholder="Search Documents" style="width:150px;height:35px;font-size:12px;" autocomplete="off"></div>
             </div>
-            <div class="row" style="width:1100px;font-size:12px;height:504px;padding:0px 0px;margin:0px 0px;">
-                <div class="col-auto my-auto" style="margin:0px;width:260px;height:449px;padding:0px 0px;"><select multiple="" id="incomingList" style="height:460px;width:250px;"><optgroup label="***INCOMING">
-                
-                </optgroup></select></div>
-                <div
-                    class="col-auto" style="margin:0px 0px;width:80px;height:300px;padding:0px 0px;">
-                    <div class="row" id="incomingButtons" style="margin:140px 13px;">
-                        <div class="col">
-                            <button class="btn btn-success btn-sm" type="button" id="acceptIncoming" style="height:23px;padding:0px 0px;font-size:12px;margin:0px -8px;width:65px;">Accept</button>
-                            <button class="btn btn-warning btn-lg" type="button" id="addIncomingRemarks" style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:8px -8px;width:62px;" data-target="#remarksModal" data-toggle="modal">Remarks</button>
-                            <button class="btn btn-info btn-sm" type="button" id="viewSelectedDoc" style="height:23px;padding:0px 0px;font-size:12px;margin:8px -8px;width:62px;">View</button>
+            <div class="row" style="font-size:12px;height:454px;padding:0 50px;margin:0; display: flex; justify-content: space-between;">
+            <!-- Incoming List -->
+            <div class="">
+                <div class="" style="margin:19px;width:260px;height:349px;">
+                    <h1 class="" style="color: black; position: relative; font-size: 15px; text-align: center; width: 280px"><b>INCOMING</b></h1>
+                    <select multiple="" id="incomingList" class="custom-select" style="height:340px;width:300px;">
+                        <optgroup style=""></optgroup>
+                    </select>
+                </div>
+
+                <!-- Incoming Buttons -->
+                <div class="" style="">
+                    <div class="row" id="incomingButtons" style="display: flex; justify-content: center; margin-left: 24px;">
+                        <div class="d-flex" style="gap: 10px;">
+                            <button style="padding: 5px 15px;" class="btn btn-success btn-sm custom-button" type="button" id="acceptIncoming">Accept</button>
+                            <button style="padding: 5px 15px;" class="btn btn-warning btn-sm custom-button" type="button" id="addIncomingRemarks" data-target="#remarksModal" data-toggle="modal">Remarks</button>
+                            <button style="padding: 5px 15px;" class="btn btn-info btn-sm custom-button" type="button" id="viewSelectedDoc">View</button>
                         </div>
                     </div>
-                    </div>
-                    <div class="col-auto my-auto" style="margin:19px;width:260px;height:449px;"><select multiple="" id="onQueueList" style="height:460px;width:250px;"><optgroup label="***ON QUEUE">
-
-                    </optgroup></select></div>
-                    <div class="col-auto" style="margin:0px 0px;width:80px;height:449px;padding:0px 0px;">
-                <div class="row" id="onQueueButtons" style="margin:140px 0px;">
-                    <div class="col"><button class="btn btn-success btn-sm" type="button" id="forward" style="height:23px;padding:0px 0px;font-size:12px;margin:6px -8px;width:65px;" data-target="#forwardDoc" data-toggle="modal">Forward</button><button class="btn btn-warning btn-lg" type="button" id="addOnQueueRemarks"
-                            style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:3px -8px;width:62px;" data-target="#remarksModal" data-toggle="modal">Remarks</button><button class="btn btn-primary btn-lg" type="button"
-                            id="completed" style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:6px -8px;width:73px;">Completed</button><button class="btn btn-danger btn-lg" type="button" id="cancel" style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:3px -8px;width:51px;">Cancel</button></div>
                 </div>
-        </div>
-        <div class="col-auto my-auto" style="margin:19px;width:260px;height:449px;"><select multiple="" id="outgoingList" style="height:460px;width:250px;"><optgroup label="***PENDING">
-
-        </optgroup></select></div>
-        <div
-            class="col-auto" style="margin:0px 0px;width:80px;height:449px;padding:0px 0px;">
-            <div class="row" id="outgoingButtons" style="margin:140px 5px;">
-                <div class="col"><button class="btn btn-danger btn-sm" type="button" id="cancelForward" style="height:23px;padding:0px 0px;font-size:12px;margin:0px -8px;width:94px;">Cancel Forward</button><button class="btn btn-warning btn-lg" type="button" id="addOutgoingRemarks"
-                        style="height:23px;padding:0px 0px;font-size:12px;background-color:rgb(225,33,33);margin:8px -8px;width:62px;" data-target="#remarksModal" data-toggle="modal">Remarks</button></div>
             </div>
-    </div>
-    </div>
+
+           <div class="">
+                <!-- On Queue List -->
+                <div class="" style="margin:19px;width:260px;height:349px;">
+                    <h1 class="" style="color: black; position: relative; font-size: 15px; text-align: center; width: 280px"><b>ON QEUE</b></h1>
+                    <select multiple="" id="onQueueList" class="custom-select" style="height:340px;width:300px;">
+                        <optgroup style=""></optgroup>
+                    </select>
+                </div>
+
+                <!-- On Queue Buttons -->
+                <div class="" style="">
+                <div class="row" id="onQueueButtons" style="display: flex; justify-content: center; margin-left: 24px;">
+                    <div class="d-flex" style="gap: 10px">
+                        <button style="padding: 5px 6px;" class="btn btn-success btn-sm custom-button" type="button" id="forward" data-target="#forwardDoc" data-toggle="modal">Forward</button>
+                        <button style="padding: 5px 6px;" class="btn btn-warning btn-sm custom-button" type="button" id="addOnQueueRemarks" data-target="#remarksModal" data-toggle="modal">Remarks</button>
+                        <button style="padding: 5px 6px;" class="btn btn-primary btn-sm custom-button" type="button" id="completed">Completed</button>
+                        <button style="padding: 5px 6px;" class="btn btn-danger btn-sm custom-button" type="button" id="cancel">Cancel</button>
+                    </div>
+                </div>
+                </div>
+           </div>
+
+            <div class="">
+                <!-- Outgoing List -->
+                <div class="" style="margin:19px;width:260px;height:349px;">
+                    <h1 class="" style="color: black; position: relative; font-size: 15px; text-align: center; width: 280px"><b>PENDING</b></h1>
+                    <select multiple="" id="outgoingList" class="custom-select" style="height:340px;width:300px;">
+                        <optgroup style=""></optgroup>
+                    </select>
+                </div>
+
+                <!-- Outgoing Buttons -->
+                <div class="" style="">
+                    <div class="row" id="outgoingButtons" style="display: flex; justify-content: center; margin-left: 24px;">
+                        <div class="d-flex" style="gap: 10px;">
+                            <button style="padding: 5px 15px;" class="btn btn-danger btn-sm custom-button" type="button" id="cancelForward">Cancel Forward</button>
+                            <button style="padding: 5px 15px;" class="btn btn-warning btn-sm custom-button" type="button" id="addOutgoingRemarks" data-target="#remarksModal" data-toggle="modal">Remarks</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     </div>
 
-    <div class="modal fade" role="dialog" tabindex="-1" id="remarksModal" style="padding:0px 0px;margin:200px 0px;">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:rgb(255,0,0);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
-                    <h5 class="modal-title" style="color:rgb(0,255,255);margin:-2px 4px;">Add Remarks</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body" style="height:102px;"><textarea style="font-size:12px;padding:0px;width:256px;height:70px;" maxlength="95"></textarea></div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="remarksModal" style="padding:0px 0px;margin:200px 0px; ">
+        <div class="modal-dialog modal-sm" role="document" >
+            <div class="modal-content" style="width:400px;">
+                <div class="modal-header"  style="background-color:#5f5f5f;margin:0px 0px;padding:10px 15px;">
+                    <h5 class="modal-title" style="color:white;margin:-2px 4px;">Add Remarks</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button></div>
+                <div class="modal-body" style="height:152px; width:400px !important;"><textarea style="font-size:12px;padding:0px;width:100%;height:100% !important;" maxlength="95"></textarea></div>
                 <div class="modal-footer" style="height:35px;"><button class="btn btn-light btn-sm" type="button" data-dismiss="modal" style="height:23px;width:50px;margin:0px 0px;padding:0px 0px;">Close</button><button class="btn btn-primary btn-sm" id="remarksSave" type="button" style="height:23px;padding:0px 0px;margin:0px 10px;width:45px;font-size:12px;">Save</button></div>
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;">
+    
+    <div class="modal fade" role="dialog" tabindex="-1" id="editPassword" style="padding:0px 0px;margin:200px 0px;overflow: hidden;">
         <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:rgb(255,0,0);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
-                    <h5 class="modal-title" style="color:rgb(0,255,255);margin:-2px 4px;">Change Password</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body" style="width:273px;">
+            <div class="modal-content" style="width:400px; ">
+                <div class="modal-header" style="background-color:#5f5f5f;margin:0px 0px;padding:10px 15px;">
+                    <h5 class="modal-title" style="color:white;margin:-2px 4px;">Change Password</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button></div>
+                <div class="modal-body" style="height:202px; width:400px !important;">
                     <div class="row">
                         <div class="col"><small style="color:rgb(255,0,0); display:none">Password was updated successfully.</small></div>
                     </div>
                     <div class="row">
-                        <div class="col-auto" style="margin:0px 0px;"><label class="col-form-label" style="font-size:12px;">Enter Password:</label><input type="password" id="mPassword1" style="font-size:12px;margin:0px 21px;"></div>
-                        <div class="col-auto" style="margin:0px 0px;"><label class="col-form-label" style="font-size:12px;">Reenter Password:&nbsp;</label><input type="password" id="mPassword2" style="font-size:12px;margin:5px;"></div>
+                        <div class="col-auto" style="margin:0px 0px;width:100%;"><label class="col-form-label" style="font-size:15px;">Enter Password:</label><input type="password" id="mPassword1" style="font-size:17px;margin:0px 5px; width: 100%; "></div>
+                        <div class="col-auto" style="margin:0px 0px;width:100%;"><label class="col-form-label" style="font-size:15px;">Reenter Password:&nbsp;</label><input type="password" id="mPassword2" style="font-size:17px;margin:5px; width: 100%; "></div>
                     </div>
                 </div>
                 <div class="modal-footer" style="height:35px;"><button class="btn btn-light btn-sm" type="button" id="mPasswordClose" data-dismiss="modal" style="height:23px;width:50px;margin:0px 0px;padding:0px 0px;">Close</button><button class="btn btn-primary btn-sm" type="button" id="mPasswordSave"
@@ -191,14 +303,15 @@ $unread_count = count($notifications);
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="forwardDoc" style="padding:0px 0px;margin:200px 0px;">
+    <div class="modal fade" role="dialog" tabindex="-1" id="forwardDoc" style="padding:0px 0px 13px;margin:200px 0px;">
         <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:rgb(255,0,0);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
-                    <h5 class="modal-title" style="color:rgb(0,255,255);margin:-2px 4px;">Forward Document</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body" style="width:273px;">
+            <div class="modal-content" style="width:400px; ">
+                <div class="modal-header" style="background-color:#5f5f5f;margin:0px 0px;padding:10px 15px;">
+                    <h5 class="modal-title" style="color:white;margin:-2px 4px;">Forward Document</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button></div>
+                <div class="modal-body" style="height:105px; width:400px !important;">
                     <div class="row">
-                        <div class="col-auto" style="padding:0px 0px;"><label class="col-form-label" style="font-size:12px;">Please select department:</label><select style="font-size:12px;margin:0px 5px;"><optgroup label=""><option value="12" selected=""></option><option value="13">SGOD-P&amp;R</option><option value="14">CID-ALS</option></optgroup></select></div>
+                        <div class="col-auto" style="padding:0px 13px;position:relative; width: 100%;"><label class="col-form-label" style="font-size:17px;">Please select department:</label>
+                        <br><select style="font-size:15px;margin:10px 5px;position: absolute; right:10px;"><optgroup label=""><option value="12" selected=""></option><option value="13">SGOD-P&amp;R</option><option value="14">CID-ALS</option></optgroup></select></div>
                     </div>
                 </div>
                 <div class="modal-footer" style="height:35px;"><button class="btn btn-light btn-sm" type="button" id="mForwardClose" data-dismiss="modal" style="height:23px;width:50px;margin:0px 0px;padding:0px 0px;">Close</button><button class="btn btn-success btn-sm" type="button" id="mForward"
@@ -208,16 +321,16 @@ $unread_count = count($notifications);
     </div>
 
     <!-- MODAL FOR VIEWING DOCUMENT  -->
-    <div class="modal fade" role="dialog" tabindex="-1" id="viewModal" style="padding:0px 0px;margin:200px 0px;">
+    <div class="modal fade" role="dialog" tabindex="-1" id="viewModal" style="padding:0px 0px;margin:200px 0px;overflow:hidden">
     <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:rgb(0,123,255);width:298px;margin:0px 0px;height:30px;padding:2px 2px;">
-                <h5 class="modal-title" style="color:rgb(255,255,255);margin:-2px 4px;">Document Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="modal-content" style="width:400px;">
+            <div class="modal-header" style="background-color:#5f5f5f;margin:0px 0px;padding:10px 15px;">
+                <h5 class="modal-title" style="color:white;margin:-2px 4px;">Document Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
             </div>
             <div class="modal-body" style="width:273px;">
                 <!-- Document details will be displayed here -->
-                <div id="documentDetails" style="font-size:12px;">
+                <div id="documentDetails" style="font-size:15px;">
                     <p><strong>Document Name:</strong> <span id="docName"></span></p>
                     <p><strong>Document Owner:</strong> <span id="docOwner"></span></p>
                     <p><strong>Document Type:</strong> <span id="docType"></span></p>

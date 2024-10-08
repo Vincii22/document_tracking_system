@@ -6,9 +6,12 @@ body {
 
 /* Navbar styles */
 .navbar {
-    background-color: #0b71e7; /* Blue background */
+    background-color: white; /* Blue background */
     padding: 0.5rem 1rem;
     margin-left: 225px; /* Align with the sidebar width */
+    a{
+        color: black !important;
+    }
 }
 
 .navbar-brand {
@@ -34,7 +37,7 @@ body {
 }
 
 .dropdown-menu a {
-    color: #333;
+    color: #fff;
 }
 
 .dropdown-menu a:hover {
@@ -54,15 +57,11 @@ body {
     left: 0;
     width: 225px; /* Set width to 250px to allow room for icon and text */
     height: 100%;
-    background-color: rgb(255, 255, 255); /* Blue background */
+    background-color: #5f5f5f; /* Blue background */
     padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center; /* Center the links horizontally */
 
     .sidenav-profile-container{
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid white;
         padding: 10px 0;
         display: flex;
         flex-direction: column;
@@ -74,7 +73,7 @@ body {
             width: 100% !important;
             text-decoration: none;
             font-size: 14px;
-            color: black;
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -90,7 +89,8 @@ body {
         p{
             margin-bottom: 0 !important;
             text-transform: uppercase;
-            font-size: .8rem
+            font-size: .8rem;
+            color: #eeeeee;
         }
 
     }
@@ -105,20 +105,22 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-top: 70px !important;
         
         a{
-            color: black;
+            color: white;
         }
     }
 
     .log-out{
-        border-top: 1px solid black;
-        width: 100%;
+        border-top: 2px solid white;
+        width: 80%;
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 5px 0;
         background: #0b71e7;
+        display: none;
 
         .nav-link{
             padding: 10px 0 !important;
@@ -148,7 +150,7 @@ body {
 /* User Info Styles */
 .user-info {
     text-align: center; /* Center text */
-    color: #0b71e7; /* Text color */
+    color: #3c8dec; /* Text color */
 }
 
 .user-name {
@@ -165,7 +167,7 @@ body {
     padding: 15px 20px;
     text-decoration: none;
     font-size: 14px;
-    color: #0b71e7; /* Change to a contrasting color for better visibility */
+    color: #3c8dec; /* Change to a contrasting color for better visibility */
     display: flex;
     align-items: center;
     justify-content: flex-start; /* Align text and icon to the left */
@@ -180,13 +182,15 @@ body {
 }
 
 .sidebar a:hover {
-    background-color: #0b71e7; /* White background on hover */
+    background-color: #adadad; /* White background on hover */
     color: white; /* Change text color on hover */
 }
 
 .sidebar a.active {
-    background-color: #0b71e7; /* White background for active links */
-    color: white; /* Change text color for active links */
+    border-radius: 5px 0 0 5px;
+    background-color: #ffffff;
+    border-right: 7px solid #000000;
+    color: rgb(0, 0, 0); /* Change text color for active links */
 }
 
 /* Tooltip removed: Now showing text beside the icon */

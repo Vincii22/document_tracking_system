@@ -57,9 +57,9 @@ $htmlContent1 = '<div class="col-auto" style="margin:19px;width:100%;"><div clas
                     <table class="table table-striped table-bordered table-sm">
                         <thead>
                             <tr class="justify-content-start" style="">
-                                <th style="width:96px; padding 10px 5px; font-size: 1rem !important">&nbsp;Tracking Num</th>
+                                <th style="width:146px; padding 10px 5px; font-size: 1rem !important">&nbsp;Tracking Num</th>
                                 <th style="width:295px; padding 10px 5px; font-size: 1rem !important">Document Name</th>
-                                <th class="visible" style="width:90px; padding 10px 5px; font-size: 1rem !important">Queue Time</th>
+                                <th class="visible" style="width:120px; padding 10px 5px; font-size: 1rem !important">Queue Time</th>
                                 <th class="visible" style="width:249px; padding 10px 5px; font-size: 1rem !important">Document Owner</th>
                                 <th style="width:92px; padding 10px 5px; font-size: 1rem !important">Status</th>
                                 <th style="width:112px; padding 10px 5px; font-size: 1rem !important">Process</th>
@@ -84,7 +84,7 @@ if (empty($object_array)) {
 } else {
   // Preparing the HTML for document rows
 foreach ($object_array as $doc) {
-    $htmlContent2 .= '<tr data-id="' . $doc["doc_id"] . '" style="height:35px;">';
+    $htmlContent2 .= '<tr data-id="' . $doc["doc_id"] . '" style="height:45px;">';
     $htmlContent2 .= '<td class="align-middle" style="color:rgb(0,0,0);font-size:14px;padding:5px 10px;">' . $doc["doc_trackingnum"] . '</td>';
     $htmlContent2 .= '<td class="align-middle" style="color:rgb(0,0,0);font-size:14px;padding:5px 10px;">' . $doc["doc_name"] . '</td>';
     $htmlContent2 .= '<td class="align-middle" style="color:rgb(0,0,0);font-size:14px;padding:5px 10px;">' . $doc["queue"];
@@ -100,11 +100,11 @@ foreach ($object_array as $doc) {
     $htmlContent2 .= '<td class="align-middle" style="color:rgb(0,0,0);font-size:14px;padding:5px 10px;">' . $doc["doc_status"] . '</td>';
     
     // Flex the Track Document and View buttons in the Process column
-    $htmlContent2 .= '<td style="height:18px; display: flex; gap: 5px;">'; // Added flex display
-    $htmlContent2 .= '<button class="btn btn-success active btn-sm" type="button" style="height:20px;padding:0;font-size:10px;margin:0;width:90px;">Track Document</button>';
+    $htmlContent2 .= '<td style=" display: flex; gap: 5px;">'; // Added flex display
+    $htmlContent2 .= '<button class="btn btn-success active btn-sm" type="button" style="padding:0;font-size:14px;margin:0;padding: 2px 10px;">Track Document</button>';
     
     // Add View button with data-id
-    $htmlContent2 .= '<button class="btn btn-info btn-sm btn-view" type="button" data-id="' . $doc["doc_id"] . '" style="height:20px;padding:0;font-size:10px;margin:0;width:90px;">View</button>';
+    $htmlContent2 .= '<button class="btn btn-info btn-sm btn-view" type="button" data-id="' . $doc["doc_id"] . '" style="padding:0;font-size:14px;margin:0;padding: 2px 10px;">View</button>';
     $htmlContent2 .= '</td></tr>'; // Closing the Process column and row
 }
 
