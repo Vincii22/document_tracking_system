@@ -28,24 +28,28 @@ $sql .= "TIMESTAMPDIFF(DAY, documents_history.timestamp, NOW()) AS queue ";
 $sql .= "FROM documents ";
 $sql .= "LEFT JOIN documents_history ON documents.doc_id = documents_history.doc_id AND documents_history.is_last = 1 ";
 $sql .= "LEFT JOIN users ON documents.personnel_id = users.user_id ";
-$sql .= "WHERE users.dept_id = {$deptId} ";
+$sql .= "WHERE users.dept_id = {$deptId} ";  // Starting the WHERE clause
 
+// Handling document status and search term conditions
 if ($docStatus != 0 && strlen($searchTerm) < 3) {
-    $sql .= "WHERE doc_status = {$docStatus} ";
+    // Append the condition for doc_status
+    $sql .= "AND doc_status = {$docStatus} ";
 } else if ($docStatus != 0 && strlen($searchTerm) > 2) {
-    $sql .= "WHERE doc_status = {$docStatus} AND (doc_trackingnum LIKE '%$searchTerm%' OR doc_name LIKE '%$searchTerm%' OR doc_owner LIKE '%$searchTerm%') ";
+    // Append the condition for both doc_status and search
+    $sql .= "AND doc_status = {$docStatus} ";
+    $sql .= "AND (doc_trackingnum LIKE '%$searchTerm%' OR doc_name LIKE '%$searchTerm%' OR doc_owner LIKE '%$searchTerm%') ";
 } else if (strlen($searchTerm) > 2) {
-    $sql .= "WHERE doc_trackingnum LIKE '%$searchTerm%' OR doc_name LIKE '%$searchTerm%' OR doc_owner LIKE '%$searchTerm%' ";
+    // Append only the search condition
+    $sql .= "AND (doc_trackingnum LIKE '%$searchTerm%' OR doc_name LIKE '%$searchTerm%' OR doc_owner LIKE '%$searchTerm%') ";
 }
 
-//$sql .= "ORDER BY doc_trackingnum DESC ";
+// Append pagination
 $sql .= "LIMIT {$per_page} ";
 $sql .= "OFFSET {$pagination->offset()}";
 
-//echo $sql; 
-//$htmlContent = "";
-
+// Execute the query
 $result_set = $database->query($sql);
+
 $object_array = array();
 
 while ($row = $database->fetch_array($result_set)) {

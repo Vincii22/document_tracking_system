@@ -151,6 +151,7 @@ $unread_count = count($notifications);
                         <thead>
                             <tr>
                                 <th style="width:185px;">Timestamp</th>
+                                <th>Document Name</th>
                                 <th>Document Movement</th>
                                 <th style="width:381px;">Document Remarks</th>
                             </tr>
