@@ -16,11 +16,11 @@ $sql .= "OFFSET {$pagination->offset()}";
 
 $a1 = Department::find_by_sql($sql);
 
-$htmlContent1 = '<div class="col-auto" style="margin:19px;width:1067px;"><div class="table-responsive" style="font-size:12px;background-color:#ffffff;margin:0px 60px;padding:0px 0px;width:950px;">
+$htmlContent1 = '<div class="col-auto" style="margin:19px;width:950px;"><div class="table-responsive" style="font-size:12px;background-color:#ffffff;padding:0px 0px;width:950px;">
                  <table class="table table-striped table-bordered table-sm"><thead><tr class="justify-content-start"><th style="width:394px;">&nbsp;Department Name</th>
                  <th style="width:129px;"><strong>Department Code</strong><br></th><th style="width:248px;">Department Head</th><th style="width:95px;">Process</th></tr></thead><tbody>';
 $htmlContent2 = "";
-$htmlContent3 = '</tbody></table></div></div><div class="col" style="width:1071px;height:27px;"><nav style="width:940px;height:33px;"><ul class="pagination"> ';
+$htmlContent3 = '</tbody></table></div></div><div class="col" style="width:1071px;height:27px;"><nav style="width:940px;height:33px;"><ul class="pagination" style="margin-left: 20px;"> ';
 $htmlContent4 = '';
 $htmlContent5 = '</ul></nav></div>';
 if(empty($a1)) {

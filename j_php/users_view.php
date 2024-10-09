@@ -19,7 +19,7 @@ $sql .= "OFFSET {$pagination->offset()}";
 
 $a1 = User::find_by_sql($sql);
 
-$htmlContent1 = '<div class="col-auto" style="margin:19px;"><div class="table-responsive" style="font-size:12px;background-color:#ffffff;margin:0px 10px;padding:0px 0px;width:1026px;">
+$htmlContent1 = '<div class="col-auto" style="margin:19px;"><div class="table-responsive" style="font-size:12px;background-color:#ffffff;margin:0px 10px;padding:0px 0px;width:76vw;">
                  <table class="table table-striped table-bordered table-sm"><thead><tr class="justify-content-start"><th style="width:394px;">&nbsp;Name</th>
                  <th style="width:284px;"><strong>Username</strong><br></th><th>Department</th><th style="width:213px;">Process</th></tr></thead><tbody>';
 $htmlContent2 = "";
