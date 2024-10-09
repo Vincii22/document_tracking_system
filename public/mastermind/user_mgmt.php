@@ -124,8 +124,8 @@ $_SESSION['usertype'] = $user_data['usertype'];
             </ul>
         </div>
     </nav>
-    <div style="font-size:10px;">
-        <div class="container">
+    <div style="font-size:10px; min-height: 90vh; padding-bottom: 20px; border-radius: 12px; margin: 20px 25px 25px 250px !important;">
+        <div class="min-height:65vh; height: fit-content; background-color: white; padding: 25px 20px">
             <div class="row" style="padding:0px;margin:7px;">
                 <div class="col">
                     <h4 style="color:rgb(134,142,150);">User Management</h4>
