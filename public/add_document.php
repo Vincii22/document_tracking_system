@@ -220,11 +220,11 @@ div {
 
                     <div class="form-group">
                         <label for="docfile">Upload Document:</label>
-                        <input class="form-control" type="file" name="docfile" required>
+                        <input class="form-control" type="file" name="docfile" id="docfile" accept="application/pdf" required>
                     </div>
 
                     <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary">Add Document</button>
+                        <button type="submit" class="btn btn-primary" onclick="return validateFile()">Add Document</button>
                     </div>
                 </form>
             </div>
@@ -267,6 +267,22 @@ div {
         </div>
     </div>
 </div>
+
+    <script>
+
+        function validateFile() {
+            const fileInput = document.getElementById('docfile');
+            const filePath = fileInput.value;
+            const allowedExtensions = /(\.pdf)$/i;
+
+            if (!allowedExtensions.exec(filePath)) {
+                alert('Please upload a PDF file.');
+                fileInput.value = ''; // Clear the input
+                return false;
+            }
+            return true;
+        }
+    </script>
 
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
