@@ -270,130 +270,131 @@ $unread_count = count($notifications);
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-        // Initialize document summary with PHP data
-        const documentSummary = <?php echo json_encode($document_summary); ?>;
+    // Initialize document summary with PHP data
+    const documentSummary = <?php echo json_encode($document_summary); ?>;
 
-        // Function to fetch data and update charts
-        function updateCharts() {
-            $.ajax({
-                url: '../j_php/get_document_summary.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    if (!data.error) {
-                        documentSummary.total_documents = data.total_documents;
-                        documentSummary.incoming = data.incoming;
-                        documentSummary.on_queue = data.on_queue;
-                        documentSummary.outgoing = data.outgoing;
-                        documentSummary.completed = data.completed;
+    // Function to fetch data and update charts
+    function updateCharts() {
+        $.ajax({
+            url: '../j_php/get_document_summary.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                if (!data.error) {
+                    documentSummary.total_documents = data.total_documents;
+                    documentSummary.incoming = data.incoming;
+                    documentSummary.on_queue = data.on_queue;
+                    documentSummary.outgoing = data.outgoing;
+                    documentSummary.completed = data.completed;
 
-                        chart1.data.datasets[0].data = [data.incoming, data.on_queue, data.outgoing, data.completed];
-                        chart2.data.datasets[0].data = [data.total_documents, data.completed];
-                        chart3.data.datasets[0].data = [data.incoming, data.outgoing];
-                        chart4.data.datasets[0].data = [data.incoming, data.on_queue, data.outgoing, data.completed];
+                    chart1.data.datasets[0].data = [data.incoming, data.on_queue, data.outgoing, data.completed];
+                    chart2.data.datasets[0].data = [data.total_documents, data.completed];
+                    chart3.data.datasets[0].data = [data.incoming, data.outgoing];
+                    chart4.data.datasets[0].data = [data.incoming, data.on_queue, data.outgoing, data.completed];
 
-                        chart1.update();
-                        chart2.update();
-                        chart3.update();
-                        chart4.update();
-                    } else {
-                        console.error("Error fetching document summary:", data.error);
-                    }
-                },
-                error: function(error) {
-                    console.error("AJAX error:", error);
+                    chart1.update();
+                    chart2.update();
+                    chart3.update();
+                    chart4.update();
+                } else {
+                    console.error("Error fetching document summary:", data.error);
                 }
-            });
+            },
+            error: function(error) {
+                console.error("AJAX error:", error);
+            }
+        });
+    }
+
+    // Set up interval to update charts every 30 seconds
+    setInterval(updateCharts, 30000);
+
+    // Initialize charts
+    const ctx1 = document.getElementById('graph1').getContext('2d');
+    const chart1 = new Chart(ctx1, {
+        type: 'pie',
+        data: {
+            labels: ['Incoming', 'On Queue', 'Outgoing', 'Completed'],
+            datasets: [{
+                data: [documentSummary.incoming, documentSummary.on_queue, documentSummary.outgoing, documentSummary.completed],
+                backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
         }
+    });
 
-        // Set up interval to update charts every 30 seconds
-        setInterval(updateCharts, 30000);
-
-        // Initialize charts
-        const ctx1 = document.getElementById('graph1').getContext('2d');
-        const chart1 = new Chart(ctx1, {
-            type: 'pie',
-            data: {
-                labels: ['Incoming', 'On Queue', 'Outgoing', 'Completed'],
-                datasets: [{
-                    data: [documentSummary.incoming, documentSummary.on_queue, documentSummary.outgoing, documentSummary.completed],
-                    backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    }
+    const ctx2 = document.getElementById('graph2').getContext('2d');
+    const chart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Total Documents', 'Completed'],
+            datasets: [{
+                label: 'Documents',
+                data: [documentSummary.total_documents, documentSummary.completed],
+                backgroundColor: ['#007bff', '#28a745']
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
+        }
+    });
 
-        const ctx2 = document.getElementById('graph2').getContext('2d');
-        const chart2 = new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: ['Total Documents', 'Completed'],
-                datasets: [{
-                    label: 'Documents',
-                    data: [documentSummary.total_documents, documentSummary.completed],
-                    backgroundColor: ['#007bff', '#28a745']
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    const ctx3 = document.getElementById('graph3').getContext('2d');
+    const chart3 = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: ['Incoming', 'Outgoing'],
+            datasets: [{
+                label: 'Document Flow',
+                data: [documentSummary.incoming, documentSummary.outgoing],
+                backgroundColor: '#007bff',
+                borderColor: '#007bff',
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
+        }
+    });
 
-        const ctx3 = document.getElementById('graph3').getContext('2d');
-        const chart3 = new Chart(ctx3, {
-            type: 'line',
-            data: {
-                labels: ['Incoming', 'Outgoing'],
-                datasets: [{
-                    label: 'Document Flow',
-                    data: [documentSummary.incoming, documentSummary.outgoing],
-                    backgroundColor: '#007bff',
-                    borderColor: '#007bff',
-                    fill: false,
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    const ctx4 = document.getElementById('graph4').getContext('2d');
+    const chart4 = new Chart(ctx4, {
+        type: 'doughnut',
+        data: {
+            labels: ['Incoming', 'On Queue', 'Outgoing', 'Completed'],
+            datasets: [{
+                data: [documentSummary.incoming, documentSummary.on_queue, documentSummary.outgoing, documentSummary.completed],
+                backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
                 }
             }
-        });
+        }
+    });
+</script>
 
-        const ctx4 = document.getElementById('graph4').getContext('2d');
-        const chart4 = new Chart(ctx4, {
-            type: 'doughnut',
-            data: {
-                labels: ['Incoming', 'On Queue', 'Outgoing', 'Completed'],
-                datasets: [{
-                    data: [documentSummary.incoming, documentSummary.on_queue, documentSummary.outgoing, documentSummary.completed],
-                    backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 
 </html>
