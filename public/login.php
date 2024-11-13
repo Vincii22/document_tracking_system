@@ -45,6 +45,12 @@ if(isset($_SESSION['usertype'])) {
     <link rel="stylesheet" href="assets/css/login.css">
 </head>
 
+<style>
+    .login-container{
+        margin-bottom: 30vh;
+        margin-right: 3vw;
+    }
+</style>
 <body>
     <div class="login-container">
         <div class="login-header">

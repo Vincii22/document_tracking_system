@@ -206,7 +206,7 @@ $unread_count = count($notifications);
 
 <div class="form-group">
     <label for="email">Email</label>
-    <input type="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" required>
+    <input type="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>" readonly>
 </div>
 
     <div class="form-group">
