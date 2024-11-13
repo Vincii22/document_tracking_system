@@ -47,8 +47,8 @@ if(isset($_SESSION['usertype'])) {
 
 <style>
     .login-container{
-        margin-bottom: 30vh;
-        margin-right: 3vw;
+        margin-right: 4vw;
+        margin-bottom: 45vh;
     }
 </style>
 <body>
