@@ -20,28 +20,40 @@ if (!isset($_SESSION['dept_abbreviation'])) {
 $dept_abbreviation = $_SESSION['dept_abbreviation'];
 
 // Query to get the document summary for the current department
-$query = "SELECT 
-             COUNT(doc_id) AS total_documents,
-             SUM(CASE WHEN doc_status = 'IN TRANSIT' THEN 1 ELSE 0 END) AS incoming,
-             SUM(CASE WHEN doc_status = 'ON QUEUE' THEN 1 ELSE 0 END) AS on_queue,
-             SUM(CASE WHEN doc_status = 'OUTGOING' THEN 1 ELSE 0 END) AS outgoing,
-             SUM(CASE WHEN doc_status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed
-          FROM documents
-          WHERE doc_owner = '{$dept_abbreviation}'";
+// Query for incoming documents (from documents_history table)
+$query_incoming = "
+    SELECT COUNT(*) AS incoming
+    FROM documents_history
+    WHERE dochist_type = 'FORWARDED TO'
+      AND dept_id = (SELECT dept_id FROM departments WHERE dept_abbreviation = '{$dept_abbreviation}')
+";
+$result_incoming = $database->query($query_incoming);
+$incoming_count = $database->fetch_array($result_incoming)['incoming'] ?? 0;
 
-// Execute the query
-$result = $database->query($query);
-$document_summary = $database->fetch_array($result);
+// Query for outgoing, on queue, completed, and total documents (from documents table)
+$query_statuses = "
+    SELECT 
+        COUNT(doc_id) AS total_documents,
+        SUM(CASE WHEN doc_status = 'IN TRANSIT' THEN 1 ELSE 0 END) AS outgoing,
+        SUM(CASE WHEN doc_status = 'WAITING' THEN 1 ELSE 0 END) AS on_queue,
+        SUM(CASE WHEN doc_status = 'COMPLETED' THEN 1 ELSE 0 END) AS completed
+    FROM documents
+    WHERE doc_owner = '{$dept_abbreviation}'
+";
+$result_statuses = $database->query($query_statuses);
+$document_summary = $database->fetch_array($result_statuses);
 
-if (!$document_summary) {
-    // If no result, initialize values with zeros to avoid undefined variable issues
-    $document_summary = [
-        'total_documents' => 0,
-        'incoming' => 0,
-        'on_queue' => 0,
-        'outgoing' => 0
-    ];
-}
+// Merge incoming count with other document statuses
+$document_summary['incoming'] = $incoming_count;
+
+// Ensure all expected keys are present, defaulting to 0 if necessary
+$document_summary = array_merge([
+    'total_documents' => 0,
+    'incoming' => 0,
+    'on_queue' => 0,
+    'outgoing' => 0,
+    'completed' => 0
+], $document_summary);
 // Fetch the current user information
 $user_id = $_SESSION['user_id'];
 $query = "SELECT users.username, users.first_name, users.last_name, users.usertype, 
@@ -256,54 +268,132 @@ $unread_count = count($notifications);
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Data for graphs
-const documentSummary = <?php echo json_encode($document_summary); ?>;
+    // Initialize document summary with PHP data
+    const documentSummary = <?php echo json_encode($document_summary); ?>;
 
-// Graph 1: Pie chart for document statuses
-const ctx1 = document.getElementById('graph1').getContext('2d');
-new Chart(ctx1, {
-    type: 'pie',
-    data: {
-        labels: ['Incoming', 'On Queue', 'Outgoing', 'Completed'],
-        datasets: [{
-            data: [documentSummary.incoming, documentSummary.on_queue, documentSummary.outgoing, documentSummary.completed],
-            backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745'],
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'bottom',
+    // Function to fetch data and update charts
+    function updateCharts() {
+        $.ajax({
+            url: '../j_php/get_document_summary.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                if (!data.error) {
+                    documentSummary.total_documents = data.total_documents;
+                    documentSummary.incoming = data.incoming;
+                    documentSummary.on_queue = data.on_queue;
+                    documentSummary.outgoing = data.outgoing;
+                    documentSummary.completed = data.completed;
+
+                    chart1.data.datasets[0].data = [data.incoming, data.on_queue, data.outgoing, data.completed];
+                    chart2.data.datasets[0].data = [data.total_documents, data.completed];
+                    chart3.data.datasets[0].data = [data.incoming, data.outgoing];
+                    chart4.data.datasets[0].data = [data.incoming, data.on_queue, data.outgoing, data.completed];
+
+                    chart1.update();
+                    chart2.update();
+                    chart3.update();
+                    chart4.update();
+                } else {
+                    console.error("Error fetching document summary:", data.error);
+                }
+            },
+            error: function(error) {
+                console.error("AJAX error:", error);
+            }
+        });
+    }
+
+    // Set up interval to update charts every 30 seconds
+    setInterval(updateCharts, 30000);
+
+    // Initialize charts
+    const ctx1 = document.getElementById('graph1').getContext('2d');
+    const chart1 = new Chart(ctx1, {
+        type: 'pie',
+        data: {
+            labels: ['Incoming', 'On Queue', 'Outgoing', 'Completed'],
+            datasets: [{
+                data: [documentSummary.incoming, documentSummary.on_queue, documentSummary.outgoing, documentSummary.completed],
+                backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
             }
         }
-    }
-});
+    });
 
-// Graph 2: Bar chart for total vs. completed documents
-const ctx2 = document.getElementById('graph2').getContext('2d');
-new Chart(ctx2, {
-    type: 'bar',
-    data: {
-        labels: ['Total Documents', 'Completed'],
-        datasets: [{
-            label: 'Documents',
-            data: [documentSummary.total_documents, documentSummary.completed],
-            backgroundColor: ['#007bff', '#28a745']
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true
+    const ctx2 = document.getElementById('graph2').getContext('2d');
+    const chart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Total Documents', 'Completed'],
+            datasets: [{
+                label: 'Documents',
+                data: [documentSummary.total_documents, documentSummary.completed],
+                backgroundColor: ['#007bff', '#28a745']
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
-});
+    });
 
+    const ctx3 = document.getElementById('graph3').getContext('2d');
+    const chart3 = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: ['Incoming', 'Outgoing'],
+            datasets: [{
+                label: 'Document Flow',
+                data: [documentSummary.incoming, documentSummary.outgoing],
+                backgroundColor: '#007bff',
+                borderColor: '#007bff',
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 
+    const ctx4 = document.getElementById('graph4').getContext('2d');
+    const chart4 = new Chart(ctx4, {
+        type: 'doughnut',
+        data: {
+            labels: ['Incoming', 'On Queue', 'Outgoing', 'Completed'],
+            datasets: [{
+                data: [documentSummary.incoming, documentSummary.on_queue, documentSummary.outgoing, documentSummary.completed],
+                backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
 </script>
+
+
 </body>
 
 </html>
