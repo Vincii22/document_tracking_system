@@ -104,6 +104,7 @@ $unread_count = count($notifications);
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
+            gap: 20px
         }
 
         .dashboard-summary .summary-card {
@@ -118,7 +119,7 @@ $unread_count = count($notifications);
         .summary-card h2 {
             font-size: 36px;
             margin-bottom: 10px;
-            color: #007bff;
+            color: #454545;
         }
 
         .summary-card p {
@@ -143,11 +144,13 @@ $unread_count = count($notifications);
     background-color: #fff;
     text-align: center;
     margin-bottom: 20px; /* Add space between rows */
+    display: flex;
+    justify-content: center;
 }
 
         .graph-card canvas {
             width: 65% !important;
-            height: 30vh !important;
+            height: 45vh !important;
         }
         .body-dashboard{
             width: 83% !important;
@@ -248,12 +251,7 @@ $unread_count = count($notifications);
             <div class="graph-card">
                 <canvas id="graph2"></canvas>
             </div>
-            <div class="graph-card">
-                <canvas id="graph3"></canvas>
-            </div>
-            <div class="graph-card">
-                <canvas id="graph4"></canvas>
-            </div>
+
         </div>
         <div class="" style="font-size: 14px; text-align: center; margin-top: 20px !important; margin-bottom: 0 !important; border-top:2px solid black; margin-right: 25px;padding:0px 0px; background-color: transparent;">
             <footer>
@@ -394,6 +392,7 @@ $unread_count = count($notifications);
         }
     });
 </script>
+
 
 </body>
 

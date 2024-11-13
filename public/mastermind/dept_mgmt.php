@@ -107,8 +107,8 @@ $_SESSION['usertype'] = $user_data['usertype'];
         </div>
     </nav>
 
-    <div style="font-size:10px;">
-        <div class="container">
+    <div style="font-size:10px; min-height: 90vh; padding-bottom: 20px; border-radius: 12px; margin: 20px 25px 25px 250px !important;">
+        <div class="min-height:65vh; height: fit-content; background-color: white; padding: 25px 20px">
             <div class="row" style="padding:0px;margin:7px;">
                 <div class="col">
                     <h4 style="color:rgb(134,142,150);">Department Management</h4>
@@ -117,16 +117,11 @@ $_SESSION['usertype'] = $user_data['usertype'];
             <div class="row">
                 <div class="col" style="padding:0px 40px;"><button class="btn btn-success btn-sm" type="button" id="addDept" style="height:23px;padding:-4px;font-size:10px;width:96px;" data-target="#addModal" data-toggle="modal">Add Department</button></div>
             </div>
-            <div id="tableArea"class="row no-gutters" style="width:1107px;">
+            <div id="tableArea"class="row no-gutters" style="">
             
                     
             </div>
         </div>
-    </div>
-    <div class="footer-basic fixed-bottom" style="height:42px;margin:0px;padding:0px 0px;background-color:#4b83cc;">
-        <footer>
-            <p class="copyright" style="color:rgb(255,255,255);"></p>
-        </footer>
     </div>
     <div class="modal fade" role="dialog" tabindex="-1" id="editModal" style="padding:0px 0px;margin:200px 0px;">
         <div class="modal-dialog modal-sm" role="document">
