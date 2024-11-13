@@ -17,6 +17,12 @@ if(isset($_SESSION['usertype'])) {
     else if ( $_SESSION['usertype'] == 'student assistant' ){
         redirect_to('profile.php');
     }
+    else if ( $_SESSION['usertype'] == 'office head' ){
+        redirect_to('profile.php');
+    }
+    else if ( $_SESSION['usertype'] == 'office staff' ){
+        redirect_to('profile.php');
+    }
     else if ( $_SESSION['usertype'] == 'guest' ){
         redirect_to('track_doc.php');
     }

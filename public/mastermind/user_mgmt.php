@@ -212,21 +212,20 @@ $_SESSION['usertype'] = $user_data['usertype'];
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="dept">Department:</label>
-                        <select id="dept" class="form-control">
-                            <optgroup label="Units/Departments"></optgroup>
-                        </select>
+                    <label for="dept">Department:</label>
+                    <select id="dept" class="form-control" onchange="loadUserTypes()">
+                        <optgroup label="Units/Departments">
+                            <!-- Populate departments dynamically from database -->
+                        </optgroup>
+                    </select>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="usertype">Usertype:</label>
-                        <select id="usertype" class="form-control">
-                            <optgroup label="Usertypes">
-                                <option value="1">Admin</option>
-                                <option value="2">Dean</option>
-                                <option value="3">Assistant</option>
-                                <option value="4">Student Assistant</option>
-                            </optgroup>
-                        </select>
+                    <label for="usertype">Usertype:</label>
+                    <select id="usertype" class="form-control">
+                        <optgroup label="Usertypes">
+                            <!-- User types will be dynamically populated based on dept_type -->
+                        </optgroup>
+                    </select>
                     </div>
                 </div>
                 <div class="row">
@@ -270,6 +269,39 @@ $_SESSION['usertype'] = $user_data['usertype'];
 
     <script src="../../j_js/menu-visibility.js"></script>
     <script src="../../j_js/user.js"></script>
+
+    <script>
+        function loadUserTypes() {
+    var deptId = $("#dept").val(); // Get selected department ID
+
+    // Send an AJAX request to fetch dept_type based on deptId
+    $.ajax({
+        url: '../../j_php/get_dept_type.php',
+        type: 'POST',
+        data: { dept_id: deptId },
+        success: function(deptType) {
+            var userTypeSelect = $("#usertype");
+            userTypeSelect.empty(); // Clear previous options
+            
+            // Define user type options based on dept_type
+            var userTypes = [];
+            if (deptType === "department") {
+                userTypes = ["Admin", "Dean", "Assistant", "Student Assistant"];
+            } else if (deptType === "office") {
+                userTypes = ["Admin", "Office Head", "Office Staff"];
+            }
+
+            // Populate the user type select with options
+            userTypes.forEach(function(type) {
+                userTypeSelect.append(new Option(type, type));
+            });
+        },
+        error: function() {
+            alert("Failed to load user types.");
+        }
+    });
+}
+    </script>
 </body>
 
 </html>
