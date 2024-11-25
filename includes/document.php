@@ -27,6 +27,7 @@ class Document extends DatabaseObject {
     public $schoolname;
     public $districtname;
 
+    
     public static function find_by_tracking($tracking = 0) {
         global $database;
         $result_array = static::find_by_sql("SELECT * FROM " . static::$table_name . " WHERE doc_trackingnum = {$tracking} LIMIT 1");
@@ -222,27 +223,58 @@ class Document extends DatabaseObject {
     return $x + $y;
 }
 
-
-    public function add_remarks($remarks) {
-        $new_doc_hist = new DocumentHistory;
-        $new_doc_hist->doc_id = $this->doc_id;
-        $new_doc_hist->user_id = $_SESSION['user_id'];
-        $new_doc_hist->dept_id = $_SESSION['dept_id'];
-        $new_doc_hist->dochist_remarks = strtoupper($remarks);
-        $new_doc_hist->dochist_type = 3;
-        $new_doc_hist->is_last = false;
-        return $new_doc_hist->create();
-
-            // Notify relevant user
-            if ($result) {
-                $message = "Remarks added to document '{$this->doc_name}'.";
-                $recipient_user_id = $_SESSION['user_id']; // Adjust as needed
-                notify_user($recipient_user_id, $message);
-            }
+public function add_remarks($remarks, $department_id, $reply_to = null) {
+    global $database; // Assuming $database is an instance of MySQLDatabase
     
-            return $result;
+    // Step 1: Add remark to DocumentHistory (existing functionality)
+    $new_doc_hist = new DocumentHistory;
+    $new_doc_hist->doc_id = $this->doc_id;
+    $new_doc_hist->user_id = $_SESSION['user_id'];
+    $new_doc_hist->dept_id = $department_id; // Use the department_id passed to the method
+    $new_doc_hist->dochist_remarks = strtoupper($remarks); // Convert remarks to uppercase if needed
+    $new_doc_hist->dochist_type = 3; // Assuming 3 indicates remarks
+    $new_doc_hist->is_last = false; // Set to false, assuming you're not marking this as the last action
+    $result = $new_doc_hist->create(); // Insert into DocumentHistory
+    
+    // Step 2: Insert remark into the remarks table (new functionality)
+    $remarks = $database->escape_value($remarks); // Escape the remarks to prevent SQL injection
+    $department_id = (int) $department_id; // Ensure department_id is an integer
+    $reply_to = $reply_to ? (int) $reply_to : 'NULL'; // Handle reply_to as optional (null or integer)
+
+    // SQL query to insert the remark into remarks table
+    $query = "INSERT INTO remarks (doc_id, department_id, remark_text, reply_to) 
+              VALUES ({$this->doc_id}, {$department_id}, '{$remarks}', {$reply_to})";
+    $remarks_result = $database->query($query); // Execute the SQL query for remarks insertion
+
+    // Step 3: Notify the user if insertion was successful
+    if ($result && $remarks_result) {
+        // Send a notification after successfully adding the remark
+        $message = "A remark has been added to the document '{$this->doc_name}'.";
+        notify_user($_SESSION['user_id'], $message); // Assuming the user is logged in and has session data
+    }
+    
+    // Return true if both operations were successful, otherwise false
+    return ($result && $remarks_result) ? true : false;
+}
+public function show_document_remarks($doc_id) {
+    global $database;
+
+    // Query to get all remarks for the document, including replies
+    $query = "SELECT r.remark_id, r.remark_text, r.created_at, d.dept_abbreviation, r.reply_to
+              FROM remarks r
+              JOIN departments d ON r.department_id = d.dept_id
+              WHERE r.doc_id = {$doc_id} ORDER BY r.created_at DESC";
+
+    $result = $database->query($query);
+    $remarks = [];
+
+    while ($row = $database->fetch_array($result)) {
+        // Store each remark, checking if it's a reply
+        $remarks[] = $row;
     }
 
+    return $remarks;  // Return the remarks data to the view
+}
     public function cancel_forward() {
         $x = 0;
         $y = 0;
