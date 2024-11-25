@@ -235,7 +235,7 @@ $unread_count = count($notifications);
         <div class="container">
             <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link text-white" href="notifications.php"><i class="fa fa-bell"></i>
+                <a class="nav-link text-white" href="../notifications.php"><i class="fa fa-bell"></i>
                     <?php if ($unread_count > 0): ?>
                         <span class="badge badge-danger"><?php echo $unread_count; ?></span>
                     <?php endif; ?>
